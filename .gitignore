@@ -1,0 +1,39 @@
+# Visual Studio user-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options directory
+**/.vs/
+
+# TouchGFX build directories
+**/TouchGFX/build/
+
+# Generated build files
+*.d
+*.o
+*.su
+*.elf
+*.ods#
+*.cache
+*.cyclo
+*.hex
+*.list
+*.map
+**/.settings/language.settings.xml
+
+# Ki-Cad
+
+**/*.bak
+**/_autosave*
+*auto*save*
+
+# Various user configuration
+
+**/subdir.mk
+**/*.*_cache
+**/TouchGFX/generated/user.config
+**/TouchGFX/config/msvs/Application.props
+**/*-cache.*

@@ -1,0 +1,32 @@
+{
+    "env": {
+        "arm-gnu-toolchain": "d:/arm/gcc-arm-none-eabi-10.3-2021.10",
+        "arm-gnu-toolchain-v": "10.3.1",
+        "arm-gnu-toolchain-t": "arm-none-eabi",
+        "arm-gnu-toolchain-f": "v7e-m+dp/hard"
+    },
+    "configurations": [
+        {
+            "name": "STM32U599",
+            "includePath": [
+                "${arm-gnu-toolchain}/${arm-gnu-toolchain-t}/include/**",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "DEBUG",
+                "USE_HAL_DRIVER",
+                "STM32U599xx"
+            ],
+            "compilerPath": "${arm-gnu-toolchain}/bin/arm-none-eabi-gcc.exe",
+            "compilerArgs": [
+                "-mcpu=cortex-m33",
+                "-mthumb",
+                "-mfpu=fpv4-sp-d16",
+                "-mfloat-abi=hard"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
