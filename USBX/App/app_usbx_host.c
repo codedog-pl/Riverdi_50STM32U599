@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,7 +67,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
 
   /* USER CODE BEGIN MX_USBX_Host_Init0 */
-
+  printf("Initializing USB host...\r\n");
   /* USER CODE END MX_USBX_Host_Init0 */
 
   /* Allocate the stack for USBX Memory */
@@ -128,7 +128,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   }
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
-
+  printf("USB host app thread created.\r\n");
   /* USER CODE END MX_USBX_Host_Init1 */
 
   return ret;
@@ -143,6 +143,8 @@ static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
   TX_PARAMETER_NOT_USED(thread_input);
+  printf("USB host thread started.\r\n");
+  while (1) tx_thread_sleep(1);
   /* USER CODE END app_ux_host_thread_entry */
 }
 
@@ -161,6 +163,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
   /* USER CODE BEGIN ux_host_event_callback0 */
   UX_PARAMETER_NOT_USED(current_class);
   UX_PARAMETER_NOT_USED(current_instance);
+  printf("USB event %lu received.\r\n", event);
   /* USER CODE END ux_host_event_callback0 */
 
   switch (event)

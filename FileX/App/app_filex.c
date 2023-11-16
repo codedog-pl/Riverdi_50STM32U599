@@ -25,6 +25,9 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include "HMI_C.h"
+#include "ux_api.h"
+#include "ux_host_class_storage.h"
+#include "ux_host_stack.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +59,8 @@ ALIGN_32BYTES (uint32_t fx_sd_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / siz
 FX_MEDIA        sdio_disk;
 
 /* USER CODE BEGIN PV */
-
+ALIGN_32BYTES (uint32_t fx_ux_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / sizeof(uint32_t)]);
+FX_MEDIA        usbx_disk;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,8 +68,56 @@ FX_MEDIA        sdio_disk;
 /* Main thread entry function.  */
 void fx_app_thread_entry(ULONG thread_input);
 
-/* USER CODE BEGIN PFP */
+  /* USER CODE BEGIN PFP */
+  /**
+   * @brief Mounts the SD card.
+   * @returns True if mounted successfully, false otherwise.
+   */
+  bool fx_mount_sd_card()
+  {
+    UINT sd_status = FX_SUCCESS;
+    printf("Mounting SD...");
+    sd_status =  fx_media_open(
+      &sdio_disk,                 // Media control block pointer.
+      FX_SD_VOLUME_NAME,          // Pointer to media name string.
+      fx_stm32_sd_driver,         // Media driver entry function.
+      NULL,                       // Optional information pointer supplied to media driver.
+      (void*)fx_sd_media_memory,  // Pointer to memory used by the FileX for this media.
+      sizeof(fx_sd_media_memory)  // Size of media memory - must be at least 512 bytes and one sector size.
+    );
+    if (sd_status == FX_SUCCESS) printf("OK.\r\n");
+    else
+    {
+      printf("ERROR %i.\r\n", sd_status);
+      return false;
+    }
+    return true;
+  }
 
+  /**
+   * @brief Mounts the USB disk.
+   * @returns True if mounted successfully, false otherwise.
+   */
+  bool fx_mount_usb_disk()
+  {
+      UINT sd_status = FX_SUCCESS;
+    printf("Mounting USB...");
+    sd_status = ux_media_open(
+      &usbx_disk,                           // Media control block pointer.
+      "USB DISK",                           // Pointer to media name string.
+      _ux_host_class_storage_driver_entry,  // Media driver entry function.
+      NULL,                                 // Optional information pointer supplied to media driver.
+      (void*)fx_ux_media_memory,            // Pointer to memory used by the FileX for this media.
+      sizeof(fx_ux_media_memory)            // Size of media memory - must be at least 512 bytes and one sector size.
+    );
+    if (sd_status == FX_SUCCESS) printf("OK.\r\n");
+    else
+    {
+      printf("ERROR %i.\r\n", sd_status);
+      return false;
+    }
+    return true;
+  }
 /* USER CODE END PFP */
 
 /**
@@ -131,7 +183,9 @@ UINT MX_FileX_Init(VOID *memory_ptr)
   UINT sd_status = FX_SUCCESS;
 
 /* USER CODE BEGIN fx_app_thread_entry 0*/
-  printf("Reading SD card...");
+  fx_mount_sd_card();
+  HMI_SysInit |= HMI_FILEX;
+  return;
 /* USER CODE END fx_app_thread_entry 0*/
 
 /* Open the SD disk driver */
@@ -141,14 +195,12 @@ UINT MX_FileX_Init(VOID *memory_ptr)
   if (sd_status != FX_SUCCESS)
   {
      /* USER CODE BEGIN SD DRIVER get info error */
-    printf("ERROR reading the SD card: %i.\r\n", sd_status);
     while(1);
     /* USER CODE END SD DRIVER get info error */
   }
 
 /* USER CODE BEGIN fx_app_thread_entry 1*/
-  printf("OK.\r\n");
-  HMI_SysInit |= HMI_FILEX;
+
 /* USER CODE END fx_app_thread_entry 1*/
   }
 

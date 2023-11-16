@@ -54,6 +54,7 @@ void UsageFault_Handler(void);
 void DebugMon_Handler(void);
 void EXTI6_IRQHandler(void);
 void TIM2_IRQHandler(void);
+void OTG_HS_IRQHandler(void);
 void SDMMC1_IRQHandler(void);
 void GPU2D_IRQHandler(void);
 void GPU2D_ER_IRQHandler(void);
