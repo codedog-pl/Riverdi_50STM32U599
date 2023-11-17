@@ -68,7 +68,7 @@ FX_MEDIA        usbx_disk;
 /* Main thread entry function.  */
 void fx_app_thread_entry(ULONG thread_input);
 
-  /* USER CODE BEGIN PFP */
+/* USER CODE BEGIN PFP */
   /**
    * @brief Mounts the SD card.
    * @returns True if mounted successfully, false otherwise.
@@ -76,7 +76,7 @@ void fx_app_thread_entry(ULONG thread_input);
   bool fx_mount_sd_card()
   {
     UINT sd_status = FX_SUCCESS;
-    printf("Mounting SD...");
+    printf("Mounting SD...\r\n");
     sd_status =  fx_media_open(
       &sdio_disk,                 // Media control block pointer.
       FX_SD_VOLUME_NAME,          // Pointer to media name string.
@@ -85,10 +85,10 @@ void fx_app_thread_entry(ULONG thread_input);
       (void*)fx_sd_media_memory,  // Pointer to memory used by the FileX for this media.
       sizeof(fx_sd_media_memory)  // Size of media memory - must be at least 512 bytes and one sector size.
     );
-    if (sd_status == FX_SUCCESS) printf("OK.\r\n");
+    if (sd_status == FX_SUCCESS) printf("SD card mounted successfully.\r\n");
     else
     {
-      printf("ERROR %i.\r\n", sd_status);
+      printf("SD ERROR %i.\r\n", sd_status);
       return false;
     }
     return true;
@@ -101,7 +101,7 @@ void fx_app_thread_entry(ULONG thread_input);
   bool fx_mount_usb_disk()
   {
       UINT sd_status = FX_SUCCESS;
-    printf("Mounting USB...");
+    printf("Mounting USB...\r\n");
     sd_status = ux_media_open(
       &usbx_disk,                           // Media control block pointer.
       "USB DISK",                           // Pointer to media name string.
@@ -110,10 +110,10 @@ void fx_app_thread_entry(ULONG thread_input);
       (void*)fx_ux_media_memory,            // Pointer to memory used by the FileX for this media.
       sizeof(fx_ux_media_memory)            // Size of media memory - must be at least 512 bytes and one sector size.
     );
-    if (sd_status == FX_SUCCESS) printf("OK.\r\n");
+    if (sd_status == FX_SUCCESS) printf("USB disk mounted successfully.\r\n");
     else
     {
-      printf("ERROR %i.\r\n", sd_status);
+      printf("USB ERROR %i.\r\n", sd_status);
       return false;
     }
     return true;

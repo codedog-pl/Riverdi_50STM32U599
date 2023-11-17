@@ -20,6 +20,7 @@ void GPIO_test::testInputs()
     {
         auto pin = &pins[i];
         pin->LastState = 1;
+        if (pin->Port == GPIOA && (pin->Bit == 11 || pin->Bit == 12)) continue;
         HAL_EX_GPIO_set_mode(pin, GPIO_EX_MODE_INPUT);
         HAL_EX_GPIO_set_pull(pin, GPIO_EX_PULL_UP);
     }

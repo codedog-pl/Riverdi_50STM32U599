@@ -16,12 +16,12 @@
 void HMI::start()
 {
     std::cout << "HMI application started." << std::endl;
-    while (!(HMI_SysInit & HMI_FILEX)) tx_thread_sleep(100);
-    GPIO_test::listPins();
-    GPIO_test::testInputs();
+    // while (!(HMI_SysInit & HMI_FILEX)) tx_thread_sleep(100);
+    // GPIO_test::listPins();
+    // GPIO_test::testInputs();
     while (1)
     {
-        tx_thread_sleep(1); // for now, let's just yield.
+        tx_thread_sleep(1000); // for now, let's just yield.
     }
 }
 

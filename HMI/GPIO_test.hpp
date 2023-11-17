@@ -31,7 +31,10 @@ public:
         p4def(36,A,8),
         p4def(37,H,5),
         p4def(38,H,4),
-        p4def(39,A,10)
+        p4def(39,A,10),
+
+        p4def(20,A,11),
+        p4def(40,A,12)
     };
     static constexpr size_t pinCount = sizeof(pins) / sizeof(GPIO_PinTypeDef);
 

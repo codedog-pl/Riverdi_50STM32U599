@@ -35,7 +35,7 @@ void TouchGFXHAL::initialize()
     // Please note, HAL::initialize() must be called to initialize the framework.
 
     TouchGFXGeneratedHAL::initialize();
-    if (!frameBuffer2)  setAnimationStorage(frameBuffer1);
+    if (frameBuffer0 && !frameBuffer2) setAnimationStorage(frameBuffer0);
     setFrameRateCompensation(true);
 }
 

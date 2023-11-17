@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "ux_host_stack.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -144,7 +145,7 @@ static VOID app_ux_host_thread_entry(ULONG thread_input)
   /* USER CODE BEGIN app_ux_host_thread_entry */
   TX_PARAMETER_NOT_USED(thread_input);
   printf("USB host thread started.\r\n");
-  while (1) tx_thread_sleep(1);
+  while (1) tx_thread_sleep(1000);
   /* USER CODE END app_ux_host_thread_entry */
 }
 
