@@ -41,9 +41,9 @@ void MX_USB_OTG_HS_HCD_Init(void)
   hhcd_USB_OTG_HS.Instance = USB_OTG_HS;
   hhcd_USB_OTG_HS.Init.Host_channels = 16;
   hhcd_USB_OTG_HS.Init.speed = HCD_SPEED_HIGH;
-  hhcd_USB_OTG_HS.Init.dma_enable = DISABLE;
+  hhcd_USB_OTG_HS.Init.dma_enable = ENABLE;
   hhcd_USB_OTG_HS.Init.phy_itface = USB_OTG_HS_EMBEDDED_PHY;
-  hhcd_USB_OTG_HS.Init.Sof_enable = ENABLE;
+  hhcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
   hhcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
   hhcd_USB_OTG_HS.Init.use_external_vbus = ENABLE;
   if (HAL_HCD_Init(&hhcd_USB_OTG_HS) != HAL_OK)
@@ -77,7 +77,7 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
 
   /** Set the OTG PHY reference clock selection
   */
-    HAL_SYSCFG_SetOTGPHYReferenceClockSelection(SYSCFG_OTG_HS_PHY_CLK_SELECT_1);
+    HAL_SYSCFG_SetOTGPHYReferenceClockSelection(SYSCFG_OTG_HS_PHY_CLK_SELECT_4);
 
     /* USB_OTG_HS clock enable */
     __HAL_RCC_USB_OTG_HS_CLK_ENABLE();

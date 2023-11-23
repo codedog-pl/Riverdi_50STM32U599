@@ -108,7 +108,7 @@
 /*#define TX_MAX_PRIORITIES                32*/
 /*#define TX_THREAD_USER_EXTENSION                ????*/
 /*#define TX_TIMER_THREAD_STACK_SIZE                1024*/
-/*#define TX_TIMER_THREAD_PRIORITY                0*/
+#define TX_TIMER_THREAD_PRIORITY                1
 
 /*#define TX_MINIMUM_STACK                200*/
 

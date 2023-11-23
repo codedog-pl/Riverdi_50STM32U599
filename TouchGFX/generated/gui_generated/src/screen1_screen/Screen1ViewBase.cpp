@@ -7,7 +7,9 @@
 #include <images/BitmapDatabase.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
-    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler)
+    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler),
+    flexButtonCallback(this, &Screen1ViewBase::flexButtonCallbackHandler),
+    customContainer11Trigger1Callback(this, &Screen1ViewBase::customContainer11Trigger1CallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -28,11 +30,34 @@ Screen1ViewBase::Screen1ViewBase() :
     screenIdTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_J1U4));
     add(screenIdTxt);
 
-    nextScreenBtn.setXY(550, 215);
-    nextScreenBtn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_HARDWARE_KEYBOARD_ARROW_RIGHT_50_50_E8F6FB_SVG_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_DONE_50_50_E8F6FB_SVG_ID));
-    nextScreenBtn.setIconXY(97, 0);
-    nextScreenBtn.setAction(buttonCallback);
-    add(nextScreenBtn);
+    button1.setXY(510, 193);
+    button1.setBitmaps(touchgfx::Bitmap(BITMAP_CLAY_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_CLAY_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
+    button1.setAction(buttonCallback);
+    add(button1);
+
+    textArea1.setPosition(593, 228, 124, 23);
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_K3Y7));
+    add(textArea1);
+
+    flexButton1.setBoxWithBorderPosition(0, 0, 202, 50);
+    flexButton1.setBorderSize(5);
+    flexButton1.setBoxWithBorderColors(touchgfx::Color::getColorFromRGB(0, 102, 153), touchgfx::Color::getColorFromRGB(0, 153, 204), touchgfx::Color::getColorFromRGB(0, 51, 102), touchgfx::Color::getColorFromRGB(51, 102, 153));
+    flexButton1.setAlpha(0);
+    flexButton1.setAction(flexButtonCallback);
+    flexButton1.setPosition(299, 215, 202, 50);
+    add(flexButton1);
+
+    customContainer11.setXY(412, 65);
+    customContainer11.setTrigger1Callback(customContainer11Trigger1Callback);
+    add(customContainer11);
+
+    textArea2.setXY(433, 94);
+    textArea2.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(touchgfx::TypedText(T___SINGLEUSE_M2GE));
+    add(textArea2);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -43,15 +68,35 @@ Screen1ViewBase::~Screen1ViewBase()
 void Screen1ViewBase::setupScreen()
 {
     background.initialize();
+    customContainer11.initialize();
 }
 
 void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    if (&src == &nextScreenBtn)
+    if (&src == &button1)
     {
         //Interaction1
-        //When nextScreenBtn clicked change screen to Screen2
+        //When button1 clicked change screen to Screen2
         //Go to Screen2 with no screen transition
         application().gotoScreen2ScreenNoTransition();
     }
+}
+
+void Screen1ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
+{
+    if (&src == &flexButton1)
+    {
+        //Interaction2
+        //When flexButton1 clicked change screen to Screen2
+        //Go to Screen2 with no screen transition
+        application().gotoScreen2ScreenNoTransition();
+    }
+}
+
+void Screen1ViewBase::customContainer11Trigger1CallbackHandler()
+{
+    //Interaction4
+    //When customContainer11 trigger1 change screen to Screen2
+    //Go to Screen2 with no screen transition
+    application().gotoScreen2ScreenNoTransition();
 }
