@@ -9,15 +9,68 @@
         {
             "name": "STM32U599",
             "includePath": [
-                "${arm-gnu-toolchain}/${arm-gnu-toolchain-t}/include/**",
-                "${workspaceFolder}/**"
+                "${arm-gnu-toolchain}/arm-none-eabi/include",
+                "${arm-gnu-toolchain}/lib/gcc/arm-none-eabi/${arm-gnu-toolchain-v}/include",
+                "${arm-gnu-toolchain}/lib/gcc/arm-none-eabi/${arm-gnu-toolchain-v}/include-fixed",
+                "${arm-gnu-toolchain}/arm-none-eabi/include/c++/${arm-gnu-toolchain-v}",
+                "${arm-gnu-toolchain}/arm-none-eabi/include/c++/${arm-gnu-toolchain-v}/arm-none-eabi",
+                "${arm-gnu-toolchain}/arm-none-eabi/include/c++/${arm-gnu-toolchain-v}/arm-none-eabi/thumb/${arm-gnu-toolchain-f}",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Tools",
+                "${workspaceFolder}/HMI",
+                "${workspaceFolder}/TouchGFX/App",
+                "${workspaceFolder}/TouchGFX/target/generated",
+                "${workspaceFolder}/TouchGFX/target",
+                "${workspaceFolder}/Drivers/Custom",
+                "${workspaceFolder}/Drivers/STM32U5xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32U5xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32U5xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/Drivers/BSP/Components/mx25lm51245g",
+                "${workspaceFolder}/Middlewares/ST/touchgfx/framework/include",
+                "${workspaceFolder}/TouchGFX/generated/fonts/include",
+                "${workspaceFolder}/TouchGFX/generated/gui_generated/include",
+                "${workspaceFolder}/TouchGFX/generated/images/include",
+                "${workspaceFolder}/TouchGFX/generated/texts/include",
+                "${workspaceFolder}/TouchGFX/generated/videos/include",
+                "${workspaceFolder}/TouchGFX/gui/include",
+                "${workspaceFolder}/AZURE_RTOS/App",
+                "${workspaceFolder}/Middlewares/ST/threadx/common/inc",
+                "${workspaceFolder}/Middlewares/ST/threadx/ports/cortex_m33/gnu/inc",
+                "${workspaceFolder}/FileX/App",
+                "${workspaceFolder}/FileX/Target",
+                "${workspaceFolder}/Middlewares/ST/filex/common/inc",
+                "${workspaceFolder}/Middlewares/ST/filex/ports/generic/inc",
+                "${workspaceFolder}/USBX/App",
+                "${workspaceFolder}/USBX/Target",
+                "${workspaceFolder}/Middlewares/ST/usbx/common/core/inc",
+                "${workspaceFolder}/Middlewares/ST/usbx/ports/generic/inc",
+                "${workspaceFolder}/Middlewares/ST/usbx/common/usbx_stm32_host_controllers",
+                "${workspaceFolder}/Middlewares/ST/usbx/common/usbx_host_classes/inc",
+                "${workspaceFolder}/Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include",
+                "${workspaceFolder}/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"
             ],
             "defines": [
-                "DEBUG",
+                "STM32U599xx",
+
                 "USE_HAL_DRIVER",
-                "STM32U599xx"
+                "MCU_PREFIX=stm32u599",
+                "HAL_PREFIX=stm32u5xx_hal",
+                "BSP_USE_CMSIS_OS",
+                "USE_AZURE_RTOS",
+                "TX_THREADS=8",
+                "TX_MUTEXES=8",
+                "TX_INCLUDE_USER_DEFINE_FILE",
+                "TX_SINGLE_MODE_NON_SECURE=1",
+                "FX_INCLUDE_USER_DEFINE_FILE",
+                "UX_INCLUDE_USER_DEFINE_FILE",
+                "__weak=__attribute__((weak))",
+                "__packed=__attribute__((__packed__))",
+                "__FPU_PRESENT=1U",
+                "DEVICE=1",
+                "DEBUG"
             ],
-            "compilerPath": "${arm-gnu-toolchain}/bin/arm-none-eabi-gcc.exe",
+            "compilerPath": "${arm-gnu-toolchain}/bin/arm-none-eabi-g++.exe",
             "compilerArgs": [
                 "-mcpu=cortex-m33",
                 "-mthumb",
@@ -25,7 +78,12 @@
                 "-mfloat-abi=hard"
             ],
             "cStandard": "c17",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "mergeConfigurations": true
         }
     ],
     "version": 4
