@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "app_usbx_host.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +43,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern FX_MEDIA *media[];
+extern UINT msc_index;
+extern TX_EVENT_FLAGS_GROUP ux_app_EventFlag;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,5 +59,29 @@
 /* USER CODE END 0 */
 
 /* USER CODE BEGIN 1 */
+/**
+  * @brief  Function implementing msc_process_thread_entry.
+  * @param  thread_input: Not used
+  * @retval none
+  */
+VOID msc_process_thread_entry(ULONG thread_input)
+{
+  ULONG storage_media_flag = 0;
+  printf("Starting MSC thread...\r\n");
+  while(1)
+  {
+    /* Wait until the requested flag STORAGE_MEDIA is received */
+    if (tx_event_flags_get(&ux_app_EventFlag, STORAGE_MEDIA, TX_OR_CLEAR,
+                           &storage_media_flag, TX_WAIT_FOREVER) != TX_SUCCESS)
+    {
 
+        printf("ERROR in tx_event_flags_get().\r\n");
+    }
+    else
+    {
+        printf("TICK: tx_event_flags_get().\r\n");
+      tx_thread_sleep(MS_TO_TICK(10));
+    }
+  }
+}
 /* USER CODE END 1 */

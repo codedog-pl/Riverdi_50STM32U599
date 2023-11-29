@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    dcache.h
+  * @file    memorymap.h
   * @brief   This file contains all the function prototypes for
-  *          the dcache.c file
+  *          the memorymap.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __DCACHE_H__
-#define __DCACHE_H__
+#ifndef __MEMORYMAP_H__
+#define __MEMORYMAP_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,16 +32,9 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern DCACHE_HandleTypeDef hdcache1;
-
-extern DCACHE_HandleTypeDef hdcache2;
-
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-
-void MX_DCACHE1_Init(void);
-void MX_DCACHE2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -51,5 +44,5 @@ void MX_DCACHE2_Init(void);
 }
 #endif
 
-#endif /* __DCACHE_H__ */
+#endif /* __MEMORYMAP_H__ */
 

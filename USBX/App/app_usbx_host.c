@@ -24,6 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "ux_host_stack.h"
+#include "usb_otg.h"
+#include "ux_hcd_stm32.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -46,6 +48,14 @@
 static TX_THREAD ux_host_app_thread;
 /* USER CODE BEGIN PV */
 
+#define MSC_INSTANCE     3
+
+FX_MEDIA                    *media[MSC_INSTANCE];
+TX_THREAD                   msc_app_thread;
+UX_HOST_CLASS_STORAGE_MEDIA *storage_media;
+TX_EVENT_FLAGS_GROUP        ux_app_EventFlag;
+UINT                        msc_index;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,6 +63,42 @@ static VOID app_ux_host_thread_entry(ULONG thread_input);
 static UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *current_instance);
 static VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_code);
 /* USER CODE BEGIN PFP */
+
+/**
+  * @brief  USBX_APP_Host_Init
+  *         Initialization of USB host.
+  * @param  none
+  * @retval none
+  */
+VOID USBX_APP_Host_Init(VOID)
+{
+  /* USER CODE BEGIN USB_Host_Init_PreTreatment_0 */
+
+  /* USER CODE END USB_Host_Init_PreTreatment_0 */
+
+  /* Initialize the LL driver */
+  MX_USB_OTG_HS_HCD_Init();
+
+  /* Initialize the host controller driver */
+  ux_host_stack_hcd_register(_ux_system_host_hcd_stm32_name,
+                             _ux_hcd_stm32_initialize, (ULONG)USB_OTG_HS,
+                             (ULONG)&hhcd_USB_OTG_HS);
+
+  /* Enable USB Global Interrupt*/
+  HAL_HCD_Start(&hhcd_USB_OTG_HS);
+
+  /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
+
+  /* Start Application Message */
+  printf("**** USB OTG HS HUB HID MSC Host ****\n");
+  printf("USB Host library started.\n");
+
+  /* Wait for Device to be attached */
+  printf("Starting HUB Application\n");
+  printf("Connect your HUB Device\n");
+
+  /* USER CODE END USB_Host_Init_PostTreatment1 */
+}
 
 /* USER CODE END PFP */
 
@@ -129,6 +175,28 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   }
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
+
+  /* Create the storage applicative process thread */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                         ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
+    {
+      return TX_POOL_ERROR;
+    }
+
+
+  if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
+                         0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 30, 30, 0,
+                         TX_AUTO_START) != TX_SUCCESS)
+    {
+      return TX_THREAD_ERROR;
+    }
+
+    /* Create the event flags group */
+    if (tx_event_flags_create(&ux_app_EventFlag, "Event Flag") != TX_SUCCESS)
+    {
+      return TX_GROUP_ERROR;
+    }
+
   printf("USB host app thread created.\r\n");
   /* USER CODE END MX_USBX_Host_Init1 */
 
@@ -143,9 +211,10 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
-  TX_PARAMETER_NOT_USED(thread_input);
+//  TX_PARAMETER_NOT_USED(thread_input);
   printf("USB host thread started.\r\n");
-  while (1) tx_thread_sleep(1000);
+  USBX_APP_Host_Init();
+//  while (1) tx_thread_sleep(1000);
   /* USER CODE END app_ux_host_thread_entry */
 }
 

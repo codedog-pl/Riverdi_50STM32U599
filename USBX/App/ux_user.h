@@ -137,7 +137,7 @@
    class, then the UX_MAX_CLASSES value can be set to 3 regardless of the number of devices
    that belong to these classes.  */
 
-/* #define UX_MAX_CLASS_DRIVER    2 */
+#define UX_MAX_CLASS_DRIVER       7
 
 /* Defined, this value is the maximum number of classes in the device stack that can be loaded by
    USBX.  */
@@ -154,14 +154,14 @@
    If for instance there are two instances of OHCI running, or one EHCI and one OHCI controller
    running, the UX_MAX_HCD should be set to 2.  */
 
-#define UX_MAX_HCD          2
+/* #define UX_MAX_HCD       1 */
 
 /* Defined, this value represents the maximum number of devices that can be attached to the USB.
    Normally, the theoretical maximum number on a single USB is 127 devices. This value can be
    scaled down to conserve memory. Note that this value represents the total number of devices
    regardless of the number of USB buses in the system.  */
 
-#define UX_MAX_DEVICES       2
+#define UX_MAX_DEVICES       5
 
 /* Defined, this value represents the current number of SCSI logical units represented in the device
    storage class driver.  */
@@ -413,7 +413,7 @@
 */
 #ifndef UX_HOST_SIDE_ONLY
 #ifndef UX_DEVICE_SIDE_ONLY
-#define UX_OTG_SUPPORT
+/* #define UX_OTG_SUPPORT */
 #endif
 #endif
 

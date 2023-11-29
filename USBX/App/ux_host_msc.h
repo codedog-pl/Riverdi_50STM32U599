@@ -52,11 +52,12 @@ extern "C" {
 /* Exported functions prototypes ---------------------------------------------*/
 
 /* USER CODE BEGIN EFP */
-
+VOID msc_process_thread_entry(ULONG thread_input);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define STORAGE_MEDIA 0x01
 
 /* USER CODE END PD */
 

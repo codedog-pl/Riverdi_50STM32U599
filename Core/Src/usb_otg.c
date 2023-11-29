@@ -41,7 +41,7 @@ void MX_USB_OTG_HS_HCD_Init(void)
   hhcd_USB_OTG_HS.Instance = USB_OTG_HS;
   hhcd_USB_OTG_HS.Init.Host_channels = 16;
   hhcd_USB_OTG_HS.Init.speed = HCD_SPEED_HIGH;
-  hhcd_USB_OTG_HS.Init.dma_enable = ENABLE;
+  hhcd_USB_OTG_HS.Init.dma_enable = DISABLE;
   hhcd_USB_OTG_HS.Init.phy_itface = USB_OTG_HS_EMBEDDED_PHY;
   hhcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
   hhcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
@@ -106,7 +106,7 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
       HAL_SYSCFG_EnableOTGPHY(SYSCFG_OTG_HS_PHY_ENABLE);
 
     /* USB_OTG_HS interrupt Init */
-    HAL_NVIC_SetPriority(OTG_HS_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(OTG_HS_IRQn, 6, 0);
     HAL_NVIC_EnableIRQ(OTG_HS_IRQn);
   /* USER CODE BEGIN USB_OTG_HS_MspInit 1 */
 

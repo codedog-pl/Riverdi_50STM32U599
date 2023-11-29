@@ -24,7 +24,6 @@
 #include "cordic.h"
 #include "crc.h"
 #include "dac.h"
-#include "dcache.h"
 #include "dma2d.h"
 #include "fdcan.h"
 #include "gpdma.h"
@@ -33,6 +32,7 @@
 #include "i2c.h"
 #include "icache.h"
 #include "ltdc.h"
+#include "memorymap.h"
 #include "octospi.h"
 #include "rng.h"
 #include "rtc.h"
@@ -40,7 +40,6 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "usb_otg.h"
 #include "gpio.h"
 #include "app_touchgfx.h"
 
@@ -119,8 +118,6 @@ int main(void)
   MX_GPDMA1_Init();
   MX_ADF1_Init();
   MX_CRC_Init();
-  MX_DCACHE1_Init();
-  MX_DCACHE2_Init();
   MX_DMA2D_Init();
   MX_FDCAN1_Init();
   MX_GPU2D_Init();
@@ -132,7 +129,6 @@ int main(void)
   MX_RNG_Init();
   MX_RTC_Init();
   MX_SDMMC1_SD_Init();
-  MX_USB_OTG_HS_HCD_Init();
   MX_ADC2_Init();
   MX_CORDIC_Init();
   MX_DAC1_Init();
