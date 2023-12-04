@@ -23,6 +23,7 @@
 #include <TouchGFXHAL.hpp>
 
 /* USER CODE BEGIN TouchGFXHAL.cpp */
+#include "main.h"
 
 using namespace touchgfx;
 
@@ -37,6 +38,7 @@ void TouchGFXHAL::initialize()
     TouchGFXGeneratedHAL::initialize();
     if (frameBuffer0 && !frameBuffer2) setAnimationStorage(frameBuffer0);
     setFrameRateCompensation(true);
+    HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
 }
 
 /**

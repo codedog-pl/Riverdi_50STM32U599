@@ -113,7 +113,7 @@ int main(void)
   SystemPower_Config();
 
   /* USER CODE BEGIN SysInit */
-  log_msg(3, "Initializing system peripherals...");
+  log_msg(3, "Initializing HAL...");
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -155,11 +155,7 @@ int main(void)
       /* PWM Generation Error */
       Error_Handler();
     }
-
-  /*Configure GPIO pin Output Level */
-
-  HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
-  log_msg(3, "Starting Azure RTOS...");
+  log_msg(3, "Starting RTOS...");
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();

@@ -54,6 +54,12 @@ public:
         return m_instance;
     }
 
+    /// @returns true if the output is currently available.
+    bool isAvailable(void) override
+    {
+        return isITMAvailable();
+    }
+
     /// @brief Switches to asynchronous operation as soon as the RTOS is started.
     void startAsync(void) override
     {

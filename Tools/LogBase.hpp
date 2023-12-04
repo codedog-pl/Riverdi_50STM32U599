@@ -41,6 +41,7 @@ public:
      */
     template<class ...va> static void printf(const char* format, va ...args)
     {
+        if (m_output && !m_output->isAvailable()) return;
         auto [message, offset] = getMessage(); if (!message) return;
         message->printf(format, args...);
         if (m_output && !offset) m_output->send(offset);
@@ -54,6 +55,7 @@ public:
      */
     template<class ...va> static void tsprintf(const char* format, va ...args)
     {
+        if (m_output && !m_output->isAvailable()) return;
         auto [message, offset] = getMessage(); if (!message) return;
         message->addTimestamp()->add(' ')->printf(format, args...);
         if (m_output && !offset) m_output->send(offset);
@@ -67,6 +69,7 @@ public:
      */
     template<class ...va> static void dump(const char* format, va ...args)
     {
+        if (m_output && !m_output->isAvailable()) return;
         if (m_level < LogMessage::detail) return;
         auto [message, offset] = getMessage(LogMessage::detail); if (!message) return;
         if (m_dumpIndentation) message->add(' ', m_dumpIndentation);
@@ -82,6 +85,7 @@ public:
      */
     template<class ...va> static void msg(const char* format, va ...args)
     {
+        if (m_output && !m_output->isAvailable()) return;
         auto [message, offset] = getMessage(); if (!message) return;
         message->addTimestamp()->add(' ')->printf(format, args...)->add("\r\n");
         if (m_output && !offset) m_output->send(offset);
@@ -96,6 +100,7 @@ public:
      */
     template<class ...va> static void msg(LogMessage::Severity severity, const char* format, va ...args)
     {
+        if (m_output && !m_output->isAvailable()) return;
         auto [message, offset] = getMessage(severity); if (!message) return;
         message->addTimestamp()->add(' ');
         switch (severity)

@@ -7,6 +7,9 @@ class IDebugOutput
 
 public:
 
+    /// @returns true if the output is currently available.
+    virtual bool isAvailable(void) { return true; }
+
     /// @brief Starts asynchronous operation as soon as the RTOS is started.
     /// @remarks If not defined in derived class, it does nothing.
     virtual void startAsync(void) { }
