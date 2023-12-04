@@ -139,8 +139,8 @@ void DateTime2RTC(DateTimeTypeDef* dt, RTC_DateTypeDef* rd, RTC_TimeTypeDef* rt)
 HAL_StatusTypeDef RTC_GetDateTime(DateTimeTypeDef* dt)
 {
     if (!hrtc.Instance) return HAL_ERROR;
-    RTC_DateTypeDef rd;
-    RTC_TimeTypeDef rt;
+    RTC_DateTypeDef rd = { };
+    RTC_TimeTypeDef rt = { };
     HAL_StatusTypeDef status;
     status = HAL_RTC_GetTime(&hrtc, &rt, RTC_FORMAT_BIN);
     if (status != HAL_OK) return status;

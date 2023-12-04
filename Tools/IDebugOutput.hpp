@@ -7,6 +7,10 @@ class IDebugOutput
 
 public:
 
+    /// @brief Starts asynchronous operation as soon as the RTOS is started.
+    /// @remarks If not defined in derived class, it does nothing.
+    virtual void startAsync(void) { }
+
     /// @brief Sends a message to the output.
     /// @param index Message index.
     virtual void send(int index) = 0;

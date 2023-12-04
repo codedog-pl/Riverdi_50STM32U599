@@ -7,6 +7,7 @@
  */
 
 #include "HMI.hpp"
+#include "Log.hpp"
 #include "tx_api.h"
 #include "main.h"
 #include "GPIO_test.hpp"
@@ -15,7 +16,7 @@
 
 void HMI::start()
 {
-    std::cout << "HMI application started." << std::endl;
+    Log::msg("HMI application started.");
     // while (!(HMI_SysInit & HMI_FILEX)) tx_thread_sleep(100);
     // GPIO_test::listPins();
     // GPIO_test::testInputs();

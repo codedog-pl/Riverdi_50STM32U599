@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "hal_target.h"
 #include HAL_HEADER
 #include "stdbool.h"
 #include "stdint.h"
@@ -25,3 +26,7 @@ void log_init(UART_HandleTypeDef* huart);
 /// @param format Format string.
 /// @param ... arguments passed with the format string.
 void log_msg(uint8_t severity, const char* format, ...);
+
+/// @brief Starts asynchronous operation as soon as the RTOS is started.
+/// @remarks If not defined in the current output, it does nothing.
+void log_start_async(void);

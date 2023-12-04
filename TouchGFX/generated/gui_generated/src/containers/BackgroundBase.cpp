@@ -9,7 +9,7 @@ BackgroundBase::BackgroundBase()
     setWidth(800);
     setHeight(480);
     backgroundImg.setXY(0, 0);
-    backgroundImg.setBitmap(touchgfx::Bitmap(BITMAP_LIGHT_THEME_IMAGES_BACKGROUNDS_800X480_SHATTERED_RAIN_ID));
+    backgroundImg.setBitmap(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_BACKGROUNDS_800X480_HIVE_ID));
     add(backgroundImg);
 }
 

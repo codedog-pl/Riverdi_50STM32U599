@@ -12,7 +12,7 @@ class LogMessagePool final : public ILogMessagePool
 
 public:
 
-    LogMessagePool() : m_messages(), m_lastIndex(-1) { }
+    LogMessagePool() : m_messages() { }
 
     /// @returns The message pool capacity.
     size_t size() override { return TSize; }
@@ -29,18 +29,6 @@ public:
         return { new(&m_messages[m_lastIndex = offset]) LogMessage(severity), offset };
     }
 
-    /// @brief Resets the pool with setting the last index to -1, to start adding new messages to the beginning of the pool.
-    inline void clear() override
-    {
-        m_lastIndex = -1;
-    }
-
-    /// @returns The index of the last message taken from the pool.
-    inline int lastIndex() override
-    {
-        return m_lastIndex;
-    }
-
     /// @returns The element pointer at index, or nullptr on index out of bounds.
     inline const LogMessage* operator[](size_t index) const override { return index < TSize ? &m_messages[index] : nullptr; }
 
@@ -50,6 +38,6 @@ public:
 private:
 
     LogMessage m_messages[TSize];   // Messages array.
-    int m_lastIndex;                // Last index used, -1 if no message was taken.
+
 
 };

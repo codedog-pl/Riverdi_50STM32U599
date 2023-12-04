@@ -31,7 +31,7 @@ extern "C" {
 #include "ux_host_msc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "c_log.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -42,7 +42,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 #define USBX_HOST_MEMORY_STACK_SIZE     110*1024
 
-#define UX_HOST_APP_THREAD_STACK_SIZE   1024
+#define UX_HOST_APP_THREAD_STACK_SIZE   2048
 #define UX_HOST_APP_THREAD_PRIO         10
 
 /* USER CODE BEGIN EC */
@@ -51,7 +51,9 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+#define USBH_UsrLog(...)   log_msg(3, __VA_ARGS__);
 
+#define USBH_ErrLog(...)   log_msg(0, __VA_ARGS__);
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

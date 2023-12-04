@@ -5,6 +5,7 @@
 #if defined(USE_FREE_RTOS)
 #include "cmsis_os.h"
 #elif defined(USE_AZURE_RTOS)
+#include "app_threadx.h"
 #include "tx_api.h"
 #include "OSResourcePool.hpp"
 #endif
@@ -42,30 +43,17 @@ public:
     static constexpr ThreadPriority threadPriorityLowest = osPriorityIdle;
     static constexpr uint32_t threadDefaultStackSize = 1024;
 
-    /// @brief Creates a new RTOS thread.
-    /// @param name Thread name.
-    /// @param thread Entry point.
-    /// @param priority Thread priority.
-    /// @return Thread identifier or nullptr in case of an error.
-    inline static ThreadId threadStart(const char* name, ThreadEntry entry, ThreadPriority priority = threadPriorityNormal)
+    /// @brief Yields the current thread allowing the other threads to proceed.
+    inline static void yield(void)
     {
-#if osCMSIS < 0x20000U
-        const osThreadDef_t threadDef = {
-            (char*)name,
-            entry,
-            priority,
-            1, // Instances.
-            threadDefaultStackSize >> 2
-        };
-        return osThreadCreate(&threadDef, nullptr);
-#else
-        const osThreadAttr_t attr = {
-            .name = name,
-            .stack_size = threadDefaultStackSize,
-            .priority = priority
-        };
-        return osThreadNew(entry, nullptr, &attr);
-#endif
+        osYield();
+    }
+
+    /// @brief Puts the current thread to sleep for a specified number of ticks.
+    /// @param ticks The number of OS ticks to wait.
+    inline static void delay(uint32_t ticks)
+    {
+        osDelay(ticks);
     }
 
     /// @brief Creates a new RTOS mutex.
@@ -110,6 +98,32 @@ public:
         return osMutexDelete(id);
     }
 
+    /// @brief Creates a new RTOS thread.
+    /// @param name Thread name.
+    /// @param thread Entry point.
+    /// @param priority Thread priority.
+    /// @return Thread identifier or nullptr in case of an error.
+    inline static ThreadId threadStart(const char* name, ThreadEntry entry, ThreadPriority priority = threadPriorityNormal)
+    {
+#if osCMSIS < 0x20000U
+        const osThreadDef_t threadDef = {
+            (char*)name,
+            entry,
+            priority,
+            1, // Instances.
+            threadDefaultStackSize >> 2
+        };
+        return osThreadCreate(&threadDef, nullptr);
+#else
+        const osThreadAttr_t attr = {
+            .name = name,
+            .stack_size = threadDefaultStackSize,
+            .priority = priority
+        };
+        return osThreadNew(entry, nullptr, &attr);
+#endif
+    }
+
 #elif defined(USE_AZURE_RTOS)
 
 public:
@@ -127,7 +141,20 @@ public:
     static constexpr ThreadPriority threadPriorityHighest = 0;
     static constexpr ThreadPriority threadPriorityLowest = TX_MAX_PRIORITIES - 1;
 
-    static constexpr uint32_t threadDefaultStackSize = 1024;
+    static constexpr uint32_t threadDefaultStackSize = TX_APP_STACK_SIZE;
+
+    /// @brief Yields the current thread allowing the other threads to proceed.
+    inline static void yield(void)
+    {
+        tx_thread_relinquish();
+    }
+
+    /// @brief Puts the current thread to sleep for a specified number of ticks.
+    /// @param ticks The number of OS ticks to wait.
+    inline static void delay(uint32_t ticks)
+    {
+        tx_thread_sleep(ticks);
+    }
 
     /// @brief Creates a new RTOS mutex.
     /// @return Mutex identifier of zero in case of an error.
@@ -154,7 +181,7 @@ public:
         MutexData* instance = m_mutexPool.getInstance(id);
         if (!instance) return TX_POOL_ERROR;
         uint32_t ticks = (timeout * TX_TIMER_TICKS_PER_SECOND) / 1000;
-        return tx_mutex_get(&instance->controlBlock, timeout);
+        return tx_mutex_get(&instance->controlBlock, ticks);
     }
 
     /// @brief Releases the RTOS mutex.

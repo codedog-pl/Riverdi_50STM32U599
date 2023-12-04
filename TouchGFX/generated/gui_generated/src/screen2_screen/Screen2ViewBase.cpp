@@ -4,10 +4,9 @@
 #include <gui_generated/screen2_screen/Screen2ViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
-#include <images/BitmapDatabase.hpp>
 
 Screen2ViewBase::Screen2ViewBase() :
-    buttonCallback(this, &Screen2ViewBase::buttonCallbackHandler)
+    backBtnClickCallback(this, &Screen2ViewBase::backBtnClickCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -16,23 +15,18 @@ Screen2ViewBase::Screen2ViewBase() :
     background.setXY(0, 0);
     add(background);
 
-    headerTxt.setXY(10, 8);
-    headerTxt.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    headerTxt.setLinespacing(0);
-    headerTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_JC0Q));
-    add(headerTxt);
-
-    screenIdTxt.setXY(299, 220);
-    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    screenIdTxt.setXY(299, 214);
+    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 170, 0));
     screenIdTxt.setLinespacing(0);
     screenIdTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_MLC1));
     add(screenIdTxt);
 
-    prevScreenBtn.setXY(10, 215);
-    prevScreenBtn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_HARDWARE_KEYBOARD_ARROW_LEFT_50_50_E8F6FB_SVG_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_DONE_50_50_E8F6FB_SVG_ID));
-    prevScreenBtn.setIconXY(97, 0);
-    prevScreenBtn.setAction(buttonCallback);
-    add(prevScreenBtn);
+    backBtn.setXY(0, 386);
+    backBtn.setClickCallback(backBtnClickCallback);
+    add(backBtn);
+
+    header.setXY(15, 15);
+    add(header);
 }
 
 Screen2ViewBase::~Screen2ViewBase()
@@ -43,15 +37,14 @@ Screen2ViewBase::~Screen2ViewBase()
 void Screen2ViewBase::setupScreen()
 {
     background.initialize();
+    backBtn.initialize();
+    header.initialize();
 }
 
-void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
+void Screen2ViewBase::backBtnClickCallbackHandler()
 {
-    if (&src == &prevScreenBtn)
-    {
-        //Interaction1
-        //When prevScreenBtn clicked change screen to Screen1
-        //Go to Screen1 with no screen transition
-        application().gotoScreen1ScreenNoTransition();
-    }
+    //Interaction1
+    //When backBtn Click change screen to Screen1
+    //Go to Screen1 with no screen transition
+    application().gotoScreen1ScreenNoTransition();
 }

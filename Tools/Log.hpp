@@ -1,6 +1,9 @@
 #pragma once
 
 #include "LogBase.hpp"
+#ifdef ITM_HEADER
+#include "DebugITM.hpp"
+#endif
 #include "DebugUART.hpp"
 
 /// @brief System-wide UART log implementation.
@@ -11,16 +14,26 @@ public:
 
     /// @brief Initializes the default log level.
     /// @param isRelase 1: RELEASE build, fewer messages. 0: DEBUG build, more messages.
-    static inline void init(bool isRelase)
+    static inline void init(bool isRelase = false)
     {
         level(isRelase ? LogMessage::info : LogMessage::detail);
+#ifdef ITM_HEADER
+        m_output = DebugITM::getInstance(m_pool);
+#endif
     }
 
     /// @brief Initializes the logger with the UART output.
     /// @param huart UART handle pointer.
-    static inline void init(UART_HandleTypeDef* huart)
+    static inline void initUART(UART_HandleTypeDef* huart)
     {
         m_output = DebugUART::getInstance(huart, m_pool);
+    }
+
+    /// @brief Starts asynchronous operation as soon as the RTOS is started.
+    /// @remarks If not defined in the current output, it does nothing.
+    static inline void startAsync(void)
+    {
+        if (m_output) m_output->startAsync();
     }
 
 };

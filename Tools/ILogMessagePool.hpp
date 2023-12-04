@@ -10,6 +10,8 @@ class ILogMessagePool
 
 public:
 
+    ILogMessagePool() : m_lastIndex(-1), m_lastSent(0) { }
+
     /// @returns The message pool capacity.
     virtual size_t size() = 0;
 
@@ -21,15 +23,46 @@ public:
     virtual std::tuple<LogMessage*, int> get(LogMessage::Severity severity = LogMessage::debug) = 0;
 
     /// @brief Resets the pool with setting the last index to -1, to start adding new messages to the beginning of the pool.
-    virtual void clear() = 0;
+    void clear()
+    {
+        m_lastIndex = -1;
+        m_lastSent = -1;
+    }
 
     /// @returns The index of the last message taken from the pool.
-    virtual int lastIndex() = 0;
+    int lastIndex()
+    {
+        return m_lastIndex;
+    }
+
+    /// @returns The last message sent pointer.
+    LogMessage* lastSent()
+    {
+        return m_lastSent < 0 ? nullptr : (*this)[m_lastSent];
+    }
+
+    /// @returns The index of the last message that was sent from the pool.
+    int lastSentIndex()
+    {
+        return m_lastSent;
+    }
+
+    /// @brief Sets the last sent message index.
+    /// @returns The new index of the last message that was sent from the pool.
+    int lastSentIndex(int newIndex)
+    {
+        m_lastSent = newIndex;
+        return m_lastSent;
+    }
 
     /// @returns The element pointer at index, or nullptr on index out of bounds.
     virtual const LogMessage* operator[](size_t index) const = 0;
 
     /// @returns The element pointer at index, or nullptr on index out of bounds.
     virtual LogMessage* operator[](size_t index) = 0;
+
+protected:
+    int m_lastIndex;                // Last index used, -1 if no message was taken.
+    int m_lastSent;                 // Last sent message index.
 
 };

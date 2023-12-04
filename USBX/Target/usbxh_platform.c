@@ -33,12 +33,12 @@ void USBH_DriverVBUS(uint8_t state)
   if(state == 0)
   {
     /* Drive low Charge pump */
-    data = GPIO_PIN_RESET;
+    data = GPIO_PIN_SET;
   }
   else
   {
     /* Drive high Charge pump */
-    data = GPIO_PIN_SET;
+    data = GPIO_PIN_RESET;
   }
   /* USER CODE END PREPARE_GPIO_DATA_VBUS_HS */
   HAL_GPIO_WritePin(GPIOG,GPIO_PIN_8,(GPIO_PinState)data);

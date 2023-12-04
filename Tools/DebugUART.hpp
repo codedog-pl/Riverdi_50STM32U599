@@ -4,12 +4,16 @@
 #include "IDebugOutput.hpp"
 #include "ILogMessagePool.hpp"
 
+/// @brief UART port debugger output.
 class DebugUART final : public IDebugOutput
 {
 
-public:
+private:
 
-    DebugUART(UART_HandleTypeDef* huart, ILogMessagePool& pool) : m_uart(huart), m_pool(pool), m_lastSent(0)
+    /// @brief Creates UART port debugger output.
+    /// @param huart UART handle pointer.
+    /// @param pool Message pool reference.
+    DebugUART(UART_HandleTypeDef* huart, ILogMessagePool& pool) : m_uart(huart), m_pool(pool)
     {
         HAL_UART_RegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID, tx_complete);
         sendNext();
@@ -21,10 +25,11 @@ public:
     ~DebugUART()
     {
         m_pool.clear();
-        m_lastSent = -1;
         HAL_UART_UnRegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID);
         m_uart = nullptr;
     }
+
+public:
 
     static DebugUART* getInstance(UART_HandleTypeDef* huart, ILogMessagePool& pool)
     {
@@ -42,7 +47,7 @@ public:
         static bool isSending = false;
         if (isSending || index > m_pool.lastIndex()) return;
         isSending = true;
-        m_lastSent = m_pool.lastIndex();
+        m_pool.lastSentIndex(m_pool.lastIndex());
         LogMessage* message = m_pool[index];
         auto [buffer, length] = message->buffer();
         if (!length) return;
@@ -55,8 +60,8 @@ private:
     /// @brief Sends the next message from the pool if available.
     void sendNext()
     {
-        if (m_lastSent < m_pool.lastIndex()) send(++m_lastSent);
-        else { m_pool.clear(); m_lastSent = 0; }
+        if (m_pool.lastSentIndex() < m_pool.lastIndex()) send(m_pool.lastSentIndex(m_pool.lastSentIndex() + 1));
+        else m_pool.clear();
     }
 
     /// @brief Called when the UART completes sending the message.
@@ -64,7 +69,7 @@ private:
     static void tx_complete(UART_HandleTypeDef* huart)
     {
         if (!m_instance) return;
-        auto message = m_instance->m_pool[(size_t)m_instance->m_lastSent];
+        auto message = m_instance->m_pool.lastSent();
         if (!message->buffer().second) return;
         message->clear();
         m_instance->sendNext();
@@ -74,7 +79,6 @@ private:
 
     UART_HandleTypeDef* m_uart;                 // Configured UART handle pointer.
     ILogMessagePool& m_pool;                    // Log message pool reference.
-    int m_lastSent;                             // Last sent message index.
     static inline DebugUART* m_instance = {};   // Singleton instance pointer for static methods.
 
 };

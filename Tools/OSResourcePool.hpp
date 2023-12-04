@@ -35,7 +35,7 @@
             for (unsigned int i = 0; i < size; i++)
             {
                 result = &m_pool[i];
-                if (result->id)
+                if (!result->id)
                 {
                     result->id = i + 1;
                     return result;

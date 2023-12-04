@@ -92,7 +92,7 @@
 
 /* Defined, enables 64-bits sector addresses used in I/O driver.  */
 
-/* #define FX_DRIVER_USE_64BIT_LBA */
+#define FX_DRIVER_USE_64BIT_LBA
 
 /* Defined, FileX is able to access exFAT file system.
 

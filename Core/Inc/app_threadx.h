@@ -45,7 +45,7 @@
 /* USER CODE END EC */
 
 /* Private defines -----------------------------------------------------------*/
-#define TX_APP_STACK_SIZE                                          1024
+#define TX_APP_STACK_SIZE                                          2048
 #define TX_APP_THREAD_PRIO                                         5
 
 /* USER CODE BEGIN PD */

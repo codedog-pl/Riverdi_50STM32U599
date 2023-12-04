@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
+#include "c_log.h"
 #include "HMI_C.h"
 #include "ux_api.h"
 #include "ux_host_class_storage.h"
@@ -37,7 +37,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* Main thread stack size */
-#define FX_APP_THREAD_STACK_SIZE         1024
+#define FX_APP_THREAD_STACK_SIZE         4096
 /* Main thread priority */
 #define FX_APP_THREAD_PRIO               10
 /* USER CODE BEGIN PD */
@@ -76,7 +76,7 @@ void fx_app_thread_entry(ULONG thread_input);
   bool fx_mount_sd_card()
   {
     UINT sd_status = FX_SUCCESS;
-    printf("Mounting SD...\r\n");
+    log_msg(3, "Mounting SD...");
     sd_status =  fx_media_open(
       &sdio_disk,                 // Media control block pointer.
       FX_SD_VOLUME_NAME,          // Pointer to media name string.
@@ -85,10 +85,10 @@ void fx_app_thread_entry(ULONG thread_input);
       (void*)fx_sd_media_memory,  // Pointer to memory used by the FileX for this media.
       sizeof(fx_sd_media_memory)  // Size of media memory - must be at least 512 bytes and one sector size.
     );
-    if (sd_status == FX_SUCCESS) printf("SD card mounted successfully.\r\n");
+    if (sd_status == FX_SUCCESS) log_msg(3, "SD card mounted successfully.");
     else
     {
-      printf("SD ERROR %i.\r\n", sd_status);
+      log_msg(0, "SD ERROR %i.", sd_status);
       return false;
     }
     return true;
@@ -100,8 +100,8 @@ void fx_app_thread_entry(ULONG thread_input);
    */
   bool fx_mount_usb_disk()
   {
-      UINT sd_status = FX_SUCCESS;
-    printf("Mounting USB...\r\n");
+    UINT sd_status = FX_SUCCESS;
+    log_msg(3, "Mounting USB...");
     sd_status = ux_media_open(
       &usbx_disk,                           // Media control block pointer.
       "USB DISK",                           // Pointer to media name string.
@@ -110,10 +110,10 @@ void fx_app_thread_entry(ULONG thread_input);
       (void*)fx_ux_media_memory,            // Pointer to memory used by the FileX for this media.
       sizeof(fx_ux_media_memory)            // Size of media memory - must be at least 512 bytes and one sector size.
     );
-    if (sd_status == FX_SUCCESS) printf("USB disk mounted successfully.\r\n");
+    if (sd_status == FX_SUCCESS) log_msg(3, "USB disk mounted successfully.");
     else
     {
-      printf("USB ERROR %i.\r\n", sd_status);
+      log_msg(0, "USB ERROR %i.", sd_status);
       return false;
     }
     return true;

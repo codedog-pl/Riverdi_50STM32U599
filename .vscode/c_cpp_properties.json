@@ -51,10 +51,10 @@
                 "${workspaceFolder}/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"
             ],
             "defines": [
-                "STM32U599xx",
-
+                "STM32U5A9xx",
+                "ITM_HEADER=\"core_cm33.h\"",
                 "USE_HAL_DRIVER",
-                "MCU_PREFIX=stm32u599",
+                "MCU_PREFIX=stm32u5a9",
                 "HAL_PREFIX=stm32u5xx_hal",
                 "BSP_USE_CMSIS_OS",
                 "USE_AZURE_RTOS",

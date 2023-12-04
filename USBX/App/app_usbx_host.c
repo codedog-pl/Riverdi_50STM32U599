@@ -26,7 +26,7 @@
 #include "ux_host_stack.h"
 #include "usb_otg.h"
 #include "ux_hcd_stm32.h"
-#include <stdio.h>
+#include "c_log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,7 +78,6 @@ VOID USBX_APP_Host_Init(VOID)
 
   /* Initialize the LL driver */
   MX_USB_OTG_HS_HCD_Init();
-
   /* Initialize the host controller driver */
   ux_host_stack_hcd_register(_ux_system_host_hcd_stm32_name,
                              _ux_hcd_stm32_initialize, (ULONG)USB_OTG_HS,
@@ -90,12 +89,12 @@ VOID USBX_APP_Host_Init(VOID)
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
   /* Start Application Message */
-  printf("**** USB OTG HS HUB HID MSC Host ****\n");
-  printf("USB Host library started.\n");
+  USBH_UsrLog("**** USB OTG HS HUB HID MSC Host ****");
+  USBH_UsrLog("USB Host library started.");
 
   /* Wait for Device to be attached */
-  printf("Starting HUB Application\n");
-  printf("Connect your HUB Device\n");
+  USBH_UsrLog("Starting HUB Application...");
+  USBH_UsrLog("Connect your HUB Device");
 
   /* USER CODE END USB_Host_Init_PostTreatment1 */
 }
@@ -114,7 +113,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
 
   /* USER CODE BEGIN MX_USBX_Host_Init0 */
-  printf("Initializing USB host...\r\n");
+  USBH_UsrLog("Initializing USB host...");
   /* USER CODE END MX_USBX_Host_Init0 */
 
   /* Allocate the stack for USBX Memory */
@@ -176,28 +175,28 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
 
-  /* Create the storage applicative process thread */
+  /* Allocate the stack for storrage app thread  */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                         ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
-    {
-      return TX_POOL_ERROR;
-    }
+                       ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }
 
-
+  /* Create the storage applicative process thread */
   if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-                         0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 30, 30, 0,
-                         TX_AUTO_START) != TX_SUCCESS)
-    {
-      return TX_THREAD_ERROR;
-    }
+                       0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 30, 30, 0,
+                       TX_AUTO_START) != TX_SUCCESS)
+  {
+    return TX_THREAD_ERROR;
+  }
 
-    /* Create the event flags group */
-    if (tx_event_flags_create(&ux_app_EventFlag, "Event Flag") != TX_SUCCESS)
-    {
-      return TX_GROUP_ERROR;
-    }
+  /* Create the event flags group */
+  if (tx_event_flags_create(&ux_app_EventFlag, "Event Flag") != TX_SUCCESS)
+  {
+    return TX_GROUP_ERROR;
+  }
 
-  printf("USB host app thread created.\r\n");
+  USBH_UsrLog("USB host app thread created.");
   /* USER CODE END MX_USBX_Host_Init1 */
 
   return ret;
@@ -212,7 +211,7 @@ static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
 //  TX_PARAMETER_NOT_USED(thread_input);
-  printf("USB host thread started.\r\n");
+  USBH_UsrLog("USB host thread started.");
   USBX_APP_Host_Init();
 //  while (1) tx_thread_sleep(1000);
   /* USER CODE END app_ux_host_thread_entry */
@@ -233,7 +232,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
   /* USER CODE BEGIN ux_host_event_callback0 */
   UX_PARAMETER_NOT_USED(current_class);
   UX_PARAMETER_NOT_USED(current_instance);
-  printf("USB event %lu received.\r\n", event);
+  USBH_UsrLog("USB event %lu received...", event);
   /* USER CODE END ux_host_event_callback0 */
 
   switch (event)
@@ -241,7 +240,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_INSERTION:
 
       /* USER CODE BEGIN UX_DEVICE_INSERTION */
-
+      USBH_UsrLog("* Device inserted.");
       /* USER CODE END UX_DEVICE_INSERTION */
 
       break;
@@ -249,7 +248,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_REMOVAL:
 
       /* USER CODE BEGIN UX_DEVICE_REMOVAL */
-
+      USBH_UsrLog("* Device removed.");
       /* USER CODE END UX_DEVICE_REMOVAL */
 
       break;
@@ -257,7 +256,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_CONNECTION:
 
       /* USER CODE BEGIN UX_DEVICE_CONNECTION */
-
+      USBH_UsrLog("* Device connected.");
       /* USER CODE END UX_DEVICE_CONNECTION */
 
       break;
@@ -265,7 +264,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_DISCONNECTION:
 
       /* USER CODE BEGIN UX_DEVICE_DISCONNECTION */
-
+      USBH_UsrLog("* Device disconnected.");
       /* USER CODE END UX_DEVICE_DISCONNECTION */
 
       break;
@@ -273,7 +272,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     default:
 
       /* USER CODE BEGIN EVENT_DEFAULT */
-
+      USBH_UsrLog("* Unhandled event.");
       /* USER CODE END EVENT_DEFAULT */
 
       break;
@@ -306,7 +305,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     case UX_DEVICE_ENUMERATION_FAILURE:
 
       /* USER CODE BEGIN UX_DEVICE_ENUMERATION_FAILURE */
-
+      USBH_ErrLog("!! Device enumeration failure !!");
       /* USER CODE END UX_DEVICE_ENUMERATION_FAILURE */
 
       break;
@@ -314,7 +313,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     case  UX_NO_DEVICE_CONNECTED:
 
       /* USER CODE BEGIN UX_NO_DEVICE_CONNECTED */
-
+      USBH_ErrLog("!! No device connected !!");
       /* USER CODE END UX_NO_DEVICE_CONNECTED */
 
       break;
@@ -322,7 +321,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     default:
 
       /* USER CODE BEGIN ERROR_DEFAULT */
-
+      // USBH_ErrLog("!! Unknown error: %u !!", error_code);
       /* USER CODE END ERROR_DEFAULT */
 
       break;

@@ -24,6 +24,7 @@
 #include "cordic.h"
 #include "crc.h"
 #include "dac.h"
+#include "dcache.h"
 #include "dma2d.h"
 #include "fdcan.h"
 #include "gpdma.h"
@@ -45,7 +46,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
+#include "c_log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,9 +90,11 @@ bool error_occurred = false;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-  ITM->LAR = 0xC5ACCE55;
-  ITM->TER = 0x1;
+#ifdef DEBUG
+  log_level(0);
+#else
+  log_level(1);
+#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -110,7 +113,7 @@ int main(void)
   SystemPower_Config();
 
   /* USER CODE BEGIN SysInit */
-  printf("Initializing system peripherals...\r\n");
+  log_msg(3, "Initializing system peripherals...");
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -142,6 +145,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   MX_ADC1_Init();
+  MX_DCACHE1_Init();
+  MX_DCACHE2_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
@@ -154,7 +159,7 @@ int main(void)
   /*Configure GPIO pin Output Level */
 
   HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
-  printf("Starting Azure RTOS...\r\n");
+  log_msg(3, "Starting Azure RTOS...");
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();

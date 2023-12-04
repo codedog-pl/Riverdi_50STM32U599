@@ -4,12 +4,9 @@
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
-#include <images/BitmapDatabase.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
-    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler),
-    flexButtonCallback(this, &Screen1ViewBase::flexButtonCallbackHandler),
-    customContainer11Trigger1Callback(this, &Screen1ViewBase::customContainer11Trigger1CallbackHandler)
+    fwdBtnClickCallback(this, &Screen1ViewBase::fwdBtnClickCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -18,46 +15,18 @@ Screen1ViewBase::Screen1ViewBase() :
     background.setXY(0, 0);
     add(background);
 
-    headerTxt.setXY(10, 8);
-    headerTxt.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    headerTxt.setLinespacing(0);
-    headerTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_PCPT));
-    add(headerTxt);
-
-    screenIdTxt.setXY(299, 216);
-    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    screenIdTxt.setXY(299, 214);
+    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 170, 0));
     screenIdTxt.setLinespacing(0);
     screenIdTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_J1U4));
     add(screenIdTxt);
 
-    button1.setXY(510, 193);
-    button1.setBitmaps(touchgfx::Bitmap(BITMAP_CLAY_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_CLAY_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
-    button1.setAction(buttonCallback);
-    add(button1);
+    fwdBtn.setXY(510, 386);
+    fwdBtn.setClickCallback(fwdBtnClickCallback);
+    add(fwdBtn);
 
-    textArea1.setPosition(593, 228, 124, 23);
-    textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
-    textArea1.setLinespacing(0);
-    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_K3Y7));
-    add(textArea1);
-
-    flexButton1.setBoxWithBorderPosition(0, 0, 202, 50);
-    flexButton1.setBorderSize(5);
-    flexButton1.setBoxWithBorderColors(touchgfx::Color::getColorFromRGB(0, 102, 153), touchgfx::Color::getColorFromRGB(0, 153, 204), touchgfx::Color::getColorFromRGB(0, 51, 102), touchgfx::Color::getColorFromRGB(51, 102, 153));
-    flexButton1.setAlpha(0);
-    flexButton1.setAction(flexButtonCallback);
-    flexButton1.setPosition(299, 215, 202, 50);
-    add(flexButton1);
-
-    customContainer11.setXY(412, 65);
-    customContainer11.setTrigger1Callback(customContainer11Trigger1Callback);
-    add(customContainer11);
-
-    textArea2.setXY(433, 94);
-    textArea2.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
-    textArea2.setLinespacing(0);
-    textArea2.setTypedText(touchgfx::TypedText(T___SINGLEUSE_M2GE));
-    add(textArea2);
+    header.setXY(15, 15);
+    add(header);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -68,35 +37,14 @@ Screen1ViewBase::~Screen1ViewBase()
 void Screen1ViewBase::setupScreen()
 {
     background.initialize();
-    customContainer11.initialize();
+    fwdBtn.initialize();
+    header.initialize();
 }
 
-void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
+void Screen1ViewBase::fwdBtnClickCallbackHandler()
 {
-    if (&src == &button1)
-    {
-        //Interaction1
-        //When button1 clicked change screen to Screen2
-        //Go to Screen2 with no screen transition
-        application().gotoScreen2ScreenNoTransition();
-    }
-}
-
-void Screen1ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
-{
-    if (&src == &flexButton1)
-    {
-        //Interaction2
-        //When flexButton1 clicked change screen to Screen2
-        //Go to Screen2 with no screen transition
-        application().gotoScreen2ScreenNoTransition();
-    }
-}
-
-void Screen1ViewBase::customContainer11Trigger1CallbackHandler()
-{
-    //Interaction4
-    //When customContainer11 trigger1 change screen to Screen2
+    //Interaction1
+    //When fwdBtn Click change screen to Screen2
     //Go to Screen2 with no screen transition
     application().gotoScreen2ScreenNoTransition();
 }

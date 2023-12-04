@@ -10,7 +10,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/Background.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
-#include <touchgfx/widgets/ButtonWithIcon.hpp>
+#include <gui/containers/BackBtn.hpp>
+#include <gui/containers/Header.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -29,21 +30,21 @@ protected:
      */
     touchgfx::Box __background;
     Background background;
-    touchgfx::TextArea headerTxt;
     touchgfx::TextArea screenIdTxt;
-    touchgfx::ButtonWithIcon prevScreenBtn;
+    BackBtn backBtn;
+    Header header;
 
 private:
 
     /*
      * Callback Declarations
      */
-    touchgfx::Callback<Screen2ViewBase, const touchgfx::AbstractButton&> buttonCallback;
+    touchgfx::Callback<Screen2ViewBase> backBtnClickCallback;
 
     /*
      * Callback Handler Declarations
      */
-    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
+    void backBtnClickCallbackHandler();
 
 };
 

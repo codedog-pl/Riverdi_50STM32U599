@@ -67,7 +67,7 @@ extern TX_EVENT_FLAGS_GROUP ux_app_EventFlag;
 VOID msc_process_thread_entry(ULONG thread_input)
 {
   ULONG storage_media_flag = 0;
-  printf("Starting MSC thread...\r\n");
+  USBH_UsrLog("Starting MSC thread...");
   while(1)
   {
     /* Wait until the requested flag STORAGE_MEDIA is received */
@@ -75,11 +75,11 @@ VOID msc_process_thread_entry(ULONG thread_input)
                            &storage_media_flag, TX_WAIT_FOREVER) != TX_SUCCESS)
     {
 
-        printf("ERROR in tx_event_flags_get().\r\n");
+        USBH_ErrLog("ERROR in tx_event_flags_get().");
     }
     else
     {
-        printf("TICK: tx_event_flags_get().\r\n");
+        USBH_UsrLog("TICK: tx_event_flags_get().");
       tx_thread_sleep(MS_TO_TICK(10));
     }
   }

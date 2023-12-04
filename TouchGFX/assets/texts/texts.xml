@@ -6,28 +6,25 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_M2GE" Alignment="Left" TypographyId="Large">
-        <Translation Language="GB">NEXT SCREEN</Translation>
+      <Text Id="__SingleUse_DTOK" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">50STM32U599</Translation>
       </Text>
-      <Text Id="__SingleUse_K3Y7" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Next Screen</Translation>
+      <Text Id="__SingleUse_P48S" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;&lt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_4XTV" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&gt;&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_MLC1" Alignment="Left" TypographyId="Large">
         <Translation Language="GB">SCREEN 2</Translation>
       </Text>
-      <Text Id="__SingleUse_JC0Q" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">50STM32U599 TEST</Translation>
-      </Text>
       <Text Id="__SingleUse_J1U4" Alignment="Left" TypographyId="Large">
         <Translation Language="GB">SCREEN 1</Translation>
-      </Text>
-      <Text Id="__SingleUse_PCPT" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">50STM32U599 TEST</Translation>
       </Text>
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Default" Font="segoeui.ttf" Size="32" Bpp="4" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" Direction="LTR" FallbackCharacter="?" />
   </Typographies>

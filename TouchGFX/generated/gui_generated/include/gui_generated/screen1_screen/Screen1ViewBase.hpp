@@ -10,9 +10,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/Background.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
-#include <touchgfx/widgets/Button.hpp>
-#include <touchgfx/containers/buttons/Buttons.hpp>
-#include <gui/containers/CustomContainer1.hpp>
+#include <gui/containers/FwdBtn.hpp>
+#include <gui/containers/Header.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -31,29 +30,21 @@ protected:
      */
     touchgfx::Box __background;
     Background background;
-    touchgfx::TextArea headerTxt;
     touchgfx::TextArea screenIdTxt;
-    touchgfx::Button button1;
-    touchgfx::TextArea textArea1;
-    touchgfx::BoxWithBorderButtonStyle< touchgfx::ClickButtonTrigger >  flexButton1;
-    CustomContainer1 customContainer11;
-    touchgfx::TextArea textArea2;
+    FwdBtn fwdBtn;
+    Header header;
 
 private:
 
     /*
      * Callback Declarations
      */
-    touchgfx::Callback<Screen1ViewBase, const touchgfx::AbstractButton&> buttonCallback;
-    touchgfx::Callback<Screen1ViewBase, const touchgfx::AbstractButtonContainer&> flexButtonCallback;
-    touchgfx::Callback<Screen1ViewBase> customContainer11Trigger1Callback;
+    touchgfx::Callback<Screen1ViewBase> fwdBtnClickCallback;
 
     /*
      * Callback Handler Declarations
      */
-    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
-    void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
-    void customContainer11Trigger1CallbackHandler();
+    void fwdBtnClickCallbackHandler();
 
 };
 

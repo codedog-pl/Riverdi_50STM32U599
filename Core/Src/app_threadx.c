@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "c_log.h"
 #include "HMI_C.h"
 /* USER CODE END Includes */
 
@@ -94,6 +95,7 @@ CHAR *pointer;
 void tx_app_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN tx_app_thread_entry */
+  log_start_async();
   HMI_Start();
   /* USER CODE END tx_app_thread_entry */
 }
