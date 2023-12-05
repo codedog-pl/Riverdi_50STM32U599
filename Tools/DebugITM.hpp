@@ -14,7 +14,8 @@ private:
 
     /// @brief Creates ITM console debug output for the message pool.
     /// @param pool Message pool reference.
-    DebugITM(ILogMessagePool& pool) : m_pool(pool), m_isThreadStarted(0), m_ptr(nullptr), m_length(0)
+    DebugITM(ILogMessagePool& pool) :
+        m_pool(pool), m_senderThreadId(0), m_senderThreadStarted(0), m_events(), m_ptr(nullptr), m_length(0)
     {
         DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
         ITM->LAR = 0xC5ACCE55;
@@ -63,7 +64,9 @@ public:
     /// @brief Switches to asynchronous operation as soon as the RTOS is started.
     void startAsync(void) override
     {
-        if (!m_isThreadStarted) OS::threadStart("ITM", senderThreadEntry);
+        if (m_senderThreadId) return;
+        OS::eventGroupCreate(m_events, "DebugITM");
+        m_senderThreadId = OS::threadStart("ITM", senderThreadEntry);
     }
 
     /// @brief Sends a message to the output.
@@ -78,7 +81,7 @@ public:
         LogMessage* message = m_pool[index];
         auto [buffer, length] = message->buffer();
         if (!length) return;
-        if (m_isThreadStarted) sendAsync(buffer, length);
+        if (m_senderThreadStarted) sendAsync(buffer, length);
         else sendImmediately(buffer, length);
         isSending = false;
     }
@@ -115,13 +118,14 @@ private:
     {
         m_ptr = (uint8_t*)buffer;
         m_length = length;
+        OS::eventGroupSignal(m_events, 1);
     }
 
     /// @brief Sends the current message asynchronously if it's ready and yields the thread waiting for the next message.
     static void senderThreadEntry(OS::ThreadEntryArgType)
     {
-        m_instance->m_isThreadStarted = true;
-        while (isITMAvailable())
+        m_instance->m_senderThreadStarted = true;
+        while (OS::eventGroupWait(m_instance->m_events))
         {
             if (m_instance->m_ptr && m_instance->m_length)
             {
@@ -137,9 +141,8 @@ private:
                 message->clear();
                 m_instance->sendNext();
             }
-            OS::delay(1);
         }
-        m_instance->m_isThreadStarted = false;
+        m_instance->m_senderThreadStarted = false;
     }
 
     /// @returns true if the ITM debugger is enabled.
@@ -175,11 +178,12 @@ private:
 
 private:
     ILogMessagePool& m_pool;                    // Log message pool reference.
-    bool m_isThreadStarted;                     // True if the sender thread is started.
+    OS::ThreadId m_senderThreadId;              // True if the sender thread is started.
+    bool m_senderThreadStarted;                 // True if the sender thread is started.
+    OS::EventGroup m_events;                    // Event group to receive asynchronous request start.
     uint8_t* m_ptr;                             // Current message data pointer for asynchronous operation.
     size_t m_length;                            // Current message length for asynchronous operation.
     static inline DebugITM* m_instance = {};    // Singleton instance pointer for static methods.
-
 
 };
 
