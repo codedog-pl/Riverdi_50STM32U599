@@ -1,3 +1,11 @@
+/**
+ * @file        OSResourcePool.hpp
+ * @author      CodeDog
+ * @brief       Defines RTOS resources metadata.
+ *
+ * @copyright   (c)2023 CodeDog, All rights reserved.
+ */
+
     #include <type_traits>
 
     using OSResourceId = unsigned int;  // RTOS resource identifier type.

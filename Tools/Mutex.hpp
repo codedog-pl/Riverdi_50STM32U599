@@ -40,7 +40,7 @@ class Mutex : MutexBase
 {
 public:
 
-    Mutex(uint32_t timeout = 32) : m_mutex(), m_timeout(timeout) { }
+    Mutex(OS::Timeout timeout = OS::waitForever) : m_mutex(), m_timeout(timeout) { }
 
     Mutex(const Mutex&) = delete;
     Mutex(Mutex&&) = delete;
@@ -70,7 +70,7 @@ public:
 
 private:
     OS::MutexId m_mutex;    // OS mutex.
-    uint32_t m_timeout;     // Default timeout.
+    OS::Timeout m_timeout;     // Default timeout.
 
 };
 
