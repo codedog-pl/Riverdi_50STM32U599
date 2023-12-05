@@ -52,7 +52,6 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 #define USBH_UsrLog(...)   log_msg(3, __VA_ARGS__);
-
 #define USBH_ErrLog(...)   log_msg(0, __VA_ARGS__);
 /* USER CODE END EM */
 

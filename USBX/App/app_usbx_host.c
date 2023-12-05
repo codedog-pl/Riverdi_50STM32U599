@@ -27,6 +27,7 @@
 #include "usb_otg.h"
 #include "ux_hcd_stm32.h"
 #include "c_log.h"
+#include "HMI_C.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +37,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define MSC_INSTANCE     1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,11 +49,10 @@
 static TX_THREAD ux_host_app_thread;
 /* USER CODE BEGIN PV */
 
-#define MSC_INSTANCE     3
-
+UX_HOST_CLASS_STORAGE       *storage_instance[MSC_INSTANCE];
+UX_HOST_CLASS_STORAGE_MEDIA *storage_media;
 FX_MEDIA                    *media[MSC_INSTANCE];
 TX_THREAD                   msc_app_thread;
-UX_HOST_CLASS_STORAGE_MEDIA *storage_media;
 TX_EVENT_FLAGS_GROUP        ux_app_EventFlag;
 UINT                        msc_index;
 
@@ -88,13 +88,8 @@ VOID USBX_APP_Host_Init(VOID)
 
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
-  /* Start Application Message */
-  USBH_UsrLog("**** USB OTG HS HUB HID MSC Host ****");
-  USBH_UsrLog("USB Host library started.");
-
-  /* Wait for Device to be attached */
-  USBH_UsrLog("Starting HUB Application...");
-  USBH_UsrLog("Connect your HUB Device");
+  USBH_UsrLog("USBH: Ready.");
+  HMI_SysInit |= HMI_USBX;
 
   /* USER CODE END USB_Host_Init_PostTreatment1 */
 }
@@ -113,7 +108,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
 
   /* USER CODE BEGIN MX_USBX_Host_Init0 */
-  USBH_UsrLog("Initializing USB host...");
+  USBH_UsrLog("USBH: Initializing...");
   /* USER CODE END MX_USBX_Host_Init0 */
 
   /* Allocate the stack for USBX Memory */
@@ -196,7 +191,6 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
     return TX_GROUP_ERROR;
   }
 
-  USBH_UsrLog("USB host app thread created.");
   /* USER CODE END MX_USBX_Host_Init1 */
 
   return ret;
@@ -210,10 +204,8 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
-//  TX_PARAMETER_NOT_USED(thread_input);
-  USBH_UsrLog("USB host thread started.");
+  USBH_UsrLog("USBH: Hardware initialization...");
   USBX_APP_Host_Init();
-//  while (1) tx_thread_sleep(1000);
   /* USER CODE END app_ux_host_thread_entry */
 }
 
@@ -230,9 +222,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
   UINT status = UX_SUCCESS;
 
   /* USER CODE BEGIN ux_host_event_callback0 */
-  UX_PARAMETER_NOT_USED(current_class);
-  UX_PARAMETER_NOT_USED(current_instance);
-  USBH_UsrLog("USB event %lu received...", event);
+  UINT idx;
   /* USER CODE END ux_host_event_callback0 */
 
   switch (event)
@@ -240,7 +230,51 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_INSERTION:
 
       /* USER CODE BEGIN UX_DEVICE_INSERTION */
-      USBH_UsrLog("* Device inserted.");
+
+      USBH_UsrLog("USBH: Device connected.");
+
+      if (current_class->ux_host_class_entry_function == ux_host_class_storage_entry)
+      {
+        status = UX_TOO_MANY_DEVICES;
+        for (idx = 0; idx < MSC_INSTANCE; )
+        {
+          if (storage_instance[idx]) ++idx;
+          else
+          {
+            storage_instance[idx] = (UX_HOST_CLASS_STORAGE*)current_instance;
+            msc_index = idx;
+            status = UX_SUCCESS;
+            break;
+          }
+        }
+        if (status != UX_SUCCESS)
+        {
+          USBH_ErrLog("USBH: Too many devices connected. Consider increasing MSC_INSTANCE.");
+          return status;
+        }
+
+        USBH_UsrLog("USBH: MSC device detected:");
+        USBH_UsrLog("  PID: %#x",
+          (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idProduct);
+        USBH_UsrLog("  VID: %#x",
+          (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idVendor);
+
+        storage_media = (UX_HOST_CLASS_STORAGE_MEDIA *)current_class -> ux_host_class_media;
+        if (storage_media[msc_index].ux_host_class_storage_media_lun != 0)
+        {
+          storage_media = UX_NULL;
+        }
+        else
+        {
+          media[msc_index] = &storage_media[msc_index].ux_host_class_storage_media;
+          if (storage_instance[msc_index] -> ux_host_class_storage_state ==  UX_HOST_CLASS_INSTANCE_LIVE)
+          {
+            if (tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_CONNECTED, TX_OR) != TX_SUCCESS)
+              Error_Handler();
+          }
+        }
+      }
+
       /* USER CODE END UX_DEVICE_INSERTION */
 
       break;
@@ -248,7 +282,23 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_REMOVAL:
 
       /* USER CODE BEGIN UX_DEVICE_REMOVAL */
-      USBH_UsrLog("* Device removed.");
+
+      USBH_UsrLog("USBH: Device disconnected.");
+
+      for (msc_index = 0; msc_index < MSC_INSTANCE; msc_index++)
+      {
+        if ((VOID*)storage_instance[msc_index] == current_instance)
+        {
+          storage_instance[msc_index] = UX_NULL;
+          storage_media = UX_NULL;
+          media[msc_index] = UX_NULL;
+          USBH_UsrLog("USBH: MSC device unregistered.");
+          if (tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_DISCONNECTED, TX_OR) != TX_SUCCESS)
+            Error_Handler();
+          return status;
+        }
+      }
+
       /* USER CODE END UX_DEVICE_REMOVAL */
 
       break;
@@ -256,7 +306,6 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_CONNECTION:
 
       /* USER CODE BEGIN UX_DEVICE_CONNECTION */
-      USBH_UsrLog("* Device connected.");
       /* USER CODE END UX_DEVICE_CONNECTION */
 
       break;
@@ -264,7 +313,6 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     case UX_DEVICE_DISCONNECTION:
 
       /* USER CODE BEGIN UX_DEVICE_DISCONNECTION */
-      USBH_UsrLog("* Device disconnected.");
       /* USER CODE END UX_DEVICE_DISCONNECTION */
 
       break;
@@ -272,7 +320,6 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
     default:
 
       /* USER CODE BEGIN EVENT_DEFAULT */
-      USBH_UsrLog("* Unhandled event.");
       /* USER CODE END EVENT_DEFAULT */
 
       break;
@@ -305,7 +352,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     case UX_DEVICE_ENUMERATION_FAILURE:
 
       /* USER CODE BEGIN UX_DEVICE_ENUMERATION_FAILURE */
-      USBH_ErrLog("!! Device enumeration failure !!");
+      USBH_ErrLog("USBH: Device enumeration failure.");
       /* USER CODE END UX_DEVICE_ENUMERATION_FAILURE */
 
       break;
@@ -313,7 +360,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     case  UX_NO_DEVICE_CONNECTED:
 
       /* USER CODE BEGIN UX_NO_DEVICE_CONNECTED */
-      USBH_ErrLog("!! No device connected !!");
+      USBH_ErrLog("USBH: No device connected.");
       /* USER CODE END UX_NO_DEVICE_CONNECTED */
 
       break;
@@ -321,7 +368,7 @@ VOID ux_host_error_callback(UINT system_level, UINT system_context, UINT error_c
     default:
 
       /* USER CODE BEGIN ERROR_DEFAULT */
-      // USBH_ErrLog("!! Unknown error: %u !!", error_code);
+
       /* USER CODE END ERROR_DEFAULT */
 
       break;

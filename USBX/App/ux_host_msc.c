@@ -59,29 +59,31 @@ extern TX_EVENT_FLAGS_GROUP ux_app_EventFlag;
 /* USER CODE END 0 */
 
 /* USER CODE BEGIN 1 */
-/**
-  * @brief  Function implementing msc_process_thread_entry.
-  * @param  thread_input: Not used
-  * @retval none
-  */
+
 VOID msc_process_thread_entry(ULONG thread_input)
 {
   ULONG storage_media_flag = 0;
-  USBH_UsrLog("Starting MSC thread...");
+  USBH_UsrLog("USBH: MSC thread started.");
   while(1)
   {
-    /* Wait until the requested flag STORAGE_MEDIA is received */
-    if (tx_event_flags_get(&ux_app_EventFlag, STORAGE_MEDIA, TX_OR_CLEAR,
-                           &storage_media_flag, TX_WAIT_FOREVER) != TX_SUCCESS)
+    if (tx_event_flags_get(
+      &ux_app_EventFlag,
+      STORAGE_MEDIA_CONNECTED | STORAGE_MEDIA_DISCONNECTED,
+      TX_OR_CLEAR,
+      &storage_media_flag,
+      TX_WAIT_FOREVER) == TX_SUCCESS)
     {
-
-        USBH_ErrLog("ERROR in tx_event_flags_get().");
+      if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
+      {
+        USBH_UsrLog("USBH: Media connected event received for device %u.", msc_index);
+      }
+      else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
+      {
+        USBH_UsrLog("USBH: Media disconnected event received for device %u.", msc_index);
+      }
     }
-    else
-    {
-        USBH_UsrLog("TICK: tx_event_flags_get().");
-      tx_thread_sleep(MS_TO_TICK(10));
-    }
+    else Error_Handler();
   }
 }
+
 /* USER CODE END 1 */

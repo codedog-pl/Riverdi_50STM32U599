@@ -16,13 +16,13 @@
 
 void HMI::start()
 {
-    Log::msg("HMI application started.");
-    // while (!(HMI_SysInit & HMI_FILEX)) tx_thread_sleep(100);
-    // GPIO_test::listPins();
-    // GPIO_test::testInputs();
+    Log::msg("HMI: Thread started.");
+    constexpr uint32_t initializationLatency = 100;
+    while ((HMI_SysInit & HMI_ALL) != HMI_ALL) OS::delay(initializationLatency);
+    Log::msg("HMI: Initialization complete.");
     while (1)
     {
-        tx_thread_sleep(1000); // for now, let's just yield.
+        OS::delay(1000); // for now
     }
 }
 

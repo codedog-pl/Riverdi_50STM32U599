@@ -57,7 +57,8 @@ VOID msc_process_thread_entry(ULONG thread_input);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STORAGE_MEDIA 0x01
+#define STORAGE_MEDIA_CONNECTED 0x01
+#define STORAGE_MEDIA_DISCONNECTED 0x02
 
 /* USER CODE END PD */
 

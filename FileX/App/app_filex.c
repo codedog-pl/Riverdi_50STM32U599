@@ -76,7 +76,7 @@ void fx_app_thread_entry(ULONG thread_input);
   bool fx_mount_sd_card()
   {
     UINT sd_status = FX_SUCCESS;
-    log_msg(3, "Mounting SD...");
+    log_msg(3, "FILEX: Mounting SD...");
     sd_status =  fx_media_open(
       &sdio_disk,                 // Media control block pointer.
       FX_SD_VOLUME_NAME,          // Pointer to media name string.
@@ -85,10 +85,10 @@ void fx_app_thread_entry(ULONG thread_input);
       (void*)fx_sd_media_memory,  // Pointer to memory used by the FileX for this media.
       sizeof(fx_sd_media_memory)  // Size of media memory - must be at least 512 bytes and one sector size.
     );
-    if (sd_status == FX_SUCCESS) log_msg(3, "SD card mounted successfully.");
+    if (sd_status == FX_SUCCESS) log_msg(3, "FILEX: SD card mounted.");
     else
     {
-      log_msg(0, "SD ERROR %i.", sd_status);
+      log_msg(0, "FILEX: SD ERROR %i.", sd_status);
       return false;
     }
     return true;
