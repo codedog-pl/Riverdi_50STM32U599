@@ -16,7 +16,7 @@ Screen1ViewBase::Screen1ViewBase() :
     add(background);
 
     screenIdTxt.setXY(299, 214);
-    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 170, 0));
+    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 119, 170));
     screenIdTxt.setLinespacing(0);
     screenIdTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_J1U4));
     add(screenIdTxt);

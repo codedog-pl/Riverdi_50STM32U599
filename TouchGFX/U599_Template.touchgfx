@@ -18,11 +18,12 @@
             "X": 299,
             "Y": 214,
             "Width": 202,
-            "Height": 41,
+            "Height": 49,
             "TextId": "__SingleUse_J1U4",
             "TextRotation": "0",
             "Color": {
-              "Green": 170
+              "Green": 119,
+              "Blue": 170
             },
             "AutoSize": true
           },
