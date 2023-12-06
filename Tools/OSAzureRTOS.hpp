@@ -28,7 +28,7 @@
 
 #define TX_RESOURCE_HANLDES_DEPLETED ((UINT) 0xFFFF)
 
-/// @brief RTOS compatibility wrapper.
+/// @brief RTOS compatibility wrapper, maps to AzureRTOS.
 class OS
 {
 
@@ -40,26 +40,21 @@ public:
 
 public:
 
-    using Status = unsigned int;
-    using EventGroupId = unsigned int;
-    using MutexId = unsigned int;
-    using SemaphoreId = unsigned int;
-    using ThreadId = unsigned int;
-    using ThreadPriority = unsigned int;
-    using ThreadEntryArgType = unsigned long;
-    using ThreadEntry = void(*)(ThreadEntryArgType);
-    using EventFlags = ULONG;
-    using Timeout = ULONG;
+    using Status = unsigned int;                        // RTOS status code.
+    using EventGroupId = unsigned int;                  // Event group identifier.
+    using MutexId = unsigned int;                       // Mutex identifier.
+    using SemaphoreId = unsigned int;                   // Semaphore identifier.
+    using ThreadId = unsigned int;                      // Thread identifier.
+    using EventFlags = ULONG;                           // Event flags container type.
+    using Timeout = ULONG;                              // Timeout value in RTOS ticks.
+    using ThreadPriority = unsigned int;                // Thread priority.
+    using ThreadEntryArgType = unsigned long;           // Thread entry argument type.
+    using ThreadEntry = void(*)(ThreadEntryArgType);    // Thread entry function type.
 
-    /// @brief Event combining and clearing option value.
-    enum EventOption : UINT
-    {
-        Or = TX_OR, // Signal beside others / wait for any.
-        OrClear = TX_OR_CLEAR, // Wait for any and clear.
-        And = TX_AND, // Signal discarding others / wait for all.
-        AndClear = TX_AND_CLEAR // Wait for all and clear.
-    };
-
+    static constexpr EventGroupId noEventGroup = 0;
+    static constexpr MutexId noMutex = 0;
+    static constexpr SemaphoreId noSemaphore = 0;
+    static constexpr ThreadId noThread = 0;
     static constexpr Timeout noWait = TX_NO_WAIT;
     static constexpr Timeout waitForever = TX_WAIT_FOREVER;
     static constexpr ThreadPriority threadPriorityAboveNormal = 4;
@@ -67,8 +62,7 @@ public:
     static constexpr ThreadPriority threadPriorityBelowNormal = 6;
     static constexpr ThreadPriority threadPriorityHighest = 0;
     static constexpr ThreadPriority threadPriorityLowest = TX_MAX_PRIORITIES - 1;
-
-    static constexpr uint32_t threadDefaultStackSize = TX_APP_STACK_SIZE;
+    static constexpr uint32_t threadDefaultStackSize = TX_APP_STACK_SIZE;   // Stack frame assigned to new threads.
 
     /// @brief Yields the current thread allowing the other threads to proceed.
     inline static void yield(void)
@@ -105,7 +99,7 @@ public:
     /// @param flags Flags to signal.
     /// @param option Setting option (default or).
     /// @return False if error occurred, true otherwise.
-    inline static bool eventGroupSignal(EventGroupId id, EventFlags flags, EventOption option = Or)
+    inline static bool eventGroupSignal(EventGroupId id, EventFlags flags)
     {
         if (id < 1)
         {
@@ -118,9 +112,17 @@ public:
             lastError = TX_NOT_AVAILABLE;
             return false;
         }
-        lastError = tx_event_flags_set(&instance->group, flags, option);
+        lastError = tx_event_flags_set(&instance->group, flags, TX_OR);
         return lastError == TX_SUCCESS;
     }
+
+    /// @brief Options type for `eventGroupWait` method.
+    enum EventOption : uint32_t
+    {
+        waitAny = 0,   // Wait for any flag.
+        waitAll = 1,   // Wait for all flags.
+        noClear = 2    // Do not clear flags which have been specified to wait for.
+    };
 
     /// @brief Suspends the current thread until one or more events are signalled.
     /// @param id Event group identifier.
@@ -129,7 +131,7 @@ public:
     /// @param timeout Time to wait for the event in OS ticks (default forever).
     /// @return Event flags received, if none set - error occurred.
     inline static EventFlags eventGroupWait(EventGroupId id, EventFlags flags = (EventFlags)(-1),
-                                            EventOption option = OrClear, Timeout timeout = waitForever)
+                                            EventOption option = waitAny, Timeout timeout = waitForever)
     {
         if (id < 1)
         {
@@ -143,7 +145,10 @@ public:
             return false;
         }
         EventFlags actualFlags;
-        lastError = tx_event_flags_get(&instance->group, flags, option, &actualFlags, timeout);
+        UINT txOption = (option & noClear)
+            ? ((option & waitAny) ? TX_OR : (option & waitAll) ? TX_AND : 0)
+            : ((option & waitAny) ? TX_OR_CLEAR : (option & waitAll) ? TX_AND_CLEAR : 0);
+        lastError = tx_event_flags_get(&instance->group, flags, txOption, &actualFlags, timeout);
         return lastError == TX_SUCCESS ? actualFlags : 0;
     }
 
@@ -287,7 +292,7 @@ public:
     /// @brief Increases the RTOS semaphore count allowing the waiting thread to continue.
     /// @param id Semaphore identifier.
     /// @return False if error occurred, true otherwise.
-    inline static bool semaphoreSignal(SemaphoreId id)
+    inline static bool semaphoreRelease(SemaphoreId id)
     {
         if (id < 1)
         {

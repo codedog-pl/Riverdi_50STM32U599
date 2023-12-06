@@ -24,7 +24,6 @@ private:
 
     ~DebugUART()
     {
-        m_pool.clear();
         HAL_UART_UnRegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID);
         m_uart = nullptr;
     }

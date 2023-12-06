@@ -15,7 +15,7 @@ private:
     /// @brief Creates ITM console debug output for the message pool.
     /// @param pool Message pool reference.
     DebugITM(ILogMessagePool& pool) :
-        m_pool(pool), m_senderThreadId(0), m_senderThreadStarted(0), m_isSending(0)
+        m_pool(pool), m_threadId(0), m_semaphoreId(0), m_isAsync(0), m_isSending(0)
     {
         DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
         ITM->LAR = 0xC5ACCE55;
@@ -34,9 +34,10 @@ private:
 
     ~DebugITM()
     {
-        m_pool.clear();
-        OS::threadDelete(m_senderThreadId);
-        OS::semaphoreDelete(m_senderSemaphoreId);
+        OS::threadDelete(m_threadId);
+        OS::semaphoreDelete(m_semaphoreId);
+        m_semaphoreId = 0;
+        m_threadId = 0;
     }
 
 public:
@@ -66,9 +67,9 @@ public:
     /// @brief Switches to asynchronous operation as soon as the RTOS is started.
     void startAsync(void) override
     {
-        if (m_senderThreadId) return;
-        m_senderSemaphoreId = OS::semaphoreCreate("DebugITM");
-        m_senderThreadId = OS::threadStart("ITM", senderThreadEntry);
+        if (m_threadId) return;
+        m_semaphoreId = OS::semaphoreCreate("DebugITM");
+        m_threadId = OS::threadStart("ITM", senderThreadEntry);
     }
 
     /// @brief Sends a message to the output.
@@ -80,7 +81,7 @@ public:
         if (!msg || msg->empty()) return;
         m_isSending = true;
         m_pool.lastSentIndex(index);
-        if (m_senderThreadStarted) sendAsync(); else sendImmediately();
+        if (m_isAsync) sendAsync(); else sendImmediately();
     }
 
 private:
@@ -109,14 +110,14 @@ private:
     /// @brief Sends the current message asynchronously without blocking the calling thread.
     void sendAsync()
     {
-        if (m_senderSemaphoreId) OS::semaphoreSignal(m_senderSemaphoreId);
+        if (m_semaphoreId) OS::semaphoreRelease(m_semaphoreId);
     }
 
     /// @brief Sends the current message asynchronously if it's ready and yields the thread waiting for the next message.
     static void senderThreadEntry(OS::ThreadEntryArgType)
     {
-        m_instance->m_senderThreadStarted = true;
-        while (OS::semaphoreWait(m_instance->m_senderSemaphoreId))
+        m_instance->m_isAsync = true;
+        while (m_instance->m_semaphoreId && OS::semaphoreWait(m_instance->m_semaphoreId))
         { // When it gets the signal from `sendAsync()` it starts sending the data with yielding the thread after each character...
             if (m_instance->m_pool.lastSentIndex() < 0) continue;
             LogMessage& msg = *m_instance->m_pool.lastSent();
@@ -130,7 +131,7 @@ private:
             m_instance->m_isSending = false;
             m_instance->sendNext();
         } // Then it waits for the next signal.
-        m_instance->m_senderThreadStarted = false;
+        m_instance->m_isAsync = false;
     }
 
     /// @returns true if the ITM debugger is enabled.
@@ -173,10 +174,11 @@ private:
 
 private:
     ILogMessagePool& m_pool;                    // Log message pool reference.
-    OS::ThreadId m_senderThreadId;              // Sender thread identifier.
-    bool m_senderThreadStarted;                 // True if the sender thread is started.
+    OS::ThreadId m_threadId;                    // Sender thread identifier.
+    OS::SemaphoreId m_semaphoreId;              // Sender thread release semaphore identifier.
+    bool m_isAsync;                             // True if the sender thread is started (asynchronous mode).
     bool m_isSending;                           // True if the sender thread is busy sending a message.
-    OS::SemaphoreId m_senderSemaphoreId;          // Event group to receive asynchronous request start.
+
     static inline DebugITM* m_instance = {};    // Singleton instance pointer for static methods.
 
 };
