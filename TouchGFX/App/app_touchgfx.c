@@ -61,6 +61,9 @@ void touchgfx_taskEntry(void);
  */
 void MX_TouchGFX_PreOSInit(void)
 {
+/* USER CODE BEGIN TouchGFX PreOS init */
+    log_msg(3, "TouchGFX: PreOS initialization...");
+/* USER CODE END TouchGFX PreOS init */
     // Calling forward to touchgfx_init in C++ domain
     touchgfx_components_init();
     touchgfx_init();
@@ -71,6 +74,9 @@ void MX_TouchGFX_PreOSInit(void)
  */
 UINT MX_TouchGFX_Init(VOID* memory_ptr)
 {
+/* USER CODE BEGIN TouchGFX main init */
+    log_msg(3, "TouchGFX: Main initialization...");
+/* USER CODE END TouchGFX main init */
     UINT ret = TX_SUCCESS;
     CHAR* pointer = 0;
 
@@ -98,6 +104,10 @@ UINT MX_TouchGFX_Init(VOID* memory_ptr)
  */
 void MX_TouchGFX_Process(void)
 {
+/* USER CODE BEGIN TouchGFX thread start 1 */
+    log_msg(3, "TouchGFX: Initialization complete.");
+    HMI_SysInit |= HMI_TOUCHGFX;
+/* USER CODE END TouchGFX thread start 1 */
     // Calling forward to touchgfx_taskEntry in C++ domain
     touchgfx_taskEntry();
 }
@@ -107,6 +117,10 @@ void MX_TouchGFX_Process(void)
  */
 void TouchGFX_Task(unsigned long thread_input)
 {
+/* USER CODE BEGIN TouchGFX thread start 2 */
+    log_msg(3, "TouchGFX: Initialization complete.");
+    HMI_SysInit |= HMI_TOUCHGFX;
+/* USER CODE END TouchGFX thread start 2 */
     // Calling forward to touchgfx_taskEntry in C++ domain
     touchgfx_taskEntry();
 }
