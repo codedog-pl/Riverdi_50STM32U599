@@ -435,6 +435,16 @@ private:
      */
     int UVtoCorner(float u, float v);
 
+    /**
+     * @fn int UVtoCornerQuad(float u, float v);
+     *
+     * @brief Convert texture coordinate (u,v) to corner index for quads drawing.
+     *
+     * @param u The horizontal texture coordinate
+     * @param v The vertical texture coordinate
+     */
+    int UVtoCornerQuad(float u, float v);
+
     //Software/DMA2D implementations for L8 bitmaps
 
     /**

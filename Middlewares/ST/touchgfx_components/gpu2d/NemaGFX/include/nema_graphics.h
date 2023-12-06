@@ -1,14 +1,15 @@
+/* TSI 2023.xmo */
 /*******************************************************************************
- * Copyright (c) 2022 Think Silicon S.A.
+ * Copyright (c) 2023 Think Silicon Single Member PC
  *
-   Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this header file and/or associated documentation files to use, copy,
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this header file and/or associated documentation files to use, copy,
  * modify, merge, publish, distribute, sublicense, and/or sell copies of the
- * Materials, and to permit persons to whom the Materials are furnished to do so,
- * subject to the following conditions:
+ * Materials, and to permit persons to whom the Materials are furnished to do
+ * so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Materials.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Materials.
  *
  * MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
  * NEMAGFX API. THE UNMODIFIED, NORMATIVE VERSIONS OF THINK-SILICON NEMAGFX
@@ -18,9 +19,10 @@
  *  The software is provided 'as is', without warranty of any kind, express or
  *  implied, including but not limited to the warranties of merchantability,
  *  fitness for a particular purpose and noninfringement. In no event shall
- *  Think Silicon S.A. be liable for any claim, damages or other liability, whether
- *  in an action of contract, tort or otherwise, arising from, out of or in
- *  connection with the software or the use or other dealings in the software.
+ *  Think Silicon Single Member PC be liable for any claim, damages or other
+ *  liability, whether in an action of contract, tort or otherwise, arising
+ *  from, out of or in connection with the software or the use or other dealings
+ *  in the software.
  ******************************************************************************/
 
 
@@ -29,6 +31,7 @@
 
 #include "nema_sys_defs.h"
 #include "nema_hal.h"
+#include "nema_matrix3x3.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -875,6 +878,28 @@ void nema_blit_subrect_quad_fit(float dx0, float dy0,
                                 int sx, int sy,
                                 int sw, int sh);
 
+/** \brief Blit source texture to destination. Use the matrix provided by the user.
+ *
+ * \param dx0 x coordinate at the first vertex of the quadrilateral
+ * \param dy0 y coordinate at the first vertex of the quadrilateral
+ * \param dx1 x coordinate at the second vertex of the quadrilateral
+ * \param dy1 y coordinate at the second vertex of the quadrilateral
+ * \param dx2 x coordinate at the third vertex of the quadrilateral
+ * \param dy2 y coordinate at the third vertex of the quadrilateral
+ * \param dx3 x coordinate at the fourth vertex of the quadrilateral
+ * \param dy3 y coordinate at the fourth vertex of the quadrilateral
+ * \param m 3x3 matrix (screen coordinates to texture coordinates)
+ * \see nema_set_blend_blit()
+ *
+ */
+void nema_blit_quad_m(float dx0, float dy0,
+                      float dx1, float dy1,
+                      float dx2, float dy2,
+                      float dx3, float dy3, nema_matrix3x3_t m);
+
+
+
+
 /** \brief Enable breakpoints
  *
  * \see nema_brk_disable()
@@ -976,6 +1001,14 @@ void nema_ext_hold_assert_imm(uint32_t hold_id);
  *
  */
 void nema_ext_hold_deassert_imm(uint32_t hold_id);
+
+/** \brief Check for which architeture is the library compiled
+ *
+ * \return Returns string with the architecture name
+ *
+ */
+const char* nema_get_sw_device_name(void);
+
 
 #ifdef __cplusplus
 }

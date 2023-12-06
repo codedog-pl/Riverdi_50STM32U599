@@ -1,14 +1,15 @@
+/* TSI 2023.xmo */
 /*******************************************************************************
- * Copyright (c) 2022 Think Silicon S.A.
+ * Copyright (c) 2023 Think Silicon Single Member PC
  *
-   Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this header file and/or associated documentation files to use, copy,
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this header file and/or associated documentation files to use, copy,
  * modify, merge, publish, distribute, sublicense, and/or sell copies of the
- * Materials, and to permit persons to whom the Materials are furnished to do so,
- * subject to the following conditions:
+ * Materials, and to permit persons to whom the Materials are furnished to do
+ * so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Materials.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Materials.
  *
  * MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
  * NEMAGFX API. THE UNMODIFIED, NORMATIVE VERSIONS OF THINK-SILICON NEMAGFX
@@ -18,9 +19,10 @@
  *  The software is provided 'as is', without warranty of any kind, express or
  *  implied, including but not limited to the warranties of merchantability,
  *  fitness for a particular purpose and noninfringement. In no event shall
- *  Think Silicon S.A. be liable for any claim, damages or other liability, whether
- *  in an action of contract, tort or otherwise, arising from, out of or in
- *  connection with the software or the use or other dealings in the software.
+ *  Think Silicon Single Member PC be liable for any claim, damages or other
+ *  liability, whether in an action of contract, tort or otherwise, arising
+ *  from, out of or in connection with the software or the use or other dealings
+ *  in the software.
  ******************************************************************************/
 
 
@@ -51,6 +53,10 @@ void nema_mat4x4_load_identity(nema_matrix4x4_t m);
 void nema_mat4x4_mul(nema_matrix4x4_t  m,
                      nema_matrix4x4_t  m_l,
                      nema_matrix4x4_t  m_r);
+
+
+void nema_mat4x4_copy(nema_matrix4x4_t m_l,
+                 nema_matrix4x4_t m_r);
 
 /** \brief Multiply a 4x1 vector with a 4x4 matrix
  *
@@ -129,6 +135,19 @@ void nema_mat4x4_rotate_Z    (nema_matrix4x4_t m, float angle_degrees);
 void nema_mat4x4_load_perspective(nema_matrix4x4_t m, float fovy_degrees, float aspect,
                                   float nearVal, float farVal);
 
+
+/** \brief Set up a Right Hand perspective projection matrix
+ *
+ * \param m A 4x4 Matrix
+ * \param fovy_degrees Field of View in degrees
+ * \param aspect Aspect ratio that determines the field of view in the x direction.
+ * \param nearVal Distance from the viewer to the near clipping plane (always positive)
+ * \param farVal Distance from the viewer to the far clipping plane (always positive)
+ *
+ */
+void nema_mat4x4_load_perspective_rh(nema_matrix4x4_t m, float fovy_degrees, float aspect,
+                                  float nearVal, float farVal);
+
 /** \brief Set up an orthographic projection matrix
  *
  * \param m A 4x4 Matrix
@@ -157,6 +176,25 @@ void nema_mat4x4_load_ortho(nema_matrix4x4_t m,
 void nema_mat4x4_load_ortho_2d(nema_matrix4x4_t m,
                                float left,   float right,
                                float bottom, float top);
+
+/** \brief Set up a Right Hand view matrix.
+ *
+ * \param m A 4x4 Matrix
+ * \param eye_x   Eye position x.
+ * \param eye_y   Eye position y.
+ * \param eye_z   Eye position z.
+ * \param center_x   Center x to look at
+ * \param center_y   Center y to look at
+ * \param center_z   Center z to look at
+ * \param up_x   Up vector x. (Usually 0)
+ * \param up_y   Up vector y. (Usually 1)
+ * \param up_z   Up vector z. (Usually 0)
+ *
+ */
+void nema_mat4x4_look_at_rh(nema_matrix4x4_t m,
+                        float eye_x, float eye_y, float eye_z,
+                        float center_x, float center_y, float center_z,
+                        float up_x, float up_y, float up_z);
 
 // ------------------------------------------------------------------------------------
 // Clip Coordinates to Window Coordinates

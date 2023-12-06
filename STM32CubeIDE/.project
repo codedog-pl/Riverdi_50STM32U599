@@ -3535,6 +3535,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/UnmappedDataFont.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/VectorFontRendererBuffers.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/FrontendApplicationBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp</locationURI>

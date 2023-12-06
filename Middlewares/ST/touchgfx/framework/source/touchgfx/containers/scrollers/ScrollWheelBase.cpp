@@ -2,7 +2,7 @@
 * Copyright (c) 2018(-2023) STMicroelectronics.
 * All rights reserved.
 *
-* This file is part of the TouchGFX 4.22.1 distribution.
+* This file is part of the TouchGFX 4.23.0 distribution.
 *
 * This software is licensed under terms that can be found in the LICENSE file in
 * the root directory of this software component.
@@ -61,7 +61,7 @@ void ScrollWheelBase::animateToPosition(int32_t position, int16_t steps)
     if (animateToCallback && animateToCallback->isValid() && itemSize > 0)
     {
         position = getNearestAlignedOffset(position);
-        int16_t itemIndex = (-position) / itemSize;
+        const int16_t itemIndex = (-position) / itemSize;
         animateToCallback->execute(itemIndex);
     }
     ScrollBase::animateToPosition(position, steps);

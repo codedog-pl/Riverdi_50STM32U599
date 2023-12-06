@@ -10,14 +10,16 @@ class GPU2DVectorRenderer : public VectorRenderer
 {
 public:
     /**
-     * Start a new drawing in the given area. The area typically
-     * corresponds to an invalidated area of a Widget.
+     * Start a new drawing (invalidated area) within the given canvas area.
+     * The canvas area typically corresponds to the area of a Widget and is
+     * given in absolute coordinates, whereas the invalidated area is given
+     * in relative coordinates.
      * Implementations may lock the framebuffer here.
      *
-     * @param renderer    The Widget that does the rendering.
-     * @param drawingArea The area of the screen to draw in.
+     * @param  canvasAreaAbs        The canvas dimensions in absolute coordinates.
+     * @param  invalidatedAreaRel   The area which should be updated in relative coordinates.
      */
-    virtual void setup(const Widget& renderer, const Rect& drawingArea);
+    virtual void setup(const Rect& canvasAreaAbs, const Rect& invalidatedAreaRel);
 
     /**
      * Set the drawing mode for the VectorRenderer. The mode will be
@@ -149,9 +151,6 @@ public:
      * @param  lineCap ignored
      */
     virtual void setStrokeLineCap(VGStrokeLineCap lineCap) {}
-
-private:
-    const Widget* w;    
 };
 }
 #endif

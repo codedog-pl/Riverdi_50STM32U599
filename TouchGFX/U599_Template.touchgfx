@@ -18,7 +18,7 @@
             "X": 299,
             "Y": 214,
             "Width": 202,
-            "Height": 49,
+            "Height": 41,
             "TextId": "__SingleUse_J1U4",
             "TextRotation": "0",
             "Color": {
@@ -307,6 +307,6 @@
       "Vector"
     ]
   },
-  "Version": "4.22.1",
+  "Version": "4.23.0",
   "CreatedBy": "4.22.0"
 }
