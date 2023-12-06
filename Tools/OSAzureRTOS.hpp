@@ -5,6 +5,15 @@
  *
  * @remarks     Used to abstract a subset of basic RTOS functions with a common API.
  *
+ *              Since AzureRTOS requires preallocated handles, this class preallocates 16 of each type.
+ *              If the handles get depleted, the `lastError` is set to `TX_CEILING_EXCEEDED`
+ *              and the thread is halted for debugging.
+ *              The number of handles can be set in compiler defines as:
+ *                  TX_EVENT_GROUPS
+ *                  TX_MUTEXES
+ *                  TX_SEMAPHORES
+ *                  TX_THREADS
+ *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
@@ -17,6 +26,8 @@
 #include "tx_api.h"
 #include "OSResourcePool.hpp"
 
+#define TX_RESOURCE_HANLDES_DEPLETED ((UINT) 0xFFFF)
+
 /// @brief RTOS compatibility wrapper.
 class OS
 {
@@ -27,17 +38,16 @@ public:
     OS(const OS&) = delete;
     OS(OS&&) = delete;
 
-    static constexpr const char* defaultMutexName = "OS::Mutex";
-
 public:
 
     using Status = unsigned int;
-    using ThreadId = unsigned int;
+    using EventGroupId = unsigned int;
     using MutexId = unsigned int;
+    using SemaphoreId = unsigned int;
+    using ThreadId = unsigned int;
     using ThreadPriority = unsigned int;
     using ThreadEntryArgType = unsigned long;
     using ThreadEntry = void(*)(ThreadEntryArgType);
-    using EventGroup = TX_EVENT_FLAGS_GROUP;
     using EventFlags = ULONG;
     using Timeout = ULONG;
 
@@ -75,17 +85,101 @@ public:
         return lastError == TX_SUCCESS;
     }
 
+    /// @brief Creates an event group.
+    /// @param name Optional event group name.
+    /// @return Group identifier or zero if error occurred.
+    inline static EventGroupId eventGroupCreate(const char* name = nullptr)
+    {
+        EventData* instance = m_eventPool.getInstance();
+        if (!instance)
+        {
+            lastError = TX_RESOURCE_HANLDES_DEPLETED;
+            while (1); // Stop here for debugging.
+        }
+        lastError = tx_event_flags_create(&instance->group, (char*)name);
+        return lastError == TX_SUCCESS ? instance->id : 0;
+    }
+
+    /// @brief Signals events to an event group.
+    /// @param id Event group identifier.
+    /// @param flags Flags to signal.
+    /// @param option Setting option (default or).
+    /// @return False if error occurred, true otherwise.
+    inline static bool eventGroupSignal(EventGroupId id, EventFlags flags, EventOption option = Or)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        EventData* instance = m_eventPool.getInstance(id);
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        lastError = tx_event_flags_set(&instance->group, flags, option);
+        return lastError == TX_SUCCESS;
+    }
+
+    /// @brief Suspends the current thread until one or more events are signalled.
+    /// @param id Event group identifier.
+    /// @param flags Flags awaited (default any / all).
+    /// @param option Combining and clearing option (default or, clear).
+    /// @param timeout Time to wait for the event in OS ticks (default forever).
+    /// @return Event flags received, if none set - error occurred.
+    inline static EventFlags eventGroupWait(EventGroupId id, EventFlags flags = (EventFlags)(-1),
+                                            EventOption option = OrClear, Timeout timeout = waitForever)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        EventData* instance = m_eventPool.getInstance(id);
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        EventFlags actualFlags;
+        lastError = tx_event_flags_get(&instance->group, flags, option, &actualFlags, timeout);
+        return lastError == TX_SUCCESS ? actualFlags : 0;
+    }
+
+    /// @brief Deletes the RTOS event group.
+    /// @param id Event group indentifier.
+    /// @return False if error occurred, true otherwise.
+    inline static bool eventGroupDelete(EventGroupId id)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        EventData* instance = m_eventPool.getInstance(id);
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        lastError = tx_event_flags_delete(&instance->group);
+        m_eventPool.returnInstance(instance->id);
+        return lastError == TX_SUCCESS;
+    }
+
     /// @brief Creates a new RTOS mutex.
+    /// @param name Optional mutex name.
     /// @return Mutex identifier of zero in case of an error.
-    inline static MutexId mutexCreate()
+    inline static MutexId mutexCreate(const char* name = nullptr)
     {
         MutexData* instance = m_mutexPool.getInstance();
         if (!instance)
         {
-            lastError = TX_CEILING_EXCEEDED;
-            return 0;
+            lastError = TX_RESOURCE_HANLDES_DEPLETED;
+            while (1); // Stop here for debugging.
         }
-        lastError = tx_mutex_create(&instance->controlBlock, 0, 0);
+        lastError = tx_mutex_create(&instance->controlBlock, (CHAR*)name, 0);
         if (lastError != TX_SUCCESS)
         {
             m_mutexPool.returnInstance(instance->id);
@@ -108,7 +202,7 @@ public:
         MutexData* instance = m_mutexPool.getInstance(id);
         if (!instance)
         {
-            lastError = TX_NO_INSTANCE;
+            lastError = TX_NOT_AVAILABLE;
             return false;
         }
         lastError = tx_mutex_get(&instance->controlBlock, timeout);
@@ -126,7 +220,7 @@ public:
         }
         MutexData* instance = m_mutexPool.getInstance(id);
         if (!instance) {
-            lastError = TX_CEILING_EXCEEDED;
+            lastError = TX_NOT_AVAILABLE;
             return false;
         }
         lastError = tx_mutex_put(&instance->controlBlock);
@@ -145,11 +239,89 @@ public:
         MutexData* instance = m_mutexPool.getInstance(id);
         if (!instance)
         {
-            lastError = TX_NOT_OWNED;
+            lastError = TX_NOT_AVAILABLE;
             return false;
         }
         lastError = tx_mutex_delete(&instance->controlBlock);
         m_mutexPool.returnInstance(id);
+        return lastError == TX_SUCCESS;
+    }
+
+    /// @brief Creates a RTOS semaphore.
+    /// @param name Semaphore name.
+    /// @param initialCount The number of times it can be acquired before blocking.
+    /// @return Semaphore identifier or zero if error occurred.
+    inline static SemaphoreId semaphoreCreate(const char* name, int initialCount = 0)
+    {
+        SemaphoreData* instance = m_semaphorePool.getInstance();
+        if (!instance)
+        {
+            lastError = TX_RESOURCE_HANLDES_DEPLETED;
+            while (1); // Stop here for debugging.
+        }
+        lastError = tx_semaphore_create(&instance->controlBlock, nullptr, initialCount = 0);
+        return lastError == TX_SUCCESS ? instance->id : 0;
+    }
+
+    /// @brief Acquires a semaphore or waits if the count is zero.
+    /// @param id Semaphore identifier.
+    /// @param timeout Timeout value in RTOS ticks.
+    /// @return False if error occurred, true otherwise.
+    inline static bool semaphoreWait(SemaphoreId id, Timeout timeout = waitForever)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        SemaphoreData* instance = m_semaphorePool.getInstance();
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        lastError = tx_semaphore_get(&instance->controlBlock, timeout);
+        return lastError == TX_SUCCESS;
+    }
+
+    /// @brief Increases the RTOS semaphore count allowing the waiting thread to continue.
+    /// @param id Semaphore identifier.
+    /// @return False if error occurred, true otherwise.
+    inline static bool semaphoreSignal(SemaphoreId id)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        SemaphoreData* instance = m_semaphorePool.getInstance();
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        lastError = tx_semaphore_put(&instance->controlBlock);
+        return lastError == TX_SUCCESS;
+    }
+
+    /// @brief Deletes a RTOS semaphore.
+    /// @param id Semaphore identifier.
+    /// @return False if error occurred, true otherwise.
+    inline static bool semaphoreDelete(SemaphoreId id)
+    {
+        if (id < 1)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        SemaphoreData* instance = m_semaphorePool.getInstance();
+        if (!instance)
+        {
+            lastError = TX_NOT_AVAILABLE;
+            return false;
+        }
+        lastError = tx_semaphore_delete(&instance->controlBlock);
+        m_semaphorePool.returnInstance(instance->id);
         return lastError == TX_SUCCESS;
     }
 
@@ -163,8 +335,8 @@ public:
         ThreadData* instance = m_threadPool.getInstance();
         if (!instance)
         {
-            lastError = TX_CEILING_EXCEEDED;
-            return 0;
+            lastError = TX_RESOURCE_HANLDES_DEPLETED;
+            while (1); // Stop here for debugging.
         }
         lastError = tx_thread_create(
             &instance->controlBlock,
@@ -189,7 +361,7 @@ public:
     /// @brief Terminates the thread and deletes it.
     /// @param id Thread identifier.
     /// @return False if error occurred, true otherwise.
-    inline static bool threadTerminate(ThreadId id)
+    inline static bool threadDelete(ThreadId id)
     {
         if (id < 1)
         {
@@ -199,7 +371,7 @@ public:
         ThreadData* instance = m_threadPool.getInstance(id);
         if (!instance)
         {
-            lastError = TX_CEILING_EXCEEDED;
+            lastError = TX_NOT_AVAILABLE;
             return false;
         }
         lastError = tx_thread_delete(&instance->controlBlock);
@@ -208,42 +380,27 @@ public:
         return true;
     }
 
-    /// @brief Creates an event group.
-    /// @param eventGroup Event group instance reference.
-    /// @param name Event group name.
-    /// @return False if error occurred, true otherwise.
-    inline static bool eventGroupCreate(EventGroup& eventGroup, const char* name)
-    {
-        lastError = tx_event_flags_create(&eventGroup, (char*)name);
-        return lastError == TX_SUCCESS;
-    }
-
-    /// @brief Signals events to an event group.
-    /// @param eventGroup Event group instance reference.
-    /// @param flags Flags to signal.
-    /// @param option Setting option (default TX_OR).
-    /// @return False if error occurred, true otherwise.
-    inline static bool eventGroupSignal(EventGroup& eventGroup, EventFlags flags, EventOption option = Or)
-    {
-        lastError = tx_event_flags_set(&eventGroup, flags, option);
-        return lastError == TX_SUCCESS;
-    }
-
-    /// @brief Suspends the current thread until one or more events are signalled.
-    /// @param eventGroup Event group instance reference.
-    /// @param flags Flags awaited (default any / all).
-    /// @param option Combining and clearing option (default OrClear).
-    /// @param timeout Time to wait for the event in OS ticks (default forever).
-    /// @return Event flags received, if none set - error occurred.
-    inline static EventFlags eventGroupWait(EventGroup& eventGroup, EventFlags flags = (EventFlags)(-1),
-                                            EventOption option = OrClear, Timeout timeout = waitForever)
-    {
-        EventFlags actualFlags;
-        lastError = tx_event_flags_get(&eventGroup, flags, option, &actualFlags, timeout);
-        return lastError == TX_SUCCESS ? actualFlags : 0;
-    }
+    /// @brief Last operation error code.
+    inline static Status lastError = TX_SUCCESS;
 
 private:
+
+    /// @brief Event flags metadata structure.
+    struct EventData : public OSResource
+    {
+        TX_EVENT_FLAGS_GROUP group; // Event flags group.
+    };
+
+    /// @brief Mutex instance metadata structure.
+    struct  MutexData : public OSResource
+    {
+        TX_MUTEX controlBlock;  // Mutex control block.
+    };
+
+    struct SemaphoreData : public OSResource
+    {
+        TX_SEMAPHORE controlBlock;  // Semaphore control block.
+    };
 
     /// @brief Thread instance metadata structure.
     struct ThreadData : public OSResource
@@ -253,19 +410,22 @@ private:
         unsigned char stack[threadDefaultStackSize];    // Thread stack.
     };
 
-    /// @brief Mutex instance metadata structure.
-    struct  MutexData : public OSResource
-    {
-        TX_MUTEX controlBlock;  // Mutex control block.
-    };
-
-    /// @brief Last operation error code.
-    inline static Status lastError = TX_SUCCESS;
+#ifdef TX_EVENT_GROUPS
+    inline static OSResourcePool<EventData, TX_EVENT_GROUPS> m_eventPool;
+#else
+    inline static OSResourcePool<EventData, 16> m_eventPool;
+#endif
 
 #ifdef TX_MUTEXES
     inline static OSResourcePool<MutexData, TX_MUTEXES> m_mutexPool;
 #else
     inline static OSResourcePool<MutexData, 16> m_mutexPool;
+#endif
+
+#ifdef TX_SEMAPHORES
+    inline static OSResourcePool<SemaphoreData, TX_SEMAPHORES> m_semaphorePool;
+#else
+    inline static OSResourcePool<SemaphoreData, 16> m_semaphorePool;
 #endif
 
 #ifdef TX_THREADS

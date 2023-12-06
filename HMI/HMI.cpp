@@ -20,6 +20,9 @@ void HMI::start()
     constexpr uint32_t initializationLatency = 100;
     while ((HMI_SysInit & HMI_ALL) != HMI_ALL) OS::delay(initializationLatency);
     Log::msg("HMI: Initialization complete.");
+    Log::msg("Size of TX_EVENT_FLAGS_GROUP: %lub.", sizeof(TX_EVENT_FLAGS_GROUP));
+    Log::msg("Size of TX_MUTEX: %lub.", sizeof(TX_MUTEX));
+    Log::msg("Size of TX_THREAD: %lub.", sizeof(TX_THREAD));
     while (1)
     {
         OS::delay(1000); // for now

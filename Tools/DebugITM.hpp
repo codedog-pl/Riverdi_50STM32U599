@@ -15,7 +15,7 @@ private:
     /// @brief Creates ITM console debug output for the message pool.
     /// @param pool Message pool reference.
     DebugITM(ILogMessagePool& pool) :
-        m_pool(pool), m_senderThreadId(0), m_senderThreadStarted(0), m_events(), m_ptr(nullptr), m_length(0)
+        m_pool(pool), m_senderThreadId(0), m_senderThreadStarted(0), m_isSending(0)
     {
         DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
         ITM->LAR = 0xC5ACCE55;
@@ -24,9 +24,9 @@ private:
         for (int i = 0; i < 2; ++i)
         {
             while (!isITMReadyToSend()) __NOP();
-            sendITM(0);
+            sendITM('\n');
         }
-        sendNext();
+        sendNext(); // In case if the pool already contains unsent messages.
     }
 
     DebugITM(const DebugITM&) = delete;
@@ -35,6 +35,8 @@ private:
     ~DebugITM()
     {
         m_pool.clear();
+        OS::threadDelete(m_senderThreadId);
+        OS::semaphoreDelete(m_senderSemaphoreId);
     }
 
 public:
@@ -65,7 +67,7 @@ public:
     void startAsync(void) override
     {
         if (m_senderThreadId) return;
-        OS::eventGroupCreate(m_events, "DebugITM");
+        m_senderSemaphoreId = OS::semaphoreCreate("DebugITM");
         m_senderThreadId = OS::threadStart("ITM", senderThreadEntry);
     }
 
@@ -73,17 +75,12 @@ public:
     /// @param index Message index.
     void send(int index) override
     {
-        if (!isITMAvailable()) return;
-        static bool isSending = false;
-        if (isSending || index > m_pool.lastIndex()) return;
-        isSending = true;
-        m_pool.lastSentIndex(m_pool.lastIndex());
-        LogMessage* message = m_pool[index];
-        auto [buffer, length] = message->buffer();
-        if (!length) return;
-        if (m_senderThreadStarted) sendAsync(buffer, length);
-        else sendImmediately(buffer, length);
-        isSending = false;
+        if (m_isSending || index > m_pool.lastIndex() || !isITMAvailable()) return;
+        LogMessage* msg = m_pool[index];
+        if (!msg || msg->empty()) return;
+        m_isSending = true;
+        m_pool.lastSentIndex(index);
+        if (m_senderThreadStarted) sendAsync(); else sendImmediately();
     }
 
 private:
@@ -95,53 +92,44 @@ private:
         else m_pool.clear();
     }
 
-    /// @brief Sends the message immediately in blocking mode.
-    /// @param buffer Message buffer.
-    /// @param length Message length.
-    void sendImmediately(const uint8_t* buffer, size_t length)
+    /// @brief Sends the current message immediately in blocking mode.
+    void sendImmediately()
     {
-        for (size_t i = 0; i < length; i++)
+        LogMessage& msg = *m_pool.lastSent();
+        for (size_t i = 0; i < msg.length(); i++)
         {
             while (!isITMReadyToSend()) __NOP();
-            sendITM(buffer[i]);
+            sendITM(msg[i]);
         }
-        auto message = m_pool.lastSent();
-        if (!message->buffer().second) return;
-        message->clear();
+        msg.clear();
+        m_isSending = false;
         sendNext();
     }
 
-    /// @brief Sends the message asynchronously without blocking the calling thread.
-    /// @param buffer Message buffer.
-    /// @param length Message length.
-    void sendAsync(const uint8_t* buffer, size_t length)
+    /// @brief Sends the current message asynchronously without blocking the calling thread.
+    void sendAsync()
     {
-        m_ptr = (uint8_t*)buffer;
-        m_length = length;
-        OS::eventGroupSignal(m_events, 1);
+        if (m_senderSemaphoreId) OS::semaphoreSignal(m_senderSemaphoreId);
     }
 
     /// @brief Sends the current message asynchronously if it's ready and yields the thread waiting for the next message.
     static void senderThreadEntry(OS::ThreadEntryArgType)
     {
         m_instance->m_senderThreadStarted = true;
-        while (OS::eventGroupWait(m_instance->m_events))
-        {
-            if (m_instance->m_ptr && m_instance->m_length)
+        while (OS::semaphoreWait(m_instance->m_senderSemaphoreId))
+        { // When it gets the signal from `sendAsync()` it starts sending the data with yielding the thread after each character...
+            if (m_instance->m_pool.lastSentIndex() < 0) continue;
+            LogMessage& msg = *m_instance->m_pool.lastSent();
+            if (msg.empty()) continue;
+            for (size_t i = 0, n = msg.length(); i < n; ++i)
             {
-                for (size_t i = 0; i < m_instance->m_length; i++)
-                {
-                    while (!isITMReadyToSend()) OS::yield();
-                    sendITM(m_instance->m_ptr[i]);
-                }
-                m_instance->m_ptr = nullptr;
-                m_instance->m_length = 0;
-                auto message = m_instance->m_pool.lastSent();
-                if (!message->buffer().second) continue;
-                message->clear();
-                m_instance->sendNext();
+                while (!isITMReadyToSend()) OS::yield();
+                sendITM(msg[i]);
             }
-        }
+            msg.clear();
+            m_instance->m_isSending = false;
+            m_instance->sendNext();
+        } // Then it waits for the next signal.
         m_instance->m_senderThreadStarted = false;
     }
 
@@ -176,13 +164,19 @@ private:
         ITM->PORT[0U].u8 = ch;
     }
 
+    /// @brief Immediately and unconditionally sends a character to the ITM port.
+    /// @param ch A pointer of the character to send.
+    static inline void sendITM(uint8_t* ptr)
+    {
+        ITM->PORT[0U].u8 = *ptr;
+    }
+
 private:
     ILogMessagePool& m_pool;                    // Log message pool reference.
-    OS::ThreadId m_senderThreadId;              // True if the sender thread is started.
+    OS::ThreadId m_senderThreadId;              // Sender thread identifier.
     bool m_senderThreadStarted;                 // True if the sender thread is started.
-    OS::EventGroup m_events;                    // Event group to receive asynchronous request start.
-    uint8_t* m_ptr;                             // Current message data pointer for asynchronous operation.
-    size_t m_length;                            // Current message length for asynchronous operation.
+    bool m_isSending;                           // True if the sender thread is busy sending a message.
+    OS::SemaphoreId m_senderSemaphoreId;          // Event group to receive asynchronous request start.
     static inline DebugITM* m_instance = {};    // Singleton instance pointer for static methods.
 
 };

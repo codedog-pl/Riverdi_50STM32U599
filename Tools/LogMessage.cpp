@@ -10,38 +10,43 @@
 #include "DateTimeEx.hpp"
 
 LogMessage::LogMessage()
-    : _severity(debug), _length(0), _offset(0), _buffer() { memset(_buffer, 0, size); }
+    : m_severity(debug), m_length(0), m_offset(0), m_buffer() { memset(m_buffer, 0, size); }
 
 LogMessage::LogMessage(Severity s)
-    : _severity(s), _length(0), _offset(0), _buffer() { memset(_buffer, 0, size); }
+    : m_severity(s), m_length(0), m_offset(0), m_buffer() { memset(m_buffer, 0, size); }
 
 LogMessage::LogMessage(const LogMessage &other)
-    : _severity(other._severity), _length(other._length), _offset(other._offset), _buffer()
+    : m_severity(other.m_severity), m_length(other.m_length), m_offset(other.m_offset), m_buffer()
 {
-    memcpy(_buffer, other._buffer, _length);
+    memcpy(m_buffer, other.m_buffer, m_length);
 }
 
 LogMessage::LogMessage(LogMessage &&other)
-    : _severity(other._severity), _length(other._length), _offset(other._offset), _buffer()
+    : m_severity(other.m_severity), m_length(other.m_length), m_offset(other.m_offset), m_buffer()
 {
-    memcpy(_buffer, other._buffer, _length);
+    memcpy(m_buffer, other.m_buffer, m_length);
 }
 
 void LogMessage::clear()
 {
-    _offset = 0;
-    _length = 0;
-    memset(_buffer, 0, size);
+    m_offset = 0;
+    m_length = 0;
+    memset(m_buffer, 0, size);
+}
+
+bool LogMessage::empty()
+{
+    return !m_offset || !m_length;
 }
 
 LogMessage* LogMessage::add(char c, int count)
 {
-    if (_length + count > size) return this;
+    if (m_length + count > size) return this;
     for (int i = 0; i < count; i++)
     {
-        _buffer[_offset] = c;
-        _offset++;
-        _length++;
+        m_buffer[m_offset] = c;
+        m_offset++;
+        m_length++;
     }
     return this;
 }
@@ -49,10 +54,10 @@ LogMessage* LogMessage::add(char c, int count)
 LogMessage* LogMessage::add(const char* s)
 {
     size_t l = strlen(s);
-    if (_length + l > size) return this;
-    memcpy(&_buffer[_offset], s, l);
-    _offset += l;
-    _length += l;
+    if (m_length + l > size) return this;
+    memcpy(&m_buffer[m_offset], s, l);
+    m_offset += l;
+    m_length += l;
     return this;
 }
 
@@ -68,7 +73,7 @@ LogMessage* LogMessage::addTimestamp()
     else return this->add('*');
 }
 
-std::pair<const uint8_t*, int> LogMessage::buffer()
+LogMessage::Buffer LogMessage::buffer()
 {
-    return { (const uint8_t*)&_buffer, _length };
+    return { (const uint8_t*)&m_buffer, m_length };
 }

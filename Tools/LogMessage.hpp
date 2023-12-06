@@ -34,6 +34,8 @@ public:
         error, warning, info, debug, detail, spam
     };
 
+    using Buffer = std::pair<const uint8_t*, int>;
+
 public:
 
     /// @brief Creates a new log message with the default (debug) severity.
@@ -49,6 +51,9 @@ public:
     /// @brief Clears the message.
     void clear();
 
+    /// @returns True if the message is empty / unset.
+    bool empty();
+
     /**
      * @brief Prints formatted text with the argument list.
      *
@@ -58,9 +63,9 @@ public:
      */
     template<class ...va> LogMessage* printf(const char* format, va ...args)
     {
-        int l = snprintf((char*)(&_buffer[_offset]), size - _length, format, args...);
-        _offset += l;
-        _length += l;
+        int l = snprintf((char*)(&m_buffer[m_offset]), size - m_length, format, args...);
+        m_offset += l;
+        m_length += l;
         return this;
     }
 
@@ -91,15 +96,23 @@ public:
     /// @returns Message's buffer pointer and length in bytes as pair.
     std::pair<const uint8_t*, int> buffer();
 
+    /// @returns Message buffer pointer.
+    uint8_t* ptr() { return m_buffer; }
+
     /// @returns Message length in bytes.
-    size_t length();
+    size_t length() { return m_length; }
+
+    /// @brief Gets the message character at the specified index.
+    /// @param index Character index.
+    /// @return A pointer to the specific character in the message buffer or null pointer if out of bounds.
+    uint8_t* operator[](size_t index) { return index < m_length ? &m_buffer[index] : nullptr; }
 
 private:
-    static constexpr int size = LOG_MESSAGE_SIZE;                      // Pre-configured message size in bytes.
-    static constexpr const char* dateTimeFormat = ISO_DATE_TIME_MS_F;  // Date format for messages.
-    Severity _severity = debug;                                        // Message severity level.
-    size_t _length = 0;                                                // Current buffer length.
-    int _offset = 0;                                                   // Current message offset.
-    uint8_t _buffer[size]{};                                           // Message buffer.
+    static constexpr int size = LOG_MESSAGE_SIZE;                       // Pre-configured message size in bytes.
+    static constexpr const char* dateTimeFormat = ISO_DATE_TIME_MS_F;   // Date format for messages.
+    Severity m_severity = debug;                                        // Message severity level.
+    size_t m_length = 0;                                                // Current buffer length.
+    int m_offset = 0;                                                   // Current message offset.
+    uint8_t m_buffer[size]{};                                           // Message buffer.
 
 };

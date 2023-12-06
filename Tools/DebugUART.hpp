@@ -16,7 +16,7 @@ private:
     DebugUART(UART_HandleTypeDef* huart, ILogMessagePool& pool) : m_uart(huart), m_pool(pool)
     {
         HAL_UART_RegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID, tx_complete);
-        sendNext();
+        sendNext(); // In case if the pool already contains unsent messages.
     }
 
     DebugUART(const DebugUART&) = delete;
@@ -31,28 +31,33 @@ private:
 
 public:
 
+    /// @brief Creates the UART debug output instance.
+    /// @param pool Message pool reference.
+    /// @return Singleton instance.
     static DebugUART* getInstance(UART_HandleTypeDef* huart, ILogMessagePool& pool)
     {
         static DebugUART instance(huart, pool);
         return m_instance = &instance;
     }
 
+    /// @brief Gets the singleton instance of the UART debug output.
+    /// @return Singleton instance.
     static inline DebugUART* getInstance()
     {
         return m_instance;
     }
 
+    /// @brief Sends a message to the output.
+    /// @param index Message index.
     void send(int index) override
     {
-        static bool isSending = false;
-        if (isSending || index > m_pool.lastIndex()) return;
-        isSending = true;
-        m_pool.lastSentIndex(m_pool.lastIndex());
+        if (m_isSending || !m_uart || index > m_pool.lastIndex()) return;
         LogMessage* message = m_pool[index];
+        if (!message || message->empty()) return;
+        m_isSending = true;
+        m_pool.lastSentIndex(index);
         auto [buffer, length] = message->buffer();
-        if (!length) return;
-        if (m_uart) HAL_UART_Transmit_DMA(m_uart, buffer, length);
-        isSending = false;
+        HAL_UART_Transmit_DMA(m_uart, buffer, length);
     }
 
 private:
@@ -70,8 +75,9 @@ private:
     {
         if (!m_instance) return;
         auto message = m_instance->m_pool.lastSent();
-        if (!message->buffer().second) return;
+        if (!message || message->empty()) return;
         message->clear();
+        m_instance->m_isSending = false;
         m_instance->sendNext();
     }
 
@@ -79,6 +85,7 @@ private:
 
     UART_HandleTypeDef* m_uart;                 // Configured UART handle pointer.
     ILogMessagePool& m_pool;                    // Log message pool reference.
+    bool m_isSending;                           // True if the port DMA is busy sending a message.
     static inline DebugUART* m_instance = {};   // Singleton instance pointer for static methods.
 
 };

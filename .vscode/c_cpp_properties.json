@@ -58,8 +58,6 @@
                 "HAL_PREFIX=stm32u5xx_hal",
                 "BSP_USE_CMSIS_OS",
                 "USE_AZURE_RTOS",
-                "TX_THREADS=8",
-                "TX_MUTEXES=8",
                 "TX_INCLUDE_USER_DEFINE_FILE",
                 "TX_SINGLE_MODE_NON_SECURE=1",
                 "FX_INCLUDE_USER_DEFINE_FILE",
