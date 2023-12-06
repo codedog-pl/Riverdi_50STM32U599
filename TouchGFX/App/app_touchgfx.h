@@ -2,7 +2,7 @@
   ******************************************************************************
   * File Name          : app_touchgfx.h
   ******************************************************************************
-  * This file was created by TouchGFX Generator 4.22.1. This file is only
+  * This file was created by TouchGFX Generator 4.23.0. This file is only
   * generated once! Delete this file from your project and re-generate code
   * using STM32CubeMX or change this file manually to update it.
   ******************************************************************************
@@ -22,7 +22,7 @@
 #ifndef APP_TOUCHGFX_H
 #define APP_TOUCHGFX_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -44,7 +44,7 @@
 
 /* Exported functions prototypes ---------------------------------------------*/
 void MX_TouchGFX_PreOSInit(void);
-UINT MX_TouchGFX_Init(VOID *memory_ptr);
+UINT MX_TouchGFX_Init(VOID* memory_ptr);
 void MX_TouchGFX_Process(void);
 void TouchGFX_Task(unsigned long thread_input);
 
