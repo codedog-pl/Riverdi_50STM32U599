@@ -13,9 +13,9 @@
 #include <utility>
 #include <stdio.h>
 #include <string.h>
-#include "c_bindings.h"
+#include "bindings.h"
 EXTERN_C_BEGIN
-#include "c_datetime.h"
+#include "datetime.h"
 EXTERN_C_END
 
 /**

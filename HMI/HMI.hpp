@@ -10,7 +10,7 @@
 #pragma once
 
 extern "C" {
-    #include "HMI_C.h"
+    #include "hmi.h"
 }
 
 class HMI final

@@ -7,9 +7,9 @@
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
-#include "Thread.hpp"
+#include "hal_mcu.h"
 #include "Log.hpp"
-#include MCU_HEADER
+#include "Thread.hpp"
 
 /**
  * @remarks When called again with the same action before the next tick occurs - it's ignored.

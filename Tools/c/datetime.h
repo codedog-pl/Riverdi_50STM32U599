@@ -11,9 +11,8 @@
 
 #pragma once
 
-#include "c_integer.h"
-#include "hal_target.h"
-#include HAL_HEADER
+#include <integer.h>
+#include "hal.h"
 
 #define ISO_DATE_F "%04u-%02u-%02u" ///< ISO8601 date format.
 #define ISO_DATE_L 11 ///< Date string length (trailing zero included).

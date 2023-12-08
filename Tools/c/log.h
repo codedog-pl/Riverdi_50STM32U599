@@ -9,10 +9,9 @@
 
 #pragma once
 
-#include "hal_target.h"
-#include HAL_HEADER
-#include "stdbool.h"
-#include "stdint.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include "hal.h"
 
 /// @brief Initializes the default log level.
 /// @param isRelease 1: RELEASE build, fewer messages. 0: DEBUG build, more messages.

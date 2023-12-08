@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "c_bindings.h"
+#include "bindings.h"
 #include "hal_target.h"
 EXTERN_C_BEGIN
 #include HAL_HEADER

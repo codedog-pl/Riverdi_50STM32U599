@@ -38,13 +38,14 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Application/Tools \
 Application/User/AZURE_RTOS/App \
 Application/User/Core \
 Application/User/FileX/App \
 Application/User/FileX/Target \
 Application/User/HMI \
 Application/User/Startup \
+Application/User/Tools \
+Application/User/Tools/c \
 Application/User/TouchGFX/App \
 Application/User/TouchGFX/target \
 Application/User/TouchGFX/target/generated \

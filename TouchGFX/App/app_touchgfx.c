@@ -24,8 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "HMI_C.h"
-#include "c_log.h"
+#include "hmi.h"
+#include "log.h"
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/

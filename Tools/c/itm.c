@@ -1,5 +1,5 @@
 /**
- * @file        swv_itm.c
+ * @file        itm.c
  * @author      CodeDog
  * @brief       Redirects standard output into SWV ITM Data Console.
  * @remarks     Reuqires SWV debugging enabled in trace mode.
@@ -7,7 +7,19 @@
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
-#include "stm32u5xx_hal.h"
+#include "hal.h"
+#include "itm.h"
+
+/**
+ * @brief Enables SWV ITM Data Console output.
+ * @return
+ */
+void ITM_Enable(void)
+{
+    DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
+    ITM->LAR = 0xC5ACCE55;
+    ITM->TER = 0x1;
+}
 
 /**
  * @brief Sends data to the SWV ITM Data Console.

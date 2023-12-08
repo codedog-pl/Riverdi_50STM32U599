@@ -23,8 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "c_log.h"
-#include "HMI_C.h"
+#include "hmi.h"
+#include "log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

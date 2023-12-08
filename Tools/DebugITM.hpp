@@ -1,10 +1,9 @@
 #pragma once
 
-#ifdef ITM_HEADER
+#include "hal.h"
 #include "IDebugOutput.hpp"
 #include "ILogMessagePool.hpp"
 #include "OS.hpp"
-#include ITM_HEADER
 
 /// @brief ITM console debug output.
 class DebugITM : public IDebugOutput
@@ -182,5 +181,3 @@ private:
     static inline DebugITM* m_instance = {};    // Singleton instance pointer for static methods.
 
 };
-
-#endif

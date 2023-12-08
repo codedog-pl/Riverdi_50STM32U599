@@ -1,9 +1,7 @@
 #pragma once
 
 #include "LogBase.hpp"
-#ifdef ITM_HEADER
 #include "DebugITM.hpp"
-#endif
 #include "DebugUART.hpp"
 
 /// @brief System-wide UART log implementation.
@@ -17,9 +15,7 @@ public:
     static inline void init(bool isRelase = false)
     {
         level(isRelase ? LogMessage::info : LogMessage::detail);
-#ifdef ITM_HEADER
         m_output = DebugITM::getInstance(m_pool);
-#endif
     }
 
     /// @brief Initializes the logger with the UART output.

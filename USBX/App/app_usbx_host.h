@@ -31,7 +31,7 @@ extern "C" {
 #include "ux_host_msc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "c_log.h"
+#include "log.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -51,8 +51,13 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+#if DEBUG
 #define USBH_UsrLog(...)   log_msg(3, __VA_ARGS__);
 #define USBH_ErrLog(...)   log_msg(0, __VA_ARGS__);
+#else
+#define USBH_UsrLog(...)
+#define USBH_ErrLog(...)
+#endif
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

@@ -1,5 +1,5 @@
 /**
- * @file        HMI_C.h
+ * @file        hmi.h
  * @author      CodeDog
  * @brief       -
  * @remarks     -

@@ -23,8 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "c_log.h"
-#include "HMI_C.h"
+#include "hmi.h"
+#include "log.h"
 #include "ux_api.h"
 #include "ux_host_class_storage.h"
 #include "ux_host_stack.h"

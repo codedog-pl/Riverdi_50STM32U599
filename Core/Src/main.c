@@ -46,7 +46,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "c_log.h"
+#include "log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

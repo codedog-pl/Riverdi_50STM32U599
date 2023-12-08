@@ -1,6 +1,6 @@
 #pragma once
 
-#include HAL_HEADER
+#include "hal.h"
 #include "IDebugOutput.hpp"
 #include "ILogMessagePool.hpp"
 

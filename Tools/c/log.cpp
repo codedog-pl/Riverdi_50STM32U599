@@ -6,15 +6,15 @@
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
+#include <c/bindings.h>
 #include "Log.hpp"
 #include <cstdarg>
 #include <cstring>
 
-#include "c_bindings.h"
 
 EXTERN_C_BEGIN
 
-#include "c_log.h"
+#include <c/log.h>
 #include "main.h"
 
 void log_level(bool isRelease) { Log::init(isRelease); }

@@ -27,13 +27,14 @@ RM := rm -rf
 -include Application/User/TouchGFX/target/generated/subdir.mk
 -include Application/User/TouchGFX/target/subdir.mk
 -include Application/User/TouchGFX/App/subdir.mk
+-include Application/User/Tools/c/subdir.mk
+-include Application/User/Tools/subdir.mk
 -include Application/User/Startup/subdir.mk
 -include Application/User/HMI/subdir.mk
 -include Application/User/FileX/Target/subdir.mk
 -include Application/User/FileX/App/subdir.mk
 -include Application/User/Core/subdir.mk
 -include Application/User/AZURE_RTOS/App/subdir.mk
--include Application/Tools/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

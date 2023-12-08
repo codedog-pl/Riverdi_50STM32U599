@@ -26,8 +26,8 @@
 #include "ux_host_stack.h"
 #include "usb_otg.h"
 #include "ux_hcd_stm32.h"
-#include "c_log.h"
-#include "HMI_C.h"
+#include "hmi.h"
+#include "log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

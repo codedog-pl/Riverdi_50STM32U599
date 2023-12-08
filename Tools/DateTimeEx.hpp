@@ -9,9 +9,9 @@
 #pragma once
 
 #include "DateTime.hpp"
-#include "c_bindings.h"
+#include "bindings.h"
 EXTERN_C_BEGIN
-#include "c_datetime.h"
+#include "datetime.h"
 EXTERN_C_END
 
 class __attribute__((__packed__)) DateTimeEx : public DateTime
