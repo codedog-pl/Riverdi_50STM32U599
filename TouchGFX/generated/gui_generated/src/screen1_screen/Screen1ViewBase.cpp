@@ -3,7 +3,6 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
-#include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
     fwdBtnClickCallback(this, &Screen1ViewBase::fwdBtnClickCallbackHandler)
@@ -15,18 +14,15 @@ Screen1ViewBase::Screen1ViewBase() :
     background.setXY(0, 0);
     add(background);
 
-    screenIdTxt.setXY(299, 214);
-    screenIdTxt.setColor(touchgfx::Color::getColorFromRGB(0, 119, 170));
-    screenIdTxt.setLinespacing(0);
-    screenIdTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_J1U4));
-    add(screenIdTxt);
-
     fwdBtn.setXY(510, 386);
     fwdBtn.setClickCallback(fwdBtnClickCallback);
     add(fwdBtn);
 
     header.setXY(15, 15);
     add(header);
+
+    dateTimeSetter1.setXY(160, 104);
+    add(dateTimeSetter1);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -39,6 +35,7 @@ void Screen1ViewBase::setupScreen()
     background.initialize();
     fwdBtn.initialize();
     header.initialize();
+    dateTimeSetter1.initialize();
 }
 
 void Screen1ViewBase::fwdBtnClickCallbackHandler()

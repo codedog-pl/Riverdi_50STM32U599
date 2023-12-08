@@ -102,7 +102,7 @@ os_source_files := \
     $(cubemx_os_path)/Source/timers.c \
     $(cubemx_os_path)/Source/CMSIS_RTOS_V2/cmsis_os2.c
 
-core_path := Core/Src	
+core_path := Core/Src
 
 os_include_paths := \
     $(cubemx_os_path)/Source/include \
@@ -218,7 +218,7 @@ source_paths = $(foreach comp, $(all_components), $(comp)/src) \
 							 $(os_source_paths) \
 							 $(makefile_path_relative)
 
-							 
+
 
 
 # Finds files that matches the specified pattern. The directory list
@@ -248,7 +248,7 @@ fontconvert_font_files := $(fontconvert_ttf_lower_files) \
 
 board_c_files := \
 						$(Drivers_path)/BSP/Components/mx25lm51245g/mx25lm51245g.c
-						
+
 board_cpp_files :=
 
 board_include_paths := 	$(Drivers_path)/CMSIS/Device/ST/STM32U5xx/Include \
@@ -260,6 +260,8 @@ board_include_paths := 	$(Drivers_path)/CMSIS/Device/ST/STM32U5xx/Include \
 c_compiler_options +=
 cpp_compiler_options +=
 
+
+
 include_paths += platform/os $(board_include_paths) $(gpu2d) $(nemaGFX) $(libjpeg)
 
 cpp_source_files := $(call find, $(source_paths),*.cpp)
@@ -270,6 +272,8 @@ asm_source_files := $(call find, $(source_paths),*.s)
 asm_source_files += $(call find, $(source_paths),*.S)
 
 object_files := $(cpp_source_files) $(c_source_files)
+
+include $(application_path)/TouchGFX/config/gcc/additional.mk
 
 # Start converting paths
 object_files := $(object_files:$(touchgfx_path)/%.cpp=$(object_output_path)/touchgfx/%.o)
@@ -298,8 +302,8 @@ libraries += touchgfxnema-float-abi-hard \
 			 nemagfx-float-abi-hard
 
 library_include_paths += $(cubemx_middlewares_path)/ST/touchgfx_components/gpu2d/NemaGFX/lib/core/cortex_m33/gcc \
-						 $(cubemx_middlewares_path)/ST/touchgfx_components/gpu2d/TouchGFXNema/lib/cortex_m33/gcc 
-						 
+						 $(cubemx_middlewares_path)/ST/touchgfx_components/gpu2d/TouchGFXNema/lib/cortex_m33/gcc
+
 .PHONY: _all_ _clean_ _assets_ _flash_ _intflash_ generate_assets build_executable
 
 # Force linking each time

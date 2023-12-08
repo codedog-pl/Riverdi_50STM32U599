@@ -29,7 +29,7 @@
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
-#define TOUCHGFX_STACK_SIZE          (4080)
+#define TOUCHGFX_STACK_SIZE          (16384)
 
 /* USER CODE BEGIN PD */
 

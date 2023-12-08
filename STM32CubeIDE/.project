@@ -3430,6 +3430,46 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/Background.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/DateTimeSetter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetter2DigitsN.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetter2DigitsN.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetter4DigitsN.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetter4DigitsN.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetterFlat.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterFlat.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetterMasksBottom.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterMasksBottom.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetterMasksBottomSVG.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterMasksBottomSVG.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetterMasksTop.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterMasksTop.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/DateTimeSetterMasksTopSVG.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterMasksTopSVG.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/FwdBtn.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/FwdBtn.cpp</locationURI>
@@ -3480,6 +3520,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/FontCache.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Font_impact_45_4bpp_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Font_impact_45_4bpp_0.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Font_segoeui_32_4bpp_0.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Font_segoeui_32_4bpp_0.cpp</locationURI>
@@ -3500,6 +3545,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/GeneratedFont.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Kerning_impact_45_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Kerning_impact_45_4bpp.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Kerning_segoeui_32_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Kerning_segoeui_32_4bpp.cpp</locationURI>
@@ -3513,6 +3563,11 @@
 			<name>Application/User/generated/Kerning_verdana_40_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Table_impact_45_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/fonts/src/Table_impact_45_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Table_segoeui_32_4bpp.cpp</name>
@@ -3555,6 +3610,46 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/BackgroundBase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/DateTimeSetter2DigitsNBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetter2DigitsNBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetter4DigitsNBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetter4DigitsNBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterFlatBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterFlatBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterMasksBottomBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterMasksBottomBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterMasksBottomSVGBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterMasksBottomSVGBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterMasksTopBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterMasksTopBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/DateTimeSetterMasksTopSVGBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterMasksTopSVGBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/FwdBtnBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/FwdBtnBase.cpp</locationURI>
@@ -3585,6 +3680,56 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/SVGDatabase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_bottom_dark.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_bottom_dark.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_bottom_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_bottom_light.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_left_dark.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_left_dark.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_right_dark.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_right_dark.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_top_dark.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_top_dark.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_top_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_top_light.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_backgrounds_small_shaded_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_backgrounds_small_shaded_light.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_hour_shaded_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_hour_shaded_light.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_minute_shaded_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_minute_shaded_light.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_second_shaded_light.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_second_shaded_light.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_clay_theme_images_widgets_button_regular_height_50_medium_rounded_normal.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_clay_theme_images_widgets_button_regular_height_50_medium_rounded_normal.cpp</locationURI>
@@ -3595,9 +3740,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_clay_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_dark_theme_images_backgrounds_800x480_hive.cpp</name>
+			<name>Application/User/generated/image_light_theme_images_backgrounds_800x480_shattered_rain.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_dark_theme_images_backgrounds_800x480_hive.cpp</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_light_theme_images_backgrounds_800x480_shattered_rain.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

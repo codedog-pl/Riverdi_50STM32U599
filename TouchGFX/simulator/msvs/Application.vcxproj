@@ -35,6 +35,22 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\FwdBtnBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\Header.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\HeaderBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetter.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetter2DigitsN.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetter2DigitsNBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetter4DigitsN.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetter4DigitsNBase.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksBottom.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksBottomBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksTop.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksTopBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksBottomSVG.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksBottomSVGBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksTopSVG.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksTopSVGBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterFlat.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterFlatBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -199,6 +215,22 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\FwdBtnBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\Header.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\HeaderBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetter.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetter2DigitsN.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetter2DigitsNBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetter4DigitsN.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetter4DigitsNBase.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksBottom.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksBottomBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksTop.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksTopBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksBottomSVG.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksBottomSVGBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksTopSVG.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksTopSVGBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterFlat.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterFlatBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

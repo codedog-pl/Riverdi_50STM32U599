@@ -20,7 +20,7 @@ FwdBtnBase::FwdBtnBase() :
     label.setXY(123, 26);
     label.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     label.setLinespacing(0);
-    label.setTypedText(touchgfx::TypedText(T___SINGLEUSE_4XTV));
+    label.setTypedText(touchgfx::TypedText(T__NEXT));
     add(label);
 }
 

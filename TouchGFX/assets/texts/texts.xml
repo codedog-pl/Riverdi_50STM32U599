@@ -4,28 +4,40 @@
     <Language Id="GB" />
   </Languages>
   <Texts>
-    <TextGroup Id="Group1" />
-    <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_DTOK" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">50STM32U599</Translation>
+    <TextGroup Id="DateTimeSetter">
+      <Text Id="_DTS2" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_P48S" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&lt;&lt;</Translation>
+      <Text Id="_DTS4" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">0000</Translation>
       </Text>
-      <Text Id="__SingleUse_4XTV" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&gt;&gt;</Translation>
+      <Text Id="_DTS_DS" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">-</Translation>
       </Text>
-      <Text Id="__SingleUse_MLC1" Alignment="Left" TypographyId="Large">
-        <Translation Language="GB">SCREEN 2</Translation>
+      <Text Id="_DTS_TS" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">:</Translation>
       </Text>
-      <Text Id="__SingleUse_J1U4" Alignment="Left" TypographyId="Large">
-        <Translation Language="GB">SCREEN 1</Translation>
+      <Text Id="_DTS_VALUE" Alignment="Center" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">&lt;value&gt;&#10;</Translation>
       </Text>
     </TextGroup>
+    <TextGroup Id="Common">
+      <Text Id="_BOARD" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">50STM32U599</Translation>
+      </Text>
+      <Text Id="_PREV" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;&lt;</Translation>
+      </Text>
+      <Text Id="_NEXT" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&gt;&gt;</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="Unsorted" />
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="segoeui.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="DateTimeSetterText" Font="impact.ttf" Size="45" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
   </Typographies>
 </TextDatabase>

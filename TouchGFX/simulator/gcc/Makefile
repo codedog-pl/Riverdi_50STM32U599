@@ -1,5 +1,5 @@
 # Helper macros to convert spaces into question marks and back again
-e := 
+e :=
 sp := $(e) $(e)
 qs = $(subst ?,$(sp),$1)
 sq = $(subst $(sp),?,$1)
@@ -20,10 +20,7 @@ all clean assets:
 $(error Spaces not allowed in path)
 else
 
-ADDITIONAL_SOURCES := 
-ADDITIONAL_INCLUDE_PATHS := 
-ADDITIONAL_LIBRARY_PATHS := 
-ADDITIONAL_LIBRARIES :=
+include $(application_path)/config/gcc/additional.mk
 export ADDITIONAL_SOURCES ADDITIONAL_INCLUDE_PATHS ADDITIONAL_LIBRARY_PATHS ADDITIONAL_LIBRARIES
 
 all: $(filter assets,$(MAKECMDGOALS))

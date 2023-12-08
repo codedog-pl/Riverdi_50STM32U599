@@ -86,7 +86,7 @@ uint8_t DateTime::daysInMonth(uint16_t _year, uint8_t _month)
 
 TimeSpan DateTime::operator-(DateTime &other)
 {
-    tm tm1 = {0};
+    tm tm1 = {};
     tm1.tm_year = year;
     tm1.tm_mon = month;
     tm1.tm_mday = day;
@@ -94,7 +94,7 @@ TimeSpan DateTime::operator-(DateTime &other)
     tm1.tm_min = minute;
     tm1.tm_sec = second;
     time_t t1 = mktime(&tm1);
-    tm tm0 = {0};
+    tm tm0 = {};
     tm0.tm_year = other.year;
     tm0.tm_mon = other.month;
     tm0.tm_mday = other.day;

@@ -13,21 +13,6 @@
             "CustomContainerDefinitionName": "Background"
           },
           {
-            "Type": "TextArea",
-            "Name": "screenIdTxt",
-            "X": 299,
-            "Y": 214,
-            "Width": 202,
-            "Height": 49,
-            "TextId": "__SingleUse_J1U4",
-            "TextRotation": "0",
-            "Color": {
-              "Green": 119,
-              "Blue": 170
-            },
-            "AutoSize": true
-          },
-          {
             "Type": "CustomContainerInstance",
             "Name": "fwdBtn",
             "X": 510,
@@ -44,6 +29,15 @@
             "Width": 204,
             "Height": 26,
             "CustomContainerDefinitionName": "Header"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetter1",
+            "X": 160,
+            "Y": 104,
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetter"
           }
         ],
         "Interactions": [
@@ -64,6 +58,7 @@
       },
       {
         "Name": "Screen2",
+        "CanvasBufferSize": 12000,
         "Components": [
           {
             "Type": "CustomContainerInstance",
@@ -72,20 +67,6 @@
             "Height": 480,
             "LockPosition": true,
             "CustomContainerDefinitionName": "Background"
-          },
-          {
-            "Type": "TextArea",
-            "Name": "screenIdTxt",
-            "X": 299,
-            "Y": 214,
-            "Width": 202,
-            "Height": 49,
-            "TextId": "__SingleUse_MLC1",
-            "TextRotation": "0",
-            "Color": {
-              "Green": 170
-            },
-            "AutoSize": true
           },
           {
             "Type": "CustomContainerInstance",
@@ -103,6 +84,15 @@
             "Width": 204,
             "Height": 26,
             "CustomContainerDefinitionName": "Header"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetter",
+            "X": 160,
+            "Y": 104,
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetterFlat"
           }
         ],
         "Interactions": [
@@ -134,7 +124,7 @@
             "Name": "backgroundImg",
             "Width": 800,
             "Height": 480,
-            "RelativeFilename": "__generated\\dark_theme_images_backgrounds_800x480_hive.png"
+            "RelativeFilename": "__generated\\light_theme_images_backgrounds_800x480_shattered_rain.png"
           }
         ],
         "Interactions": []
@@ -159,8 +149,8 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 32,
-            "TextId": "__SingleUse_P48S",
+            "Height": 43,
+            "TextId": "_PREV",
             "TextRotation": "0",
             "AutoSize": true
           }
@@ -205,8 +195,8 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 32,
-            "TextId": "__SingleUse_4XTV",
+            "Height": 43,
+            "TextId": "_NEXT",
             "TextRotation": "0",
             "AutoSize": true
           }
@@ -243,14 +233,1158 @@
             "Y": -6,
             "Width": 204,
             "Height": 32,
-            "TextId": "__SingleUse_DTOK",
+            "TextId": "_BOARD",
             "TextRotation": "0",
+            "Color": {
+              "Green": 82,
+              "Blue": 120
+            },
+            "AutoSize": true
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetter",
+        "Width": 480,
+        "Height": 272,
+        "Includes": "#include \"DateTime.hpp\"",
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "background",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetterMasksBottom",
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetterMasksBottom"
+          },
+          {
+            "Type": "Container",
+            "Name": "separators",
+            "Y": 112,
+            "Width": 480,
+            "Height": 48,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "TextArea",
+                "Name": "ts2",
+                "X": 388,
+                "Y": -9,
+                "Width": 9,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_TS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ts1",
+                "X": 328,
+                "Y": -9,
+                "Width": 9,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_TS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ds2",
+                "X": 194,
+                "Y": -6,
+                "Width": 13,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_DS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ds1",
+                "X": 130,
+                "Y": -6,
+                "Width": 13,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_DS",
+                "TextRotation": "0",
+                "AutoSize": true
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "digits",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "ScrollWheel",
+                "Name": "secondWheel",
+                "X": 399,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 60,
+                "InitialElement": 30,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 8.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "minuteWheel",
+                "X": 339,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 60,
+                "InitialElement": 30,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 8.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "hourWheel",
+                "X": 279,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 24,
+                "InitialElement": 12,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "dayWheel",
+                "X": 209,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 31,
+                "InitialElement": 15,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "monthWheel",
+                "X": 145,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 12,
+                "InitialElement": 6,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "yearWheel",
+                "X": 32,
+                "Width": 99,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "ItemTemplateName": "DateTimeSetter4DigitsN",
+                "NumberofItems": 86,
+                "InitialElement": 43,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              }
+            ]
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetterMasksTop",
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetterMasksTop"
+          }
+        ],
+        "Interactions": [],
+        "CustomTriggers": [
+          {
+            "Name": "valueChanged",
+            "HasValue": true,
+            "ValueType": "DateTime&"
+          }
+        ],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "HasValue": true,
+            "ValueType": "DateTime&"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetterFlat",
+        "Width": 480,
+        "Height": 272,
+        "Includes": "#include \"DateTime.hpp\"",
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "background",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetterMasksBottom",
+            "Width": 480,
+            "Height": 272,
+            "Visible": false,
+            "CustomContainerDefinitionName": "DateTimeSetterMasksBottom"
+          },
+          {
+            "Type": "Container",
+            "Name": "separators",
+            "Y": 112,
+            "Width": 480,
+            "Height": 48,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "TextArea",
+                "Name": "ts2",
+                "X": 388,
+                "Y": -9,
+                "Width": 9,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_TS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ts1",
+                "X": 328,
+                "Y": -9,
+                "Width": 9,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_TS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ds2",
+                "X": 194,
+                "Y": -6,
+                "Width": 13,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_DS",
+                "TextRotation": "0",
+                "AutoSize": true
+              },
+              {
+                "Type": "TextArea",
+                "Name": "ds1",
+                "X": 130,
+                "Y": -6,
+                "Width": 13,
+                "Height": 55,
+                "LockPosition": true,
+                "TextId": "_DTS_DS",
+                "TextRotation": "0",
+                "AutoSize": true
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "digits",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "ScrollWheel",
+                "Name": "secondWheel",
+                "X": 399,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 60,
+                "InitialElement": 30,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 8.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "minuteWheel",
+                "X": 339,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 60,
+                "InitialElement": 30,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 8.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "hourWheel",
+                "X": 279,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 24,
+                "InitialElement": 12,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "dayWheel",
+                "X": 209,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 31,
+                "InitialElement": 15,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "monthWheel",
+                "X": 145,
+                "Width": 50,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "IsCircular": true,
+                "ItemTemplateName": "DateTimeSetter2DigitsN",
+                "NumberofItems": 12,
+                "InitialElement": 6,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              },
+              {
+                "Type": "ScrollWheel",
+                "Name": "yearWheel",
+                "X": 32,
+                "Width": 99,
+                "Height": 272,
+                "LockPosition": true,
+                "SelectedItemOffset": 112,
+                "ItemTemplateName": "DateTimeSetter4DigitsN",
+                "NumberofItems": 86,
+                "InitialElement": 43,
+                "Easing": "Cubic",
+                "EasingOption": "Out",
+                "SwipeAcceleration": 4.0,
+                "DragAcceleration": 2.0,
+                "OverShootPercentage": 75
+              }
+            ]
+          },
+          {
+            "Type": "Box",
+            "Name": "screenBottom",
+            "Width": 480,
+            "Height": 113,
             "Color": {
               "Red": 255,
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true
+            "Alpha": 239
+          },
+          {
+            "Type": "Box",
+            "Name": "screenTop",
+            "Y": 160,
+            "Width": 480,
+            "Height": 112,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 239
+          },
+          {
+            "Type": "Line",
+            "Name": "lineBottom",
+            "Y": 151,
+            "Width": 480,
+            "Height": 15,
+            "LockPosition": true,
+            "Color": {
+              "Green": 174,
+              "Blue": 255
+            },
+            "StartY": 8.0,
+            "EndX": 480.0,
+            "EndY": 8.0,
+            "LineWidth": 1.0,
+            "LineEndingStyle": "Butt"
+          },
+          {
+            "Type": "Line",
+            "Name": "lineTop",
+            "Y": 106,
+            "Width": 480,
+            "Height": 15,
+            "Color": {
+              "Green": 174,
+              "Blue": 255
+            },
+            "StartY": 8.0,
+            "EndX": 480.0,
+            "EndY": 8.0,
+            "LineWidth": 1.0,
+            "LineEndingStyle": "Butt"
+          }
+        ],
+        "Interactions": [],
+        "CustomTriggers": [
+          {
+            "Name": "valueChanged",
+            "HasValue": true,
+            "ValueType": "DateTime&"
+          }
+        ],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "HasValue": true,
+            "ValueType": "DateTime&"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetter2DigitsN",
+        "Width": 50,
+        "Height": 44,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "digitsTxt",
+            "Y": -3,
+            "Width": 48,
+            "Height": 110,
+            "LockPosition": true,
+            "TextId": "_DTS_VALUE",
+            "TextRotation": "0",
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "_DTS2",
+              "UseBuffer": true,
+              "BufferSize": 3
+            }
+          }
+        ],
+        "Interactions": [],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "Description": "",
+            "HasValue": true,
+            "ValueType": "uint16_t"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetter4DigitsN",
+        "Width": 99,
+        "Height": 44,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "digitsTxt",
+            "Y": -3,
+            "Width": 96,
+            "Height": 92,
+            "LockPosition": true,
+            "TextId": "_DTS_VALUE",
+            "TextRotation": "0",
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "_DTS4",
+              "UseBuffer": true,
+              "BufferSize": 5
+            }
+          }
+        ],
+        "Interactions": [],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "Description": "",
+            "HasValue": true,
+            "ValueType": "uint16_t"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetterMasksTop",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "masks",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "ScalableImage",
+                "Name": "maskBottomGradient",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "Box",
+                "Name": "maskBottom",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              },
+              {
+                "Type": "Container",
+                "Name": "viewWindow",
+                "Y": 112,
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Components": [
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowBottomShade",
+                    "Y": 44,
+                    "Width": 480,
+                    "Height": 4,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowTopShade",
+                    "Width": 480,
+                    "Height": 4,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowBottomHighligt",
+                    "Y": 24,
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowTopHighligt",
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  }
+                ]
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "maskTopGradient",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_light.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "Box",
+                "Name": "maskTop",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetterMasksTopSVG",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "masks",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "SvgImage",
+                "Name": "maskBottomGradient",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Image": "gradient_white_down_100.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 3.16,
+                "ImageVerticalScale": 0.74
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "maskTopGradient",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Image": "gradient_white_up_100.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 3.16,
+                "ImageVerticalScale": 0.74
+              },
+              {
+                "Type": "Box",
+                "Name": "maskBottom",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              },
+              {
+                "Type": "Box",
+                "Name": "maskTop",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              },
+              {
+                "Type": "Container",
+                "Name": "viewWindow",
+                "Y": 112,
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Components": [
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowBottomShade",
+                    "Y": 44,
+                    "Width": 480,
+                    "Height": 4,
+                    "LockPosition": true,
+                    "Image": "gradient_black_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.03
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowTopShade",
+                    "Width": 480,
+                    "Height": 4,
+                    "Image": "gradient_black_up_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.03
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowBottomHighligh",
+                    "Y": 24,
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Image": "gradient_black_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.16
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowTopHighligt",
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Image": "gradient_white_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.16
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetterMasksBottom",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "wheelShadows",
+            "Width": 480,
+            "Height": 272,
+            "Components": [
+              {
+                "Type": "ScalableImage",
+                "Name": "secondShadowRight",
+                "X": 451,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "secondShadowLeft",
+                "X": 387,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "minuteShadowRight",
+                "X": 391,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "minuteShadowLeft",
+                "X": 327,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "hourShadowRight",
+                "X": 331,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "hourShadowLeft",
+                "X": 267,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "dayShadowRight",
+                "X": 261,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "dayShadowLeft",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "monthShadowRight",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "monthShadowLeft",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "yearShadowRight",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_right_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "yearShadowLeft",
+                "X": 20,
+                "Width": 8,
+                "Height": 272,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_left_dark.png",
+                "Alpha": 63,
+                "ScalingAlgorithm": "Nearest-neighbor"
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "viewWindowBackground",
+            "Y": 112,
+            "Width": 480,
+            "Height": 48,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "Box",
+                "Name": "digitsHighlight",
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 61,
+                  "Green": 191,
+                  "Blue": 180
+                },
+                "Alpha": 199
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetterMasksBottomSVG",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "wheelShadows",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "SvgImage",
+                "Name": "secondShadowRight",
+                "X": 451,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "secondShadowLeft",
+                "X": 387,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "minuteShadowRight",
+                "X": 391,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "minuteShadowLeft",
+                "X": 327,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "hourShadowRight",
+                "X": 331,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "hourShadowLeft",
+                "X": 267,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "dayShadowRight",
+                "X": 261,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "dayShadowLeft",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "monthShadowRight",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "monthShadowLeft",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "yearShadowRight",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "yearShadowLeft",
+                "X": 20,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "viewWindowBackground",
+            "Y": 112,
+            "Width": 480,
+            "Height": 48,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "Box",
+                "Name": "digitsHighlight",
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 61,
+                  "Green": 191,
+                  "Blue": 180
+                },
+                "Alpha": 199
+              }
+            ]
           }
         ],
         "Interactions": []

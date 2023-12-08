@@ -10,9 +10,9 @@ HeaderBase::HeaderBase()
     setWidth(204);
     setHeight(26);
     headerTxt.setXY(0, -6);
-    headerTxt.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    headerTxt.setColor(touchgfx::Color::getColorFromRGB(0, 82, 120));
     headerTxt.setLinespacing(0);
-    headerTxt.setTypedText(touchgfx::TypedText(T___SINGLEUSE_DTOK));
+    headerTxt.setTypedText(touchgfx::TypedText(T__BOARD));
     add(headerTxt);
 }
 

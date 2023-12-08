@@ -20,7 +20,7 @@ BackBtnBase::BackBtnBase() :
     label.setXY(123, 26);
     label.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     label.setLinespacing(0);
-    label.setTypedText(touchgfx::TypedText(T___SINGLEUSE_P48S));
+    label.setTypedText(touchgfx::TypedText(T__PREV));
     add(label);
 }
 

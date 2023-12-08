@@ -49,5 +49,6 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "stm32u5xx_hal.h": "c"
-    }
+    },
+    "svg.preview.background": "transparent"
 }

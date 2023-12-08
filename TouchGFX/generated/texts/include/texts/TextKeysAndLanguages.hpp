@@ -12,11 +12,14 @@ enum LANGUAGES
 
 enum TEXTS
 {
-    T___SINGLEUSE_DTOK,
-    T___SINGLEUSE_P48S,
-    T___SINGLEUSE_4XTV,
-    T___SINGLEUSE_MLC1,
-    T___SINGLEUSE_J1U4,
+    T__DTS2,
+    T__DTS4,
+    T__DTS_DS,
+    T__DTS_TS,
+    T__DTS_VALUE,
+    T__BOARD,
+    T__PREV,
+    T__NEXT,
     NUMBER_OF_TEXT_KEYS
 };
 

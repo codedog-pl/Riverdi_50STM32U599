@@ -9,9 +9,10 @@
 #include <gui/screen2_screen/Screen2Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/Background.hpp>
-#include <touchgfx/widgets/TextArea.hpp>
 #include <gui/containers/BackBtn.hpp>
 #include <gui/containers/Header.hpp>
+#include <gui/containers/DateTimeSetterFlat.hpp>
+#include <touchgfx/containers/clock/AnalogClock.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -30,11 +31,18 @@ protected:
      */
     touchgfx::Box __background;
     Background background;
-    touchgfx::TextArea screenIdTxt;
     BackBtn backBtn;
     Header header;
+    DateTimeSetterFlat dateTimeSetter;
+    touchgfx::AnalogClock analogClock1;
 
 private:
+
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint32_t CANVAS_BUFFER_SIZE = 12000;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 
     /*
      * Callback Declarations

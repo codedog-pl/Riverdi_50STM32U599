@@ -49,7 +49,7 @@ extern "C" {
 
 #define UX_HOST_APP_MEM_POOL_SIZE                122880
 
-#define TOUCHGFX_APP_MEM_POOL_SIZE               4096
+#define TOUCHGFX_APP_MEM_POOL_SIZE               128*1024
 
 /* USER CODE BEGIN EC */
 
