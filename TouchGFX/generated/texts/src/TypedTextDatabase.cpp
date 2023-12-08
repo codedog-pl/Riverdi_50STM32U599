@@ -5,15 +5,15 @@
 #include <fonts/GeneratedFont.hpp>
 #include <texts/TypedTextDatabase.hpp>
 
-extern touchgfx::GeneratedFont& getFont_segoeui_32_4bpp();
-extern touchgfx::GeneratedFont& getFont_verdana_40_4bpp();
-extern touchgfx::GeneratedFont& getFont_verdana_10_4bpp();
+extern touchgfx::GeneratedVectorFont& getFont_vector_segoeui_32();
+extern touchgfx::GeneratedVectorFont& getFont_vector_verdana_40();
+extern touchgfx::GeneratedVectorFont& getFont_vector_verdana_10();
 extern touchgfx::GeneratedFont& getFont_impact_45_4bpp();
 
 const touchgfx::Font* touchgfx_fonts[] = {
-    &(getFont_segoeui_32_4bpp()),
-    &(getFont_verdana_40_4bpp()),
-    &(getFont_verdana_10_4bpp()),
+    &(getFont_vector_segoeui_32()),
+    &(getFont_vector_verdana_40()),
+    &(getFont_vector_verdana_10()),
     &(getFont_impact_45_4bpp())
 };
 
@@ -66,13 +66,13 @@ void resetFont(touchgfx::FontId fontId)
     switch (fontId)
     {
     case 0:
-        touchgfx_fonts[0] = &(getFont_segoeui_32_4bpp());
+        touchgfx_fonts[0] = &(getFont_vector_segoeui_32());
         break;
     case 1:
-        touchgfx_fonts[1] = &(getFont_verdana_40_4bpp());
+        touchgfx_fonts[1] = &(getFont_vector_verdana_40());
         break;
     case 2:
-        touchgfx_fonts[2] = &(getFont_verdana_10_4bpp());
+        touchgfx_fonts[2] = &(getFont_vector_verdana_10());
         break;
     case 3:
         touchgfx_fonts[3] = &(getFont_impact_45_4bpp());
