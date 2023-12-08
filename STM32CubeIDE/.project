@@ -1,21 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <projectDescription>
-	<name>U599_Template</name>
+	<name>Riverdi_50STM32U599</name>
 	<comment/>
-	<projects>
-	</projects>
+	<projects/>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<triggers>clean,full,incremental,</triggers>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
 			<triggers>full,incremental,</triggers>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 	</buildSpec>
 	<natures>
@@ -35,9 +32,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>U599_Template.ioc</name>
+			<name>Riverdi_50STM32U599.ioc</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/U599_Template.ioc</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Riverdi_50STM32U599.ioc</locationURI>
 		</link>
 		<link>
 			<name>Application/Tools</name>
@@ -3708,26 +3705,6 @@
 			<name>Application/User/generated/image_alternate_theme_images_effects_240x240_shade_top_light.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_effects_240x240_shade_top_light.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_backgrounds_small_shaded_light.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_backgrounds_small_shaded_light.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_hour_shaded_light.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_hour_shaded_light.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_minute_shaded_light.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_minute_shaded_light.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_alternate_theme_images_widgets_analogclock_hands_small_second_shaded_light.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_analogclock_hands_small_second_shaded_light.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_clay_theme_images_widgets_button_regular_height_50_medium_rounded_normal.cpp</name>

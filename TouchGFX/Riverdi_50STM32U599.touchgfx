@@ -1390,7 +1390,7 @@
         "Interactions": []
       }
     ],
-    "Name": "U599_Template",
+    "Name": "Riverdi_50STM32U599",
     "Resolution": {
       "Width": 800,
       "Height": 480
@@ -1433,13 +1433,14 @@
     "SubFamily": "STM32U599/5A9",
     "Toolchain": "STM32CubeIDE",
     "Platform": "m33",
-    "ProjectFile": "../U599_Template.ioc",
+    "ProjectFile": "../Riverdi_50STM32U599.ioc",
     "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
     "OptionalComponents": [
       "GPU2D"
     ],
     "AdditionalFeatures": [
-      "Vector"
+      "GPU2DVector",
+      "VectorFonts"
     ]
   },
   "Version": "4.23.0",

@@ -6,6 +6,6 @@
 
 static unsigned short SIM_WIDTH = 800;
 static unsigned short SIM_HEIGHT = 480;
-#define SIM_TITLE "U599_Template"
+#define SIM_TITLE "Riverdi_50STM32U599"
 
 #endif // SIMCONSTANTS_HPP

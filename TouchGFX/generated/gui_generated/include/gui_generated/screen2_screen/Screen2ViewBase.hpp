@@ -12,7 +12,6 @@
 #include <gui/containers/BackBtn.hpp>
 #include <gui/containers/Header.hpp>
 #include <gui/containers/DateTimeSetterFlat.hpp>
-#include <touchgfx/containers/clock/AnalogClock.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -34,7 +33,6 @@ protected:
     BackBtn backBtn;
     Header header;
     DateTimeSetterFlat dateTimeSetter;
-    touchgfx::AnalogClock analogClock1;
 
 private:
 

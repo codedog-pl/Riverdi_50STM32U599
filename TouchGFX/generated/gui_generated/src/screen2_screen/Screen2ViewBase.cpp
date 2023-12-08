@@ -4,7 +4,6 @@
 #include <gui_generated/screen2_screen/Screen2ViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 
 Screen2ViewBase::Screen2ViewBase() :
     backBtnClickCallback(this, &Screen2ViewBase::backBtnClickCallbackHandler)
@@ -27,17 +26,6 @@ Screen2ViewBase::Screen2ViewBase() :
 
     dateTimeSetter.setXY(160, 104);
     add(dateTimeSetter);
-
-    analogClock1.setXY(560, 240);
-    analogClock1.setBackground(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_ANALOGCLOCK_BACKGROUNDS_SMALL_SHADED_LIGHT_ID, 120, 120);
-    analogClock1.setupSecondHand(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_ANALOGCLOCK_HANDS_SMALL_SECOND_SHADED_LIGHT_ID, 2, 100);
-    analogClock1.setupMinuteHand(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_ANALOGCLOCK_HANDS_SMALL_MINUTE_SHADED_LIGHT_ID, 10, 87);
-    analogClock1.setMinuteHandSecondCorrection(false);
-    analogClock1.setupHourHand(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_ANALOGCLOCK_HANDS_SMALL_HOUR_SHADED_LIGHT_ID, 9, 69);
-    analogClock1.setHourHandMinuteCorrection(false);
-    analogClock1.initializeTime24Hour(10, 10, 0);
-    analogClock1.setAnimation(30, touchgfx::EasingEquations::backEaseOut);
-    add(analogClock1);
 }
 
 Screen2ViewBase::~Screen2ViewBase()

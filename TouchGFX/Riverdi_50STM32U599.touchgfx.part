@@ -1,6 +1,6 @@
 {
   "Application": {
-    "Name": "U599_Template",
+    "Name": "Riverdi_50STM32U599",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "AvailableColorDepths": [
       24
@@ -19,14 +19,15 @@
     "SubFamily": "STM32U599/5A9",
     "Platform": "m33",
     "Toolchain": "STM32CubeIDE",
-    "ProjectFile": "../U599_Template.ioc",
+    "ProjectFile": "../Riverdi_50STM32U599.ioc",
     "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
     "OptionalComponents": [
       "GPU2D"
     ],
     "AdditionalFeatures": [
-      "Vector"
+      "GPU2DVector",
+      "VectorFonts"
     ]
   },
-  "Version": "4.22.1"
+  "Version": "4.23.0"
 }
