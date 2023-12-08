@@ -17,7 +17,7 @@ DateTimeSetterMasksTopBase::DateTimeSetterMasksTopBase()
 
     maskBottom.setPosition(0, 160, 480, 112);
     maskBottom.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    maskBottom.setAlpha(159);
+    maskBottom.setAlpha(199);
     masks.add(maskBottom);
 
     viewWindow.setPosition(0, 112, 480, 48);
@@ -54,7 +54,7 @@ DateTimeSetterMasksTopBase::DateTimeSetterMasksTopBase()
 
     maskTop.setPosition(0, 0, 480, 112);
     maskTop.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    maskTop.setAlpha(159);
+    maskTop.setAlpha(199);
     masks.add(maskTop);
 
     add(masks);

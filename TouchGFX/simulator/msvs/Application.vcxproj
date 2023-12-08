@@ -45,8 +45,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksBottomBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksTop.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksTopBase.cpp"/>
-    <ClCompile Include="..\..\gui\src\containers\DateTimeSetterFlat.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterFlatBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -221,8 +219,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksBottomBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksTop.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksTopBase.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterFlat.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterFlatBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

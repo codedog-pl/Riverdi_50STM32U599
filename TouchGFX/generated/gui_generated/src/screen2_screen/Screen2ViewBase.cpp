@@ -23,9 +23,6 @@ Screen2ViewBase::Screen2ViewBase() :
 
     header.setXY(15, 15);
     add(header);
-
-    dateTimeSetter.setXY(160, 104);
-    add(dateTimeSetter);
 }
 
 Screen2ViewBase::~Screen2ViewBase()
@@ -38,7 +35,6 @@ void Screen2ViewBase::setupScreen()
     background.initialize();
     backBtn.initialize();
     header.initialize();
-    dateTimeSetter.initialize();
 }
 
 void Screen2ViewBase::backBtnClickCallbackHandler()

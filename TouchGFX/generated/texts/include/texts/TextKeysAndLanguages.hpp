@@ -12,14 +12,14 @@ enum LANGUAGES
 
 enum TEXTS
 {
-    T__DTS2,
-    T__DTS4,
-    T__DTS_DS,
-    T__DTS_TS,
-    T__DTS_VALUE,
     T__BOARD,
     T__PREV,
     T__NEXT,
+    T__DTS2,
+    T__DTS_VALUE,
+    T__DTS4,
+    T__DTS_TS,
+    T__DTS_DS,
     NUMBER_OF_TEXT_KEYS
 };
 

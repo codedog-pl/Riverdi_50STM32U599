@@ -85,15 +85,6 @@
             "Width": 204,
             "Height": 26,
             "CustomContainerDefinitionName": "Header"
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "dateTimeSetter",
-            "X": 160,
-            "Y": 104,
-            "Width": 480,
-            "Height": 272,
-            "CustomContainerDefinitionName": "DateTimeSetterFlat"
           }
         ],
         "Interactions": [
@@ -225,7 +216,7 @@
       {
         "Name": "Header",
         "Width": 204,
-        "Height": 26,
+        "Height": 28,
         "IsCacheableContainer": true,
         "Components": [
           {
@@ -284,7 +275,7 @@
                 "X": 388,
                 "Y": -9,
                 "Width": 9,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -296,7 +287,7 @@
                 "X": 328,
                 "Y": -9,
                 "Width": 9,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -308,7 +299,7 @@
                 "X": 194,
                 "Y": -6,
                 "Width": 13,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -320,7 +311,7 @@
                 "X": 130,
                 "Y": -6,
                 "Width": 13,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -467,460 +458,6 @@
             "ValueType": "DateTime&"
           }
         ]
-      },
-      {
-        "Name": "DateTimeSetterFlat",
-        "Width": 480,
-        "Height": 272,
-        "Includes": "#include \"DateTime.hpp\"",
-        "Components": [
-          {
-            "Type": "Box",
-            "Name": "background",
-            "Width": 480,
-            "Height": 272,
-            "LockPosition": true,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "dateTimeSetterMasksBottom",
-            "Width": 480,
-            "Height": 272,
-            "Visible": false,
-            "CustomContainerDefinitionName": "DateTimeSetterMasksBottom"
-          },
-          {
-            "Type": "Container",
-            "Name": "separators",
-            "Y": 112,
-            "Width": 480,
-            "Height": 48,
-            "LockPosition": true,
-            "Components": [
-              {
-                "Type": "TextArea",
-                "Name": "ts2",
-                "X": 388,
-                "Y": -9,
-                "Width": 9,
-                "Height": 55,
-                "LockPosition": true,
-                "TextId": "_DTS_TS",
-                "TextRotation": "0",
-                "AutoSize": true
-              },
-              {
-                "Type": "TextArea",
-                "Name": "ts1",
-                "X": 328,
-                "Y": -9,
-                "Width": 9,
-                "Height": 55,
-                "LockPosition": true,
-                "TextId": "_DTS_TS",
-                "TextRotation": "0",
-                "AutoSize": true
-              },
-              {
-                "Type": "TextArea",
-                "Name": "ds2",
-                "X": 194,
-                "Y": -6,
-                "Width": 13,
-                "Height": 55,
-                "LockPosition": true,
-                "TextId": "_DTS_DS",
-                "TextRotation": "0",
-                "AutoSize": true
-              },
-              {
-                "Type": "TextArea",
-                "Name": "ds1",
-                "X": 130,
-                "Y": -6,
-                "Width": 13,
-                "Height": 55,
-                "LockPosition": true,
-                "TextId": "_DTS_DS",
-                "TextRotation": "0",
-                "AutoSize": true
-              }
-            ]
-          },
-          {
-            "Type": "Container",
-            "Name": "digits",
-            "Width": 480,
-            "Height": 272,
-            "LockPosition": true,
-            "Components": [
-              {
-                "Type": "ScrollWheel",
-                "Name": "secondWheel",
-                "X": 399,
-                "Width": 50,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "IsCircular": true,
-                "ItemTemplateName": "DateTimeSetter2DigitsN",
-                "NumberofItems": 60,
-                "InitialElement": 30,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 8.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              },
-              {
-                "Type": "ScrollWheel",
-                "Name": "minuteWheel",
-                "X": 339,
-                "Width": 50,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "IsCircular": true,
-                "ItemTemplateName": "DateTimeSetter2DigitsN",
-                "NumberofItems": 60,
-                "InitialElement": 30,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 8.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              },
-              {
-                "Type": "ScrollWheel",
-                "Name": "hourWheel",
-                "X": 279,
-                "Width": 50,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "IsCircular": true,
-                "ItemTemplateName": "DateTimeSetter2DigitsN",
-                "NumberofItems": 24,
-                "InitialElement": 12,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 4.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              },
-              {
-                "Type": "ScrollWheel",
-                "Name": "dayWheel",
-                "X": 209,
-                "Width": 50,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "IsCircular": true,
-                "ItemTemplateName": "DateTimeSetter2DigitsN",
-                "NumberofItems": 31,
-                "InitialElement": 15,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 4.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              },
-              {
-                "Type": "ScrollWheel",
-                "Name": "monthWheel",
-                "X": 145,
-                "Width": 50,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "IsCircular": true,
-                "ItemTemplateName": "DateTimeSetter2DigitsN",
-                "NumberofItems": 12,
-                "InitialElement": 6,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 4.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              },
-              {
-                "Type": "ScrollWheel",
-                "Name": "yearWheel",
-                "X": 32,
-                "Width": 99,
-                "Height": 272,
-                "LockPosition": true,
-                "SelectedItemOffset": 112,
-                "ItemTemplateName": "DateTimeSetter4DigitsN",
-                "NumberofItems": 86,
-                "InitialElement": 43,
-                "Easing": "Cubic",
-                "EasingOption": "Out",
-                "SwipeAcceleration": 4.0,
-                "DragAcceleration": 2.0,
-                "OverShootPercentage": 75
-              }
-            ]
-          },
-          {
-            "Type": "Box",
-            "Name": "screenBottom",
-            "Width": 480,
-            "Height": 113,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 239
-          },
-          {
-            "Type": "Box",
-            "Name": "screenTop",
-            "Y": 160,
-            "Width": 480,
-            "Height": 112,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 239
-          },
-          {
-            "Type": "Line",
-            "Name": "lineBottom",
-            "Y": 151,
-            "Width": 480,
-            "Height": 15,
-            "LockPosition": true,
-            "Color": {
-              "Green": 174,
-              "Blue": 255
-            },
-            "StartY": 8.0,
-            "EndX": 480.0,
-            "EndY": 8.0,
-            "LineWidth": 1.0,
-            "LineEndingStyle": "Butt"
-          },
-          {
-            "Type": "Line",
-            "Name": "lineTop",
-            "Y": 106,
-            "Width": 480,
-            "Height": 15,
-            "Color": {
-              "Green": 174,
-              "Blue": 255
-            },
-            "StartY": 8.0,
-            "EndX": 480.0,
-            "EndY": 8.0,
-            "LineWidth": 1.0,
-            "LineEndingStyle": "Butt"
-          }
-        ],
-        "Interactions": [],
-        "CustomTriggers": [
-          {
-            "Name": "valueChanged",
-            "HasValue": true,
-            "ValueType": "DateTime&"
-          }
-        ],
-        "CustomActions": [
-          {
-            "Name": "setValue",
-            "HasValue": true,
-            "ValueType": "DateTime&"
-          }
-        ]
-      },
-      {
-        "Name": "DateTimeSetter2DigitsN",
-        "Width": 50,
-        "Height": 44,
-        "IsCacheableContainer": true,
-        "Components": [
-          {
-            "Type": "TextArea",
-            "Name": "digitsTxt",
-            "Y": -3,
-            "Width": 48,
-            "Height": 110,
-            "LockPosition": true,
-            "TextId": "_DTS_VALUE",
-            "TextRotation": "0",
-            "AutoSize": true,
-            "Wildcard1": {
-              "TextId": "_DTS2",
-              "UseBuffer": true,
-              "BufferSize": 3
-            }
-          }
-        ],
-        "Interactions": [],
-        "CustomActions": [
-          {
-            "Name": "setValue",
-            "Description": "",
-            "HasValue": true,
-            "ValueType": "uint16_t"
-          }
-        ]
-      },
-      {
-        "Name": "DateTimeSetter4DigitsN",
-        "Width": 99,
-        "Height": 44,
-        "IsCacheableContainer": true,
-        "Components": [
-          {
-            "Type": "TextArea",
-            "Name": "digitsTxt",
-            "Y": -3,
-            "Width": 96,
-            "Height": 110,
-            "LockPosition": true,
-            "TextId": "_DTS_VALUE",
-            "TextRotation": "0",
-            "AutoSize": true,
-            "Wildcard1": {
-              "TextId": "_DTS4",
-              "UseBuffer": true,
-              "BufferSize": 5
-            }
-          }
-        ],
-        "Interactions": [],
-        "CustomActions": [
-          {
-            "Name": "setValue",
-            "Description": "",
-            "HasValue": true,
-            "ValueType": "uint16_t"
-          }
-        ]
-      },
-      {
-        "Name": "DateTimeSetterMasksTop",
-        "Width": 480,
-        "Height": 272,
-        "IsCacheableContainer": true,
-        "Components": [
-          {
-            "Type": "Container",
-            "Name": "masks",
-            "Width": 480,
-            "Height": 272,
-            "LockPosition": true,
-            "Components": [
-              {
-                "Type": "ScalableImage",
-                "Name": "maskBottomGradient",
-                "Y": 160,
-                "Width": 480,
-                "Height": 112,
-                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
-                "ScalingAlgorithm": "Nearest-neighbor"
-              },
-              {
-                "Type": "Box",
-                "Name": "maskBottom",
-                "Y": 160,
-                "Width": 480,
-                "Height": 112,
-                "LockPosition": true,
-                "Color": {
-                  "Red": 255,
-                  "Green": 255,
-                  "Blue": 255
-                },
-                "Alpha": 159
-              },
-              {
-                "Type": "Container",
-                "Name": "viewWindow",
-                "Y": 112,
-                "Width": 480,
-                "Height": 48,
-                "LockPosition": true,
-                "Components": [
-                  {
-                    "Type": "ScalableImage",
-                    "Name": "windowBottomShade",
-                    "Y": 44,
-                    "Width": 480,
-                    "Height": 4,
-                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
-                    "Alpha": 63,
-                    "ScalingAlgorithm": "Nearest-neighbor"
-                  },
-                  {
-                    "Type": "ScalableImage",
-                    "Name": "windowTopShade",
-                    "Width": 480,
-                    "Height": 4,
-                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_dark.png",
-                    "Alpha": 63,
-                    "ScalingAlgorithm": "Nearest-neighbor"
-                  },
-                  {
-                    "Type": "ScalableImage",
-                    "Name": "windowBottomHighligt",
-                    "Y": 24,
-                    "Width": 480,
-                    "Height": 24,
-                    "LockPosition": true,
-                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
-                    "Alpha": 63,
-                    "ScalingAlgorithm": "Nearest-neighbor"
-                  },
-                  {
-                    "Type": "ScalableImage",
-                    "Name": "windowTopHighligt",
-                    "Width": 480,
-                    "Height": 24,
-                    "LockPosition": true,
-                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
-                    "Alpha": 63,
-                    "ScalingAlgorithm": "Nearest-neighbor"
-                  }
-                ]
-              },
-              {
-                "Type": "ScalableImage",
-                "Name": "maskTopGradient",
-                "Width": 480,
-                "Height": 112,
-                "LockPosition": true,
-                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_light.png",
-                "ScalingAlgorithm": "Nearest-neighbor"
-              },
-              {
-                "Type": "Box",
-                "Name": "maskTop",
-                "Width": 480,
-                "Height": 112,
-                "LockPosition": true,
-                "Color": {
-                  "Red": 255,
-                  "Green": 255,
-                  "Blue": 255
-                },
-                "Alpha": 159
-              }
-            ]
-          }
-        ],
-        "Interactions": []
       },
       {
         "Name": "DateTimeSetterMasksBottom",
@@ -1074,6 +611,185 @@
                   "Red": 61,
                   "Green": 191,
                   "Blue": 180
+                },
+                "Alpha": 199
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetter2DigitsN",
+        "Width": 50,
+        "Height": 44,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "digitsTxt",
+            "Y": -3,
+            "Width": 48,
+            "Height": 92,
+            "LockPosition": true,
+            "TextId": "_DTS_VALUE",
+            "TextRotation": "0",
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "_DTS2",
+              "UseBuffer": true,
+              "BufferSize": 3
+            }
+          }
+        ],
+        "Interactions": [],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "Description": "",
+            "HasValue": true,
+            "ValueType": "uint16_t"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetter4DigitsN",
+        "Width": 99,
+        "Height": 44,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "digitsTxt",
+            "Y": -3,
+            "Width": 96,
+            "Height": 92,
+            "LockPosition": true,
+            "TextId": "_DTS_VALUE",
+            "TextRotation": "0",
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "_DTS4",
+              "UseBuffer": true,
+              "BufferSize": 5
+            }
+          }
+        ],
+        "Interactions": [],
+        "CustomActions": [
+          {
+            "Name": "setValue",
+            "Description": "",
+            "HasValue": true,
+            "ValueType": "uint16_t"
+          }
+        ]
+      },
+      {
+        "Name": "DateTimeSetterMasksTop",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "masks",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "ScalableImage",
+                "Name": "maskBottomGradient",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "Box",
+                "Name": "maskBottom",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 199
+              },
+              {
+                "Type": "Container",
+                "Name": "viewWindow",
+                "Y": 112,
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Components": [
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowBottomShade",
+                    "Y": 44,
+                    "Width": 480,
+                    "Height": 4,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowTopShade",
+                    "Width": 480,
+                    "Height": 4,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowBottomHighligt",
+                    "Y": 24,
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_dark.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  },
+                  {
+                    "Type": "ScalableImage",
+                    "Name": "windowTopHighligt",
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_top_light.png",
+                    "Alpha": 63,
+                    "ScalingAlgorithm": "Nearest-neighbor"
+                  }
+                ]
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "maskTopGradient",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Filename": "__generated\\alternate_theme_images_effects_240x240_shade_bottom_light.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              },
+              {
+                "Type": "Box",
+                "Name": "maskTop",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
                 },
                 "Alpha": 199
               }

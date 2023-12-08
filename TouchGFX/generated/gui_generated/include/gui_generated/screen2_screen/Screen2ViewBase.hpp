@@ -11,7 +11,6 @@
 #include <gui/containers/Background.hpp>
 #include <gui/containers/BackBtn.hpp>
 #include <gui/containers/Header.hpp>
-#include <gui/containers/DateTimeSetterFlat.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -32,7 +31,6 @@ protected:
     Background background;
     BackBtn backBtn;
     Header header;
-    DateTimeSetterFlat dateTimeSetter;
 
 private:
 

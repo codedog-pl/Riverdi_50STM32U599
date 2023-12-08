@@ -4,23 +4,6 @@
     <Language Id="GB" />
   </Languages>
   <Texts>
-    <TextGroup Id="DateTimeSetter">
-      <Text Id="_DTS2" Alignment="Left" TypographyId="DateTimeSetterText">
-        <Translation Language="GB">00</Translation>
-      </Text>
-      <Text Id="_DTS4" Alignment="Left" TypographyId="DateTimeSetterText">
-        <Translation Language="GB">0000</Translation>
-      </Text>
-      <Text Id="_DTS_DS" Alignment="Left" TypographyId="DateTimeSetterText">
-        <Translation Language="GB">-</Translation>
-      </Text>
-      <Text Id="_DTS_TS" Alignment="Left" TypographyId="DateTimeSetterText">
-        <Translation Language="GB">:</Translation>
-      </Text>
-      <Text Id="_DTS_VALUE" Alignment="Center" TypographyId="DateTimeSetterText">
-        <Translation Language="GB">&lt;value&gt;&#10;</Translation>
-      </Text>
-    </TextGroup>
     <TextGroup Id="Common">
       <Text Id="_BOARD" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">50STM32U599</Translation>
@@ -33,6 +16,23 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted" />
+    <TextGroup Id="DateTimeSetter">
+      <Text Id="_DTS2" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">00</Translation>
+      </Text>
+      <Text Id="_DTS_VALUE" Alignment="Center" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">&lt;value&gt;&#10;</Translation>
+      </Text>
+      <Text Id="_DTS4" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">0000</Translation>
+      </Text>
+      <Text Id="_DTS_TS" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">:</Translation>
+      </Text>
+      <Text Id="_DTS_DS" Alignment="Left" TypographyId="DateTimeSetterText">
+        <Translation Language="GB">-</Translation>
+      </Text>
+    </TextGroup>
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="segoeui.ttf" Size="32" Bpp="4" IsVector="yes" Direction="LTR" FallbackCharacter="?" />

@@ -8,7 +8,7 @@
 HeaderBase::HeaderBase()
 {
     setWidth(204);
-    setHeight(26);
+    setHeight(28);
     headerTxt.setXY(0, -6);
     headerTxt.setColor(touchgfx::Color::getColorFromRGB(0, 82, 120));
     headerTxt.setLinespacing(0);

@@ -3445,11 +3445,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetter4DigitsN.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/gui/DateTimeSetterFlat.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterFlat.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/gui/DateTimeSetterMasksBottom.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/gui/src/containers/DateTimeSetterMasksBottom.cpp</locationURI>
@@ -3613,11 +3608,6 @@
 			<name>Application/User/generated/DateTimeSetterBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterBase.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/DateTimeSetterFlatBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX/generated/gui_generated/src/containers/DateTimeSetterFlatBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/DateTimeSetterMasksBottomBase.cpp</name>
