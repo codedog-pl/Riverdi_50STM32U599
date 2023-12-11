@@ -11,6 +11,7 @@
 #include "tx_api.h"
 #include "main.h"
 #include "GPIO_test.hpp"
+#include "FS_API.hpp"
 
 #include <iostream>
 
