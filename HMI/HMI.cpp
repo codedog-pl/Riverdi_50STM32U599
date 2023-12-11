@@ -8,26 +8,35 @@
 
 #include "HMI.hpp"
 #include "Log.hpp"
-#include "tx_api.h"
-#include "main.h"
-#include "GPIO_test.hpp"
-#include "FS_API.hpp"
+#include "Thread.hpp"
 
 #include <iostream>
 
 void HMI::start()
 {
-    Log::msg("HMI: Thread started.");
-    constexpr uint32_t initializationLatency = 100;
-    while ((HMI_SysInit & HMI_ALL) != HMI_ALL) OS::delay(initializationLatency);
+    Log::msg("HMI: Initializing...");
+    initSemaphore = OS::semaphoreCreate("HMI_Initialization");
+    while ((HMI_SysInit & HMI_ALL) != HMI_ALL) OS::semaphoreWait(initSemaphore);
+    OS::semaphoreDelete(initSemaphore);
+    initSemaphore = 0;
     Log::msg("HMI: Initialization complete.");
-    Log::msg("Size of TX_EVENT_FLAGS_GROUP: %lub.", sizeof(TX_EVENT_FLAGS_GROUP));
-    Log::msg("Size of TX_MUTEX: %lub.", sizeof(TX_MUTEX));
-    Log::msg("Size of TX_THREAD: %lub.", sizeof(TX_THREAD));
-    while (1)
-    {
-        OS::delay(1000); // for now
-    }
+    Thread::dispatchLoop(); // This will wait indefinitely for thread synchronization events.
+}
+
+void HMI::init(uint32_t flags)
+{
+    HMI_SysInit |= flags;
+    if (initSemaphore) OS::semaphoreRelease(initSemaphore);
+}
+
+void HMI::USBMediaMounted()
+{
+    Log::msg("HMI: USB media available.");
+}
+
+void HMI::USBMediaUnmounted()
+{
+    Log::msg("HMI: USB media disconnected.");
 }
 
 // C bindings
@@ -40,6 +49,21 @@ uint32_t HMI_SysInit = HMI_NONE;
 void HMI_Start()
 {
    HMI::start();
+}
+
+void HMI_Init(uint32_t flags)
+{
+    HMI::init(flags);
+}
+
+void HMI_TriggerUSBMediaMounted()
+{
+    Thread::sync(HMI::USBMediaMounted);
+}
+
+void HMI_TriggerUSBMediaUnmounted()
+{
+    Thread::sync(HMI::USBMediaUnmounted);
 }
 
 }

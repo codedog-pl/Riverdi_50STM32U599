@@ -163,8 +163,9 @@ UINT MX_FileX_Init(VOID *memory_ptr)
   UINT sd_status = FX_SUCCESS;
 
 /* USER CODE BEGIN fx_app_thread_entry 0*/
+  // We initialize SD card here, to avoid crashing the app if SD card is not present.
   fx_mount_sd_card();
-  HMI_SysInit |= HMI_FILEX;
+  HMI_SD_OK // So we can have it initialized even without SD card.
   return;
 /* USER CODE END fx_app_thread_entry 0*/
 

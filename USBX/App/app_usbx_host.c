@@ -89,7 +89,7 @@ VOID USBX_APP_Host_Init(VOID)
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
   USBH_UsrLog("USBH: Ready.");
-  HMI_SysInit |= HMI_USBX;
+  HMI_USB_OK
 
   /* USER CODE END USB_Host_Init_PostTreatment1 */
 }
@@ -179,7 +179,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* Create the storage applicative process thread */
   if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-                       0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 30, 30, 0,
+                       0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
                        TX_AUTO_START) != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;

@@ -9,19 +9,31 @@
 
 #pragma once
 
-extern "C" {
-    #include "hmi.h"
-}
+#include "hmi.h"
+#include "StaticClass.hpp"
+#include "OS.hpp"
 
 class HMI final
 {
 public:
-    HMI() = delete;
-    HMI(const HMI& other) = delete;
-    HMI(HMI&& other) = delete;
+
+    STATIC(HMI)
 
     /// @brief Starts the main application thread.
     static void start();
 
-};
+    /// @brief Passes initialization flags to the HMI startup. The initialization will complete when all flags are passed.
+    /// @param flags Initialization flags.
+    static void init(uint32_t flags);
 
+    /// @brief Called when the USB media is mounted at "1:/".
+    static void USBMediaMounted();
+
+    /// @brief Called when the USB media is unmounted from "1:/".
+    static void USBMediaUnmounted();
+
+private:
+
+    inline static OS::SemaphoreId initSemaphore = 0; // Initialization semaphore.
+
+};

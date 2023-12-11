@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "app_usbx_host.h"
 #include "fs_bindings.h"
+#include "hmi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,11 +79,13 @@ VOID msc_process_thread_entry(ULONG thread_input)
       {
         fs_mount(media[msc_index], "1:/");
         log_msg(3, "USBH: External storage mounted as \"1:/\".");
+        HMI_TriggerUSBMediaMounted();
       }
       else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
       {
         fs_umount("1:/");
         log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
+        HMI_TriggerUSBMediaUnmounted();
       }
     }
     else Error_Handler();
