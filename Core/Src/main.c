@@ -47,6 +47,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "log.h"
+#include "fs_bindings.h"
+#include "fx_stm32_sd_driver.h"
+#include "ux_api.h"
+#include "ux_host_class_storage.h"
+#include "ux_host_stack.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -155,6 +160,10 @@ int main(void)
       /* PWM Generation Error */
       Error_Handler();
     }
+
+  log_msg(3, "Configuring media...");
+  fs_register_type(FS_MEDIA_SD, fx_stm32_sd_driver, NULL);
+  fs_register_type(FS_MEDIA_USB, _ux_host_class_storage_driver_entry, NULL);
   log_msg(3, "Starting RTOS...");
   /* USER CODE END 2 */
 

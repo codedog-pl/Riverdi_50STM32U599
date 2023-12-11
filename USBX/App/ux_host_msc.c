@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_usbx_host.h"
+#include "fs_bindings.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,11 +76,13 @@ VOID msc_process_thread_entry(ULONG thread_input)
     {
       if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
       {
-        USBH_UsrLog("USBH: Media connected event received for device %u.", msc_index);
+        fs_mount(media[msc_index], "1:/");
+        log_msg(3, "USBH: External storage mounted as \"1:/\".");
       }
       else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
       {
-        USBH_UsrLog("USBH: Media disconnected event received for device %u.", msc_index);
+        fs_umount("1:/");
+        log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
       }
     }
     else Error_Handler();

@@ -54,8 +54,6 @@ UINT MX_FileX_Init(VOID *memory_ptr);
 
 /* USER CODE BEGIN EFP */
 
-bool fx_mount_usb_disk();
-
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
