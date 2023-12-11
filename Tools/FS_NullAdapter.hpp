@@ -14,51 +14,6 @@ class NullAdapter final : public AdapterMethods
 
 public:
 
-    /// @brief Mounts a media to a specified file system root path.
-    /// @param media Media structure reference to mount.
-    /// @param root File system root path pointer.
-    /// @return Status.
-    Status mount(Media& media, const char* root) override
-    {
-        auto entry = FileSystemTable::find(root);
-        if (!entry) // New entry.
-        {
-            entry = FileSystemTable::add(root, &media);
-            if (!entry) return FS_MOUNT_MTAB_FULL;
-        }
-        else if (entry->media) // Existing entry with media set.
-        {
-            if (entry->media == &media) return OK; // Already mounted to this media.
-            return FS_MOUNT_CONFLICT;
-        }
-        else entry->media = &media; // Existing entry without media set.
-        entry->isMounted = true;
-        entry->isIdle = true;
-        return OK;
-    }
-
-    /// @brief Unmouts a media from the specified system root path.
-    /// @param root File system root path pointer.
-    /// @return Status.
-    Status umount(const char* root) override
-    {
-        auto entry = FileSystemTable::find(root);
-        if (!entry) return FS_MOUNT_ROOT_NOT_FOUND;
-        entry->clear();
-        return OK;
-    }
-
-    /// @brief Unmounts a media from a specified media structure location.
-    /// @param media Media structure pointer.
-    /// @return Status.
-    Status umount(Media& media) override
-    {
-        auto entry = FileSystemTable::find(&media);
-        if (!entry) return FS_MOUNT_MEDIA_NOT_FOUND;
-        entry->clear();
-        return OK;
-    }
-
     /// @brief Finds the directory entry that matches the path.
     /// @param media Media structure reference.
     /// @param path File or directory path.
@@ -113,9 +68,9 @@ public:
     /// @param path A path to the file relative to the file system root.
     /// @param mode File opening mode. Default opens existing file for reading.
     /// @return Status.
-    Status fileOpen(Media& media, FileHandle& file, const char* path, FileMode mode = read) override
+    Status fileOpen(Media& media, FileHandle& file, const char* path, FileMode mode = FileMode::read) override
     {
-        if (!(mode & write) || file.isUsed) return FS_NEGATIVE;
+        if (!(mode & FileMode::write) || file.isUsed) return FS_NEGATIVE;
         file.isUsed = true;
     }
 

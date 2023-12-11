@@ -42,8 +42,8 @@ struct File final : public Path
     /// @return True if done. False otherwise.
     bool seek(FileOffset offset)
     {
-        if (!isOpen) return;
-        adapter.fileSeek(file, offset) == OK;
+        if (!isOpen) return false;
+        return adapter.fileSeek(file, offset) == OK;
     }
 
     /// @brief Reads the data from the file.

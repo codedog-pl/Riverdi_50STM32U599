@@ -1,7 +1,12 @@
 #include "FS_Adapter.hpp"
 
+namespace FS
+{
+
 #if defined(USE_FILEX)
-static FS::FILEX adapter;
+FILEX adapter;
 #else
-static FS::NullAdapter adapter;
+NullAdapter adapter;
 #endif
+
+}

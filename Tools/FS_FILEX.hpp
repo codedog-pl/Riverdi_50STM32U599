@@ -2,6 +2,7 @@
 
 #ifdef USE_FILEX
 
+#include "BitFlags.hpp"
 #include "FS_AdapterMethods.hpp"
 #include "fx_directory.h"
 #include <cstring>
@@ -93,7 +94,7 @@ public:
         else if ((mode & FileMode::read) != 0 && (mode & FileMode::write) == 0) fxMode = FX_OPEN_FOR_READ_FAST;
         else if ((mode & FileMode::read) == 0 && (mode & FileMode::write) != 0) fxMode = FX_OPEN_FOR_WRITE;
 
-        if ((mode & FileMode::createNew))
+        if ((mode & FileMode::createNew) != 0)
         {
             fxStatus = fx_file_create(&media, (CHAR*)path);
             if (fxStatus == FX_ALREADY_CREATED) return fxStatus;
@@ -107,7 +108,7 @@ public:
         fxStatus = fx_file_open(&media, &file, (CHAR*)path, fxMode);
         if (fxStatus != OK) return fxStatus;
 
-        if ((mode & FileMode::openAppend)) fxStatus = fx_file_seek(&file, offsetMax);
+        if ((mode & FileMode::openAppend) != 0) fxStatus = fx_file_seek(&file, offsetMax);
         else fxStatus = fx_file_seek(&file, 0);
         return fxStatus;
     }
@@ -129,7 +130,7 @@ public:
     /// @return Status.
     Status fileRead(FileHandle& file, void* buffer, size_t size, size_t& bytesRead) override
     {
-        Status result = fx_file_read(&file, buffer, size, (ULONG*)&bytesRead);
+        return fx_file_read(&file, buffer, size, (ULONG*)&bytesRead);
     }
 
     /// @brief Writes data to a file.
@@ -140,7 +141,7 @@ public:
     /// @return Status.
     virtual Status fileWrite(FileHandle& file, void* buffer, size_t size) override
     {
-        Status result = fx_file_write(&file, buffer, size);
+        return fx_file_write(&file, buffer, size);
     }
 
     /// @brief Closes a file.

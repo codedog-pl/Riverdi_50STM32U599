@@ -1,9 +1,10 @@
 #pragma once
 
-#include "bindings.h"
 #if defined(USE_FILEX)
 #include "fx_api.h"
 #endif
+
+#include "FS_FileSystem.hpp"
 
 namespace FS
 {
@@ -66,7 +67,7 @@ public:
     /// @return True if performed successfully, false otherwise.
     static bool format(MediaType mediaType, MediaFormat format, const char* label)
     {
-        auto configuration = getConfiguration(mediaType);
+//        auto configuration = getConfiguration(mediaType);
         return false; // Not implemented yet.
     }
 
@@ -122,7 +123,7 @@ private:
     /// @return Matching configuration or `nullptr` if the type is not registered.
     static MediaConfiguration* getConfiguration(MediaType mediaType)
     {
-        for (int i = 0; i < maxConfigurations; ++i)
+        for (size_t i = 0; i < maxConfigurations; ++i)
             if (configurations[i].type == mediaType) return &configurations[i];
         return nullptr;
     }
@@ -132,34 +133,3 @@ private:
 };
 
 }
-
-// using FS_Media = FS::AdapterTypes::Media;
-
-EXTERN_C_BEGIN
-
-void fs_register_type(FS_MediaType mediaType, FS_MediaDriver driver, FS_MediaDriverInfo driverInfo)
-{
-    FS::MediaServices::registerType(static_cast<FS::MediaType>(mediaType), driver, driverInfo);
-}
-
-bool fs_format(FS_MediaType mediaType, FS_MediaFormat format, const char* label)
-{
-    return FS::MediaServices::format(static_cast<FS::MediaType>(mediaType), static_cast<FS::MediaFormat>(format), label);
-}
-
-bool fs_mount(FS_Media* media, const char* root)
-{
-    return FS::MediaServices::mount(*media, root);
-}
-
-bool fs_umount(const char* root)
-{
-    return FS::MediaServices::umount(root);
-}
-
-bool fs_umount(FS_Media* media)
-{
-    return FS::MediaServices::umount(*media);
-}
-
-EXTERN_C_END

@@ -75,6 +75,32 @@ TEnum operator^=(TEnum& a, const TEnum b)
     return a = static_cast<TEnum>(static_cast<TValue>(a) ^ static_cast<TValue>(b));
 }
 
+template<typename TEnum>
+bool operator==(const TEnum a, const TEnum b)
+{
+    using TValue = typename std::underlying_type<TEnum>::type;
+    return static_cast<TValue>(a) == static_cast<TValue>(b);
+}
+
+template<typename TEnum>
+bool operator!=(const TEnum a, const TEnum b)
+{
+    using TValue = typename std::underlying_type<TEnum>::type;
+    return static_cast<TValue>(a) != static_cast<TValue>(b);
+}
+
+template<typename TEnum, typename TValue>
+bool operator==(const TEnum a, const TValue b)
+{
+    return static_cast<TValue>(a) == b;
+}
+
+template<typename TEnum, typename TValue>
+bool operator!=(const TEnum a, const TValue b)
+{
+    return static_cast<TValue>(a) != b;
+}
+
 /**
  * @brief Bit flags name space.
  */

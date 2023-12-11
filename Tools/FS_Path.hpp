@@ -26,8 +26,8 @@ struct Path : protected AdapterTypes
     {
         fileSystem = FileSystemTable::find(path);
         if (!fileSystem) return; // If the root is not found, the `fileSystem` will be empty.
-        std::snprintf(&absolutePath, FS_MAX_PATH_LENGTH, path, args...);
-        std::snprintf(&relativePath, FS_MAX_PATH_LENGTH, path + std::strlen(fileSystem->root), args...);
+        std::snprintf(&absolutePath[0], lfnMaxLength, path, args...);
+        std::snprintf(&relativePath[0], lfnMaxLength, path + std::strlen(fileSystem->root), args...);
     }
 
     /// @brief Creates a target file system information from a file system target pointer, relative path string and optional arguments.
@@ -41,8 +41,8 @@ struct Path : protected AdapterTypes
         fileSystem = &fs;
         auto rootLength = std::strlen(fileSystem->root);
         std::memcpy(&absolutePath, &fileSystem->root, rootLength);
-        std::snprintf(&relativePath, FS_MAX_PATH_LENGTH, path, args...);
-        std::snprintf(&absolutePath + rootLength, FS_MAX_PATH_LENGTH - rootLength, path, args...);
+        std::snprintf(&relativePath[0], lfnMaxLength, path, args...);
+        std::snprintf(&absolutePath[0] + rootLength, lfnMaxLength - rootLength, path, args...);
     }
 
     /// @returns True if the path target is fully configured.

@@ -1,14 +1,14 @@
 #pragma once
 
-#include <stdbool.h>
 #include <stddef.h>
+#include "bindings.h"
 
 // Common types:
 
 /// @brief A placeholder structure for a NULL file system.
-typedef struct
+typedef struct __FS_Placeholder
 {
-    bool isUsed = 0;    // 1: The structure is in use. 0: The structure is reset.
+    int isUsed; // 1: The structure is in use. 0: The structure is reset.
 } FS_Placeholder;
 
 /// @brief Physical media type.
@@ -53,6 +53,8 @@ typedef int             FS_Status;
 
 // Media services declarations:
 
+EXTERN_C_BEGIN
+
 /// @brief Registers a media type.
 /// @param mediaType Media type.
 /// @param driver  Media driver (if required).
@@ -64,20 +66,22 @@ void fs_register_type(FS_MediaType mediaType, FS_MediaDriver driver, FS_MediaDri
 /// @param format File system type.
 /// @param label Volume label.
 /// @return True if performed successfully, false otherwise.
-bool fs_format(FS_MediaType mediaType, FS_MediaFormat format, const char* label);
+int fs_format(FS_MediaType mediaType, FS_MediaFormat format, const char* label);
 
 /// @brief Mounts a media to a specified file system root path.
 /// @param media Media structure reference to mount.
 /// @param root File system root path pointer.
-/// @return True if the media was successfully mounted, false otherwise.
-bool fs_mount(FS_Media* media, const char* root);
+/// @return 1 if the media was successfully mounted, 0 otherwise.
+int fs_mount(FS_Media* media, const char* root);
 
 /// @brief Unmouts a media from the specified system root path.
 /// @param root File system root path pointer.
-/// @return True if the media was successfully unmounted, false otherwise.
-bool fs_umount(const char* root);
+/// @return 1 if the media was successfully unmounted, 0 otherwise.
+int fs_umount(const char* root);
 
 /// @brief Unmounts a media from a specified media structure location.
 /// @param media Media structure pointer.
-/// @return Status.
-bool fs_umount(FS_Media* media);
+/// @return 1 if the media was successfully unmounted, 0 otherwise.
+int fs_umount_media(FS_Media* media);
+
+EXTERN_C_END

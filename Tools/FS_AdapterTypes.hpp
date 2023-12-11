@@ -10,7 +10,7 @@ namespace FS
 
 /// @brief Flags for the file open operation.
 /// @remark Values made to match FATFS flags directly.
-enum class FileMode : uint8_t
+enum class FileMode : uint32_t
 {
     none            = 0x00, // No access, fail if the file doesn't exist.
     read            = 0x01, // Read access.
