@@ -42,16 +42,14 @@ Empty project template takes **188KB** of RAM.
 | UXHost memory pool            | 64KB
 | - USBX host system stack      | 48KB (min.40KB)
 | - Host thread stack           | 16KB
-| - Host app thread stack       | 4KB
-
-
-| ? Host enum thread stack      | 2KB
-| ? Host HCD thread stack       | 2KB
-| ? Host HNP thread stack       | 2KB
+|   - Host app thread stack     | 10KB
+|   - enum thread stack         | 2KB
+|   - HCD thread stack          | 2KB
+|   - HNP thread stack          | 2KB
 |                               |
 | TouchGFX memory pool          | 32KB
 | - TouchGFX memory stack       | 16KB
-
+|                               |
 | Total                         | Size
 |-------------------------------|------
 | Pools                         | 56KB
