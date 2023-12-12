@@ -70,6 +70,16 @@ public:
         tx_thread_relinquish();
     }
 
+    /// @brief Changes the current thread priority.
+    /// @param newPriority New priority value.
+    /// @param oldPriority An optional pointer to the old priority value.
+    /// @return False if error occurred, true otherwise.
+    inline static bool changeCurrentThreadPriority(ThreadPriority newPriority, ThreadPriority* oldPriority = nullptr)
+    {
+        lastError = tx_thread_priority_change(tx_thread_identify(), newPriority, oldPriority);
+        return lastError == TX_SUCCESS;
+    }
+
     /// @brief Puts the current thread to sleep for a specified number of ticks.
     /// @param ticks The number of OS ticks to wait.
     /// @returns False if error occurred, true otherwise.
@@ -279,7 +289,7 @@ public:
             lastError = TX_NOT_AVAILABLE;
             return false;
         }
-        SemaphoreData* instance = m_semaphorePool.getInstance();
+        SemaphoreData* instance = m_semaphorePool.getInstance(id);
         if (!instance)
         {
             lastError = TX_NOT_AVAILABLE;
@@ -299,7 +309,7 @@ public:
             lastError = TX_NOT_AVAILABLE;
             return false;
         }
-        SemaphoreData* instance = m_semaphorePool.getInstance();
+        SemaphoreData* instance = m_semaphorePool.getInstance(id);
         if (!instance)
         {
             lastError = TX_NOT_AVAILABLE;
@@ -319,7 +329,7 @@ public:
             lastError = TX_NOT_AVAILABLE;
             return false;
         }
-        SemaphoreData* instance = m_semaphorePool.getInstance();
+        SemaphoreData* instance = m_semaphorePool.getInstance(id);
         if (!instance)
         {
             lastError = TX_NOT_AVAILABLE;

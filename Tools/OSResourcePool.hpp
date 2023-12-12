@@ -28,7 +28,7 @@
 
         static constexpr unsigned int size = N; // The number of elements available in the pool.
 
-        OSResourcePool()
+        OSResourcePool() : m_pool()
         {
             static_assert(std::is_base_of<OSResource, T>::value, "T must inherit from OSResource");
         }
