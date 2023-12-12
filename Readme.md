@@ -1,8 +1,8 @@
-# Riverdi U599 HMI documentation
+# Riverdi 50STM32U599 documentation
 
 ## Memory layout
 
-| Type              | Start         | End           | Size          | Readable  |
+| Type              | Start         | End           | Size          | [KB/MB]   |
 |-------------------|---------------|---------------|---------------|-----------|
 | FLASH             | 0x0800_0000   | 0x083F_FFFF   | 0x0040_0000   | 4MB       |
 | RAM (internal)    | 0x2000_0000   | 0x2026_FFFF   | 0x0027_0000   | 2496KB    |
@@ -12,6 +12,16 @@
 ### Frame buffer memory
 
 A single frame buffer takes `0x0011_9400` bytes (1125KB).
+
+### Memory with the single frame buffer
+
+| Type              | Start         | End           | Size          | [KB/MB]   |
+|-------------------|---------------|---------------|---------------|-----------|
+| FLASH             | 0x0800_0000   | 0x083F_FFFF   | 0x0040_0000   | 4MB       |
+| RAM (internal)    | 0x2000_0000   | 0x2015_6BFF   | 0x0015_6C00   | 1372KB    |
+| RAM (framebuffer) | 0x2015_6C00   | 0x2015_6BFF   | 0x0011_9400   | 1126KB    |
+| RAM (static)      | 0x2800_0000   | 0x2800_3FFF   | 0x0027_4000   | 16KB      |
+| RAM (external)    | 0x9000_0000   | 0x93FF_FFFF   | 0x0400_0000   | 64MB      |
 
 ### Single buffer layout
 
@@ -34,23 +44,25 @@ Empty project template takes **188KB** of RAM.
 
 ## ThreadX (AZURE RTOS) memory pools configuration
 
-| Pool                          | Size
-|-------------------------------|------
-| ThreadX memory pool           | 4KB
-| FileX memory pool             | 128KB
-|                               |
-| UXHost memory pool            | 64KB
-| - USBX host system stack      | 48KB (min.40KB)
-| - Host thread stack           | 16KB
-|   - Host app thread stack     | 10KB
-|   - enum thread stack         | 2KB
-|   - HCD thread stack          | 2KB
-|   - HNP thread stack          | 2KB
-|                               |
-| TouchGFX memory pool          | 32KB
-| - TouchGFX memory stack       | 16KB
-|                               |
-| Total                         | Size
-|-------------------------------|------
-| Pools                         | 56KB
-| Stacks                        | 30KB
+| Pool                          | Size  | Macro
+|-------------------------------|-------|---------------------------
+| THREADX (APP THREAD)          | 128KB | TX_APP_MEM_POOL_SIZE
+|                               |  64KB | TX_APP_STACK_SIZE
+| FILEX                         |  64KB | FX_APP_MEM_POOL_SIZE
+|                               |   4KB | FX_APP_THREAD_STACK_SIZE
+| USBX                          |  64KB | UX_HOST_APP_MEM_POOL_SIZE
+|                               |  46KB | USBX_HOST_MEMORY_STACK_SIZE
+|                               |   4KB | UX_HOST_APP_THREAD_STACK_SIZE
+| TOUCHGFX                      |  32KB | TOUCHGFX_APP_MEM_POOL_SIZE
+|                               |  16KB | TOUCHGFX_STACK_SIZE
+---
+Total: 304KB
+
+## Static tools
+
+| Static allocation             | Size  | Notes
+|-------------------------------|-------|----------------------------
+| Log                           |  36KB | Message pool
+| OS wrapper                    |  22KB | Disposable resource handles
+---
+Total: 58KB
