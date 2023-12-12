@@ -25,20 +25,20 @@ struct Path : protected AdapterTypes
     template<class ...va> Path(const char* path, va ...args) : fileSystem(), absolutePath(), relativePath()
     {
         fileSystem = FileSystemTable::find(path);
-        if (!fileSystem) return; // If the root is not found, the `fileSystem` will be empty.
+        if (!fileSystem || !fileSystem->root) return;
         std::snprintf(&absolutePath[0], lfnMaxLength, path, args...);
         std::snprintf(&relativePath[0], lfnMaxLength, path + std::strlen(fileSystem->root), args...);
     }
 
     /// @brief Creates a target file system information from a file system target pointer, relative path string and optional arguments.
     /// @tparam ...va Variadic arguments type.
-    /// @param fs File system target reference.
+    /// @param fs File system pointer.
     /// @param path Relative path to the file system entry.
     /// @param ...args Optional arguments used to format the path.
-    template<class ...va> Path(FileSystem& fs, const char* path, va ...args) : fileSystem(), absolutePath(), relativePath()
+    template<class ...va> Path(FileSystem* fs, const char* path, va ...args) : fileSystem(), absolutePath(), relativePath()
     {
-        if (!fs.root) return; // If the target's root is empty, the `fileSystem` will be empty.
-        fileSystem = &fs;
+        if (!fs || !fs->root) return;
+        fileSystem = fs;
         auto rootLength = std::strlen(fileSystem->root);
         std::memcpy(&absolutePath, &fileSystem->root, rootLength);
         std::snprintf(&relativePath[0], lfnMaxLength, path, args...);

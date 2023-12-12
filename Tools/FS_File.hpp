@@ -27,10 +27,10 @@ struct File final : public Path
 
     /// @brief Creates a file metadata from a file system target pointer, relative path string and optional arguments.
     /// @tparam ...va Variadic arguments type.
-    /// @param fs File system target reference.
+    /// @param fs File system pointer.
     /// @param path Relative path to the file.
     /// @param ...args Optional arguments used to format the path.
-    template<class ...va> File(FileSystem& fs, const char* relativePath, FileMode pMode, va ...args)
+    template<class ...va> File(FileSystem* fs, const char* relativePath, FileMode pMode, va ...args)
         : Path(fs, relativePath, std::forward<va>(args)...), mode(pMode) { open(); }
 
     FileHandle file;    // File handle.

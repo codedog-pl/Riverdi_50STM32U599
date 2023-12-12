@@ -4,7 +4,10 @@
 
 #include "BitFlags.hpp"
 #include "FS_AdapterMethods.hpp"
+#include "bindings.h"
+EXTERN_C_BEGIN
 #include "fx_directory.h"
+EXTERN_C_END
 #include <cstring>
 
 namespace FS
