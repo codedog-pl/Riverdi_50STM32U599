@@ -26,6 +26,7 @@
 
 #include "hmi.h"
 #include "log.h"
+#include "fs_bindings.h"
 
 #include "usb_otg.h"
 #include "ux_api.h"
@@ -93,9 +94,6 @@ VOID USBX_APP_Host_Init(VOID)
   HAL_HCD_Start(&hhcd_USB_OTG_HS);
 
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
-
-  USBH_UsrLog("USBH: Ready.");
-  HMI_USB_OK
 
   /* USER CODE END USB_Host_Init_PostTreatment1 */
 }
@@ -176,26 +174,20 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
 
-  /* Allocate the stack for storrage app thread  */
-  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                       ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
-  {
-    return TX_POOL_ERROR;
-  }
+  // /* Allocate the stack for storrage app thread  */
+  // if (tx_byte_allocate(byte_pool, (VOID **) &pointer, (UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
+  // {
+  //   return TX_POOL_ERROR;
+  // }
 
-  /* Create the storage applicative process thread */
-  if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-                       0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
-                       TX_AUTO_START) != TX_SUCCESS)
-  {
-    return TX_THREAD_ERROR;
-  }
+  // /* Create the storage applicative process thread */
+  // if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
+  //                      0, pointer, ( UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
+  //                      TX_AUTO_START) != TX_SUCCESS)
+  // {
+  //   return TX_THREAD_ERROR;
+  // }
 
-  /* Create the event flags group */
-  if (tx_event_flags_create(&ux_app_EventFlag, "Event Flag") != TX_SUCCESS)
-  {
-    return TX_GROUP_ERROR;
-  }
 
   /* USER CODE END MX_USBX_Host_Init1 */
 
@@ -210,8 +202,36 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
+
   USBH_UsrLog("USBH: Hardware initialization...");
   USBX_APP_Host_Init();
+  ULONG storage_media_flag = 0;
+  tx_event_flags_create(&ux_app_EventFlag, "USBH_Event");
+  USBH_UsrLog("USBH: Host thread started...");
+  HMI_USB_OK
+  while(1)
+  {
+    tx_event_flags_get(
+      &ux_app_EventFlag,
+      STORAGE_MEDIA_CONNECTED | STORAGE_MEDIA_DISCONNECTED,
+      TX_OR_CLEAR,
+      &storage_media_flag,
+      TX_WAIT_FOREVER
+    );
+    if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
+    {
+      fs_mount(media[msc_index], "1:/");
+      log_msg(3, "USBH: External storage mounted as \"1:/\".");
+      HMI_TriggerUSBMediaMounted();
+    }
+    else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
+    {
+      fs_umount("1:/");
+      log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
+      HMI_TriggerUSBMediaUnmounted();
+    }
+  }
+
   /* USER CODE END app_ux_host_thread_entry */
 }
 
