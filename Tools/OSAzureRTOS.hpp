@@ -62,7 +62,7 @@ public:
     static constexpr ThreadPriority threadPriorityBelowNormal = 6;
     static constexpr ThreadPriority threadPriorityHighest = 0;
     static constexpr ThreadPriority threadPriorityLowest = TX_MAX_PRIORITIES - 1;
-    static constexpr uint32_t threadDefaultStackSize = TX_APP_STACK_SIZE;   // Stack frame assigned to new threads.
+    static constexpr uint32_t threadDefaultStackSize = 1024;   // Stack frame assigned to new threads.
 
     /// @brief Yields the current thread allowing the other threads to proceed.
     inline static void yield(void)
