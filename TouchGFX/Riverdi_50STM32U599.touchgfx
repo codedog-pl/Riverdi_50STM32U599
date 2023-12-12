@@ -3,7 +3,6 @@
     "Screens": [
       {
         "Name": "Screen1",
-        "CanvasBufferSize": 12000,
         "Components": [
           {
             "Type": "CustomContainerInstance",
@@ -59,7 +58,6 @@
       },
       {
         "Name": "Screen2",
-        "CanvasBufferSize": 12000,
         "Components": [
           {
             "Type": "CustomContainerInstance",

@@ -35,12 +35,6 @@ protected:
 private:
 
     /*
-     * Canvas Buffer Size
-     */
-    static const uint32_t CANVAS_BUFFER_SIZE = 12000;
-    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
-
-    /*
      * Callback Declarations
      */
     touchgfx::Callback<Screen2ViewBase> backBtnClickCallback;

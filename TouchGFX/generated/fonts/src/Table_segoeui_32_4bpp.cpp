@@ -3,44 +3,32 @@
 #include <fonts/GeneratedFont.hpp>
 
 FONT_TABLE_LOCATION_FLASH_PRAGMA
-KEEP extern const touchgfx::VectorFontNode vector_glyphs_segoeui[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE = {
-    {     0, 0x0030,  934, 1483, 1458,   86, 1104,   0,   0 },
-    {    56, 0x0032,  885, 1458, 1458,  109, 1104,   0,   0 },
-    {   147, 0x0033,  830, 1483, 1458,  123, 1104,   0,   0 },
-    {   236, 0x0035,  805, 1459, 1434,  164, 1104,   0,   0 },
-    {   313, 0x0039,  910, 1483, 1458,   94, 1104,   0,   0 },
-    {   427, 0x003C,  860,  973, 1100,  272, 1401,   0,   0 },
-    {   446, 0x003E,  860,  973, 1100,  272, 1401,   0,   0 },
-    {   465, 0x003F,  686, 1476, 1458,  131,  918,   0,   0 },
-    {   576, 0x004D, 1462, 1434, 1434,  188, 1839,   0,   0 },
-    {   636, 0x0053,  869, 1482, 1458,  121, 1088,   0,   0 },
-    {   750, 0x0054,  995, 1434, 1434,   41, 1073,   0,   1 },
-    {   769, 0x0055, 1067, 1458, 1434,  170, 1407,   0,   0 }
+KEEP extern const touchgfx::GlyphNode glyphs_segoeui_32_4bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE = {
+    {     0, 0x0030,  15,  23,  23,   1,  17,   0,   0, 0x00 },
+    {   184, 0x0032,  15,  23,  23,   1,  17,   0,   0, 0x00 },
+    {   368, 0x0033,  14,  23,  23,   1,  17,   0,   0, 0x00 },
+    {   529, 0x0035,  14,  23,  23,   2,  17,   0,   0, 0x00 },
+    {   690, 0x0039,  15,  23,  23,   1,  17,   0,   0, 0x00 },
+    {   874, 0x003C,  14,  16,  18,   4,  22,   0,   0, 0x00 },
+    {   986, 0x003E,  14,  16,  18,   4,  22,   0,   0, 0x00 },
+    {  1098, 0x003F,  11,  23,  23,   2,  14,   0,   0, 0x00 },
+    {  1236, 0x004D,  24,  23,  23,   2,  29,   0,   0, 0x00 },
+    {  1512, 0x0053,  15,  23,  23,   1,  17,   0,   0, 0x00 },
+    {  1696, 0x0054,  17,  23,  23,   0,  17,   0,   1, 0x00 },
+    {  1903, 0x0055,  18,  23,  23,   2,  22,   0,   0, 0x00 }
 };
 
-    // The VectorFontData accessed by static initializers. Must be located in internal flash.
-KEEP extern const touchgfx::VectorFontData vector_fontData_segoeui = {
-       12, // Number of glyphs
-     2048, // Baseline Height
-        0, // Max left
-        0, // Max right
-        0, // Max above top
-       25, // Max below baseline
-       63, // Fallback character
-        0  // Ellipsis character
-    };
-
-// Empty GSUB tableFONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA
-KEEP extern const uint16_t vector_segoeui_gsubTable[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = { 0 };
-
-
+// segoeui_32_4bpp
+FONT_TABLE_LOCATION_FLASH_PRAGMA
+KEEP extern const touchgfx::GlyphNode glyphs_segoeui_32_4bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE;
 FONT_GLYPH_LOCATION_FLASH_PRAGMA
-KEEP extern const uint16_t vector_unicodes_segoeui_0[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
-
+KEEP extern const uint8_t unicodes_segoeui_32_4bpp_0[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
 FONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA
-KEEP extern const uint16_t* const vector_unicodes_segoeui[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = {
-    vector_unicodes_segoeui_0
+KEEP extern const uint8_t* const unicodes_segoeui_32_4bpp[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = {
+    unicodes_segoeui_32_4bpp_0
 };
+FONT_KERNING_LOCATION_FLASH_PRAGMA
+KEEP extern const touchgfx::KerningNode kerning_segoeui_32_4bpp[] FONT_KERNING_LOCATION_FLASH_ATTRIBUTE;
 static const touchgfx::Unicode::UnicodeChar contextualForms4Long[][5] = {
     //                        key,    isol,   key2
     { /*0627 0644 0644 0647*/ 0x02ED, 0xFDF2, 0x0644, 0x0000, 0x0000 }, // ARABIC LIGATURE ALLAH
@@ -180,9 +168,9 @@ static const touchgfx::Unicode::UnicodeChar contextualForms06XX[][5] = {
     { /*06D3*/ 0x06D3, 0xFBB0, 0xFBB1, 0x0000, 0x0000 }  // ARABIC LETTER YEH BARREE WITH HAMZA ABOVE
 };
 
-extern const touchgfx::FontContextualFormsTable vector_segoeui_contextualFormsTable;
+extern const touchgfx::FontContextualFormsTable segoeui_contextualFormsTable;
 
-const touchgfx::FontContextualFormsTable vector_segoeui_contextualFormsTable =
+const touchgfx::FontContextualFormsTable segoeui_contextualFormsTable =
 {
     contextualForms4Long,
     contextualForms3Long,
@@ -197,3 +185,10 @@ const touchgfx::FontContextualFormsTable vector_segoeui_contextualFormsTable =
     sizeof(contextualForms06XX)/sizeof(contextualForms06XX[0])
 };
 
+touchgfx::GeneratedFont& getFont_segoeui_32_4bpp();
+
+touchgfx::GeneratedFont& getFont_segoeui_32_4bpp()
+{
+    static touchgfx::GeneratedFont segoeui_32_4bpp(glyphs_segoeui_32_4bpp, 12, 32, 32, 0, 0, 4, 1, 0, 0, unicodes_segoeui_32_4bpp, kerning_segoeui_32_4bpp, 63, 0, 0, &segoeui_contextualFormsTable);
+    return segoeui_32_4bpp;
+}
