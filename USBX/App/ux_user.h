@@ -102,7 +102,7 @@
    though the compiler's equivalent of the -D option.  */
 
 /* Define USBX Generic Thread Stack Size.  */
-#define UX_THREAD_STACK_SIZE                                16384
+#define UX_THREAD_STACK_SIZE                             (2 * 1024)
 
 /* Define USBX Host Enum Thread Stack Size. The default is to use UX_THREAD_STACK_SIZE */
 /* #define UX_HOST_ENUM_THREAD_STACK_SIZE                   UX_THREAD_STACK_SIZE  */
@@ -161,7 +161,7 @@
    scaled down to conserve memory. Note that this value represents the total number of devices
    regardless of the number of USB buses in the system.  */
 
-#define UX_MAX_DEVICES       2
+#define UX_MAX_DEVICES       1
 
 /* Defined, this value represents the current number of SCSI logical units represented in the device
    storage class driver.  */
@@ -428,7 +428,7 @@
 
 /* Defined, this value represents the size of the log pool.
 */
-/* #define UX_DEBUG_LOG_SIZE          (1024 * 16) */
+#define UX_DEBUG_LOG_SIZE             1024
 
 /* Defined, this macro represents the non-blocking function to return time tick.
    This macro is used only in standalone mode.
