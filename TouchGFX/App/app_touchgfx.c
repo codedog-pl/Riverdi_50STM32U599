@@ -24,8 +24,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "hmi.h"
-#include "log.h"
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -99,7 +97,6 @@ UINT MX_TouchGFX_Init(VOID* memory_ptr)
 void MX_TouchGFX_Process(void)
 {
     // Calling forward to touchgfx_taskEntry in C++ domain
-    HMI_DISPLAY_OK
     touchgfx_taskEntry();
 }
 
@@ -109,7 +106,6 @@ void MX_TouchGFX_Process(void)
 void TouchGFX_Task(unsigned long thread_input)
 {
     // Calling forward to touchgfx_taskEntry in C++ domain
-    HMI_DISPLAY_OK
     touchgfx_taskEntry();
 }
 
