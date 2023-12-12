@@ -42,11 +42,12 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 #define USBX_HOST_MEMORY_STACK_SIZE     48*1024
 
-#define UX_HOST_APP_THREAD_STACK_SIZE   4096
-#define UX_HOST_APP_THREAD_PRIO         10
+#define UX_HOST_APP_THREAD_STACK_SIZE   4*1024
+#define UX_HOST_APP_THREAD_PRIO         23
 
 /* USER CODE BEGIN EC */
-
+#define STORAGE_MEDIA_CONNECTED         0x01
+#define STORAGE_MEDIA_DISCONNECTED      0x02
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
