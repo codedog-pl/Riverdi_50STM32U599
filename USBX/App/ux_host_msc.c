@@ -23,9 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "app_usbx_host.h"
-#include "fs_bindings.h"
-#include "hmi.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,35 +59,5 @@ extern TX_EVENT_FLAGS_GROUP ux_app_EventFlag;
 /* USER CODE END 0 */
 
 /* USER CODE BEGIN 1 */
-
-VOID msc_process_thread_entry(ULONG thread_input)
-{
-  ULONG storage_media_flag = 0;
-  USBH_UsrLog("USBH: MSC thread started.");
-  while(1)
-  {
-    if (tx_event_flags_get(
-      &ux_app_EventFlag,
-      STORAGE_MEDIA_CONNECTED | STORAGE_MEDIA_DISCONNECTED,
-      TX_OR_CLEAR,
-      &storage_media_flag,
-      TX_WAIT_FOREVER) == TX_SUCCESS)
-    {
-      if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
-      {
-        fs_mount(media[msc_index], "1:/");
-        log_msg(3, "USBH: External storage mounted as \"1:/\".");
-        HMI_TriggerUSBMediaMounted();
-      }
-      else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
-      {
-        fs_umount("1:/");
-        log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
-        HMI_TriggerUSBMediaUnmounted();
-      }
-    }
-    else Error_Handler();
-  }
-}
 
 /* USER CODE END 1 */

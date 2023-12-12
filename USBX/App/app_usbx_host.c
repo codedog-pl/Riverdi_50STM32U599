@@ -44,7 +44,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define MSC_INSTANCE     1
+#define MSC_INSTANCE                0x01
+#define STORAGE_MEDIA_CONNECTED     0x01
+#define STORAGE_MEDIA_DISCONNECTED  0x02
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
