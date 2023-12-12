@@ -9,8 +9,7 @@
 #include "HMI.hpp"
 #include "Log.hpp"
 #include "Thread.hpp"
-
-#include <iostream>
+#include "FS_Test.hpp"
 
 void HMI::start()
 {
@@ -20,6 +19,7 @@ void HMI::start()
     OS::semaphoreDelete(initSemaphore);
     initSemaphore = 0;
     Log::msg("HMI: Initialization complete.");
+    // FS::Test::fileAPI("0:/", "fs-test.dat");
     Thread::dispatchLoop(); // This will wait indefinitely for thread synchronization events.
 }
 
@@ -32,6 +32,7 @@ void HMI::init(uint32_t flags)
 void HMI::USBMediaMounted()
 {
     Log::msg("HMI: USB media available.");
+    FS::Test::fileAPI("1:/", "fs-test.dat");
 }
 
 void HMI::USBMediaUnmounted()

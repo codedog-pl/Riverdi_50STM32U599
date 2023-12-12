@@ -23,11 +23,17 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ux_host_stack.h"
-#include "usb_otg.h"
-#include "ux_hcd_stm32.h"
+
 #include "hmi.h"
 #include "log.h"
+
+#include "usb_otg.h"
+#include "ux_api.h"
+#include "ux_hcd_stm32.h"
+#include "ux_host_class_storage.h"
+#include "ux_host_stack.h"
+
+//#include "ux_host_stack.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -233,6 +239,7 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
 
       USBH_UsrLog("USBH: Device connected.");
 
+
       if (current_class->ux_host_class_entry_function == ux_host_class_storage_entry)
       {
         status = UX_TOO_MANY_DEVICES;
@@ -269,8 +276,8 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
           media[msc_index] = &storage_media[msc_index].ux_host_class_storage_media;
           if (storage_instance[msc_index] -> ux_host_class_storage_state ==  UX_HOST_CLASS_INSTANCE_LIVE)
           {
-            if (tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_CONNECTED, TX_OR) != TX_SUCCESS)
-              Error_Handler();
+            // Pass the control to MSC thread:
+            if (tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_CONNECTED, TX_OR) != TX_SUCCESS) Error_Handler();
           }
         }
       }

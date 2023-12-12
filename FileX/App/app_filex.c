@@ -23,9 +23,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include "hmi.h"
 #include "log.h"
 #include "fs_bindings.h"
+
+#include "ux_api.h"
+#include "ux_host_class_storage.h"
+#include "ux_host_stack.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,8 +63,6 @@ ALIGN_32BYTES (uint32_t fx_sd_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / siz
 FX_MEDIA        sdio_disk;
 
 /* USER CODE BEGIN PV */
-ALIGN_32BYTES (uint32_t fx_ux_media_memory[FX_STM32_SD_DEFAULT_SECTOR_SIZE / sizeof(uint32_t)]);
-FX_MEDIA        usbx_disk;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,14 +73,14 @@ void fx_app_thread_entry(ULONG thread_input);
 /* USER CODE BEGIN PFP */
 
 /**
- * @brief Mounts the SD card.
+ * @brief Mounts a SD card.
  * @returns True if mounted successfully, false otherwise.
  */
 bool fx_mount_sd_card()
 {
-  UINT sd_status = FX_SUCCESS;
-  log_msg(3, "FILEX: Reading SD...");
-  sd_status =  fx_media_open(
+  UINT status = FX_SUCCESS;
+  log_msg(3, "FILEX: Opening SD...");
+  status =  fx_media_open(
     &sdio_disk,                 // Media control block pointer.
     FX_SD_VOLUME_NAME,          // Pointer to media name string.
     fx_stm32_sd_driver,         // Media driver entry function.
@@ -84,19 +88,17 @@ bool fx_mount_sd_card()
     (void*)fx_sd_media_memory,  // Pointer to memory used by the FileX for this media.
     sizeof(fx_sd_media_memory)  // Size of media memory - must be at least 512 bytes and one sector size.
   );
-  if (sd_status == FX_SUCCESS)
+  if (status == FX_SUCCESS)
   {
     fs_mount(&sdio_disk, "0:/");
     log_msg(3, "FILEX: SD card mounted as \"0:/\".");
   }
   else
   {
-    log_msg(0, "FILEX: SD ERROR %i.", sd_status);
-    return false;
+    log_msg(0, "FILEX: SD ERROR %i.", status);
   }
-  return true;
+  return status == FX_SUCCESS;
 }
-
 
 /* USER CODE END PFP */
 

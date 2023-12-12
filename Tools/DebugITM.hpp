@@ -68,7 +68,7 @@ public:
     {
         if (m_threadId) return;
         m_semaphoreId = OS::semaphoreCreate("DebugITM");
-        m_threadId = OS::threadStart("ITM", senderThreadEntry);
+        m_threadId = OS::threadStart("ITM", senderThreadEntry, 30);
     }
 
     /// @brief Sends a message to the output.

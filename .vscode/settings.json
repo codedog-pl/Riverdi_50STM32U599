@@ -48,7 +48,10 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "stm32u5xx_hal.h": "c"
+        "stm32u5xx_hal.h": "c",
+        "ctime": "cpp",
+        "ux_host_class_storage.h": "c",
+        "ux_host_msc.h": "c"
     },
     "svg.preview.background": "transparent"
 }
