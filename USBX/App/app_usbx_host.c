@@ -24,14 +24,15 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "hmi.h"
-#include "log.h"
-
 #include "usb_otg.h"
 #include "ux_api.h"
 #include "ux_hcd_stm32.h"
 #include "ux_host_class_storage.h"
 #include "ux_host_stack.h"
+
+#include "hmi.h"
+#include "log.h"
+#include "fs_bindings.h"
 
 //#include "ux_host_stack.h"
 /* USER CODE END Includes */
@@ -94,10 +95,37 @@ VOID USBX_APP_Host_Init(VOID)
 
   /* USER CODE BEGIN USB_Host_Init_PostTreatment1 */
 
-  USBH_UsrLog("USBH: Ready.");
-  HMI_USB_OK
-
   /* USER CODE END USB_Host_Init_PostTreatment1 */
+}
+
+VOID USBX_Event_Dispatcher(VOID)
+{
+  tx_event_flags_create(&ux_app_EventFlag, "Event Flag");
+  ULONG storage_media_flag = 0;
+  USBH_UsrLog("USBH: MSC event dispatcher started.");
+  HMI_USB_OK
+  while(1)
+  {
+    tx_event_flags_get(
+      &ux_app_EventFlag,
+      STORAGE_MEDIA_CONNECTED | STORAGE_MEDIA_DISCONNECTED,
+      TX_OR_CLEAR,
+      &storage_media_flag,
+      TX_WAIT_FOREVER
+    );
+    if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
+    {
+      fs_mount(media[msc_index], "1:/");
+      log_msg(3, "USBH: External storage mounted as \"1:/\".");
+      HMI_TriggerUSBMediaMounted();
+    }
+    else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
+    {
+      fs_umount("1:/");
+      log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
+      HMI_TriggerUSBMediaUnmounted();
+    }
+  }
 }
 
 /* USER CODE END PFP */
@@ -176,26 +204,20 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
 
-  /* Allocate the stack for storrage app thread  */
-  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                       ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
-  {
-    return TX_POOL_ERROR;
-  }
+  // /* Allocate the stack for storrage app thread  */
+  // if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+  //                      ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
+  // {
+  //   return TX_POOL_ERROR;
+  // }
 
-  /* Create the storage applicative process thread */
-  if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-                       0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
-                       TX_AUTO_START) != TX_SUCCESS)
-  {
-    return TX_THREAD_ERROR;
-  }
-
-  /* Create the event flags group */
-  if (tx_event_flags_create(&ux_app_EventFlag, "Event Flag") != TX_SUCCESS)
-  {
-    return TX_GROUP_ERROR;
-  }
+  // /* Create the storage applicative process thread */
+  // if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
+  //                      0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
+  //                      TX_AUTO_START) != TX_SUCCESS)
+  // {
+  //   return TX_THREAD_ERROR;
+  // }
 
   /* USER CODE END MX_USBX_Host_Init1 */
 
@@ -212,6 +234,7 @@ static VOID app_ux_host_thread_entry(ULONG thread_input)
   /* USER CODE BEGIN app_ux_host_thread_entry */
   USBH_UsrLog("USBH: Hardware initialization...");
   USBX_APP_Host_Init();
+  USBX_Event_Dispatcher();
   /* USER CODE END app_ux_host_thread_entry */
 }
 
@@ -238,47 +261,43 @@ UINT ux_host_event_callback(ULONG event, UX_HOST_CLASS *current_class, VOID *cur
       /* USER CODE BEGIN UX_DEVICE_INSERTION */
 
       USBH_UsrLog("USBH: Device connected.");
+      if (current_class->ux_host_class_entry_function != ux_host_class_storage_entry) break;
 
-
-      if (current_class->ux_host_class_entry_function == ux_host_class_storage_entry)
+      status = UX_TOO_MANY_DEVICES;
+      for (idx = 0; idx < MSC_INSTANCE; )
       {
-        status = UX_TOO_MANY_DEVICES;
-        for (idx = 0; idx < MSC_INSTANCE; )
-        {
-          if (storage_instance[idx]) ++idx;
-          else
-          {
-            storage_instance[idx] = (UX_HOST_CLASS_STORAGE*)current_instance;
-            msc_index = idx;
-            status = UX_SUCCESS;
-            break;
-          }
-        }
-        if (status != UX_SUCCESS)
-        {
-          USBH_ErrLog("USBH: Too many devices connected. Consider increasing MSC_INSTANCE.");
-          return status;
-        }
-
-        USBH_UsrLog("USBH: MSC device detected:");
-        USBH_UsrLog("  PID: %#x",
-          (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idProduct);
-        USBH_UsrLog("  VID: %#x",
-          (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idVendor);
-
-        storage_media = (UX_HOST_CLASS_STORAGE_MEDIA *)current_class -> ux_host_class_media;
-        if (storage_media[msc_index].ux_host_class_storage_media_lun != 0)
-        {
-          storage_media = UX_NULL;
-        }
+        if (storage_instance[idx]) ++idx;
         else
         {
-          media[msc_index] = &storage_media[msc_index].ux_host_class_storage_media;
-          if (storage_instance[msc_index] -> ux_host_class_storage_state ==  UX_HOST_CLASS_INSTANCE_LIVE)
-          {
-            // Pass the control to MSC thread:
-            if (tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_CONNECTED, TX_OR) != TX_SUCCESS) Error_Handler();
-          }
+          storage_instance[idx] = (UX_HOST_CLASS_STORAGE*)current_instance;
+          msc_index = idx;
+          status = UX_SUCCESS;
+          break;
+        }
+      }
+      if (status != UX_SUCCESS)
+      {
+        USBH_ErrLog("USBH: Too many devices connected. Consider increasing MSC_INSTANCE.");
+        return status;
+      }
+
+      USBH_UsrLog("USBH: MSC device detected:");
+      USBH_UsrLog("  PID: %#x",
+        (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idProduct);
+      USBH_UsrLog("  VID: %#x",
+        (UINT)storage_instance[msc_index]->ux_host_class_storage_device->ux_device_descriptor.idVendor);
+
+      storage_media = (UX_HOST_CLASS_STORAGE_MEDIA*)current_class->ux_host_class_media;
+      if (storage_media[msc_index].ux_host_class_storage_media_lun != 0)
+      {
+        storage_media = UX_NULL;
+      }
+      else
+      {
+        media[msc_index] = &storage_media[msc_index].ux_host_class_storage_media;
+        if (storage_instance[msc_index] -> ux_host_class_storage_state ==  UX_HOST_CLASS_INSTANCE_LIVE)
+        { // Pass the control to MSC thread:
+          tx_event_flags_set(&ux_app_EventFlag, STORAGE_MEDIA_CONNECTED, TX_OR);
         }
       }
 
