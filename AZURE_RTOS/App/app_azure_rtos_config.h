@@ -47,7 +47,7 @@ extern "C" {
 
 #define FX_APP_MEM_POOL_SIZE                     131072
 
-#define UX_HOST_APP_MEM_POOL_SIZE                122880
+#define UX_HOST_APP_MEM_POOL_SIZE                65536
 
 #define TOUCHGFX_APP_MEM_POOL_SIZE               32768
 
