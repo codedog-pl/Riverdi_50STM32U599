@@ -161,7 +161,7 @@
    scaled down to conserve memory. Note that this value represents the total number of devices
    regardless of the number of USB buses in the system.  */
 
-#define UX_MAX_DEVICES       2
+#define UX_MAX_DEVICES       1
 
 /* Defined, this value represents the current number of SCSI logical units represented in the device
    storage class driver.  */
