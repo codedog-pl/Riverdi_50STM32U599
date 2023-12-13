@@ -15,7 +15,7 @@ class Test final
 
 public:
 
-    static constexpr size_t bufferSize = 128;
+    static constexpr size_t bufferSize = 16384;
     static constexpr size_t slack = 10;
 
     /// @brief Tests the file API.
@@ -84,7 +84,16 @@ public:
         }
         {
             Log::msg("Prefixing the file...");
-            Path prefixed(fs, "_%s", fileName);
+            Path prefixed(fs, ".%s", fileName);
+            if (fileExists(fs, prefixed.relativePath))
+            {
+                Log::msg("Prefixed file exists, deleting prefixed...");
+                if (!fileDelete(fs, prefixed.relativePath))
+                {
+                    Log::msg("Delete prefixed failed!");
+                    return false;
+                }
+            }
             if (!prefixed.isValid())
             {
                 Log::msg(LogMessage::error, "Prefixed path considered invalid!");
