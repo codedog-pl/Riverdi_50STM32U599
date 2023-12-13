@@ -44,19 +44,19 @@ Empty project template takes **188KB** of RAM.
 
 ## ThreadX (AZURE RTOS) memory pools configuration
 
-| Pool                          | Size  | Macro
-|-------------------------------|-------|---------------------------
-| THREADX (APP THREAD)          | 128KB | TX_APP_MEM_POOL_SIZE
-|                               |  64KB | TX_APP_STACK_SIZE
-| FILEX                         |  64KB | FX_APP_MEM_POOL_SIZE
-|                               |   4KB | FX_APP_THREAD_STACK_SIZE
-| USBX                          |  64KB | UX_HOST_APP_MEM_POOL_SIZE
-|                               |  46KB | USBX_HOST_MEMORY_STACK_SIZE
-|                               |   4KB | UX_HOST_APP_THREAD_STACK_SIZE
-| TOUCHGFX                      |  32KB | TOUCHGFX_APP_MEM_POOL_SIZE
-|                               |  16KB | TOUCHGFX_STACK_SIZE
+| Pool           | Size  | Macro
+|----------------|-------|---------------------------
+| THREADX (APP)  | 256KB | TX_APP_MEM_POOL_SIZE
+|                | 128KB | TX_APP_STACK_SIZE
+| FILEX          |  64KB | FX_APP_MEM_POOL_SIZE
+|                |   4KB | FX_APP_THREAD_STACK_SIZE
+| USBX           |  64KB | UX_HOST_APP_MEM_POOL_SIZE
+|                |  46KB | USBX_HOST_MEMORY_STACK_SIZE
+|                |   4KB | UX_HOST_APP_THREAD_STACK_SIZE
+| TOUCHGFX       |  32KB | TOUCHGFX_APP_MEM_POOL_SIZE
+|                |  16KB | TOUCHGFX_STACK_SIZE
 ---
-Total: 304KB
+Total: 432KB
 
 ## Static tools
 
