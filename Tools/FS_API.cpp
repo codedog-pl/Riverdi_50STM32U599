@@ -5,16 +5,6 @@ namespace FS
 
 static AdapterTypes::Status ok = AdapterTypes::OK;
 
-inline FileSystem* SD()
-{
-    return FileSystemTable::find(FS_SD_ROOT);
-}
-
-inline FileSystem* USB()
-{
-    return FileSystemTable::find(FS_USB_ROOT);
-}
-
 bool created(FileSystem* fs, const char *path, DateTime &dateTime)
 {
     Path context(fs, path);

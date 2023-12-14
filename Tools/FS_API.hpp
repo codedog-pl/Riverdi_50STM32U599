@@ -7,10 +7,10 @@ namespace FS
 {
 
 /// @returns The SD card file system pointer if it was mounted. Null pointer otherwise.
-FileSystem* SD();
+inline FileSystem* SD() { return FileSystemTable::find(FS_SD_ROOT); }
 
 /// @return The USB disk file system pointer if it was mounted. Null pointer otherwise.
-FileSystem* USB();
+inline FileSystem* USB() { return FileSystemTable::find(FS_USB_ROOT); }
 
 /// @brief Gets the file or directory creation time.
 /// @param fs File system pointer.
