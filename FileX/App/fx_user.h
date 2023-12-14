@@ -150,7 +150,7 @@
 
 /* Defined, gathering of media statistics is disabled.  */
 
-#define FX_MEDIA_STATISTICS_DISABLE
+/* #define FX_MEDIA_STATISTICS_DISABLE */
 
 /* Defined, local path logic is disabled.  */
 
@@ -181,13 +181,13 @@
 
 /* Defines the number of seconds the time parameters are updated in FileX.  */
 
-/* #define FX_UPDATE_RATE_IN_SECONDS         10 */
+#define FX_UPDATE_RATE_IN_SECONDS   1
 
 /* Defines the number of ThreadX timer ticks required to achieve the update rate specified by
    FX_UPDATE_RATE_IN_SECONDS defined previously. By default, the ThreadX timer tick is 10ms,
    so the default value for this constant is 1000.  */
 
-#define FX_UPDATE_RATE_IN_TICKS     10000
+/* #define FX_UPDATE_RATE_IN_TICKS         1000 */
 
 /* Determine if cache is disabled.  */
 
