@@ -3,8 +3,8 @@
  * @author      CodeDog
  * @brief       Quick thread synchronization tool, header file.
  * @remarks     In order to use:
- *                  - call tick() from the frame display thread,
- *                  - call dispatchLoop() at the end of the main application thread.
+ *                  - call dispatchLoop() at the end of the main application thread,
+ *                  - call tick() from the frame display thread.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -36,27 +36,14 @@ public:
     /// @param context Target thread context.
     static void sync(Action action, Context context = application);
 
-
     /// @brief Schedules the action to be executed in the selected thread context.
     /// @param action Action that passes an argument pointer.
     /// @param argument Pointer to pass to the action.
     /// @param context Target thread context.
     static void sync(BindingAction action, void* argument, Context context = application);
 
-    /// @brief Schedules the action call if called from ISR, calls immediately otherwise.
-    /// @param action Action that passes no argument.
-    /// @param context Target thread context.
-    static void syncISR(Action action, Context context = application);
-
-
-    /// @brief Schedules the action call if called from ISR, calls immediately otherwise.
-    /// @param action Action that passes an argument pointer.
-    /// @param argument Pointer to pass to the action.
-    /// @param context Target thread context.
-    static void syncISR(BindingAction action, void* argument, Context context = application);
-
     /// @returns 1: Called from ISR. 0: Not called from ISR.
-    static bool fromISR();
+    static bool isISRContext();
 
     /// Displays a debug error message if the function was called from ISR.
     /// Should be compiled conditionally in `debug` builds.

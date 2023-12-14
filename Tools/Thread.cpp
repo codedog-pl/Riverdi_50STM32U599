@@ -16,19 +16,15 @@
 /**
  * @remarks When called again with the same action before the last one completed - it's ignored.
  *          Also does nothing if the action pool is full (scheduled actions limit exceeded).
+ *          When the dispatcher functions are not called, the action call will wait.
  */
 void Thread::sync(Action action, Context context)
 {
-    if (!action || !context) return;
-    if ((context == application && !dispatcherStarted) || (context == frame && !displayStarted))
-    {
-        action();
-        return;
-    }
+    if (!action || !context) return; // Ignore call if no data to proceed.
     for (uint8_t i = 0; i < max; i++)
     {
-        if (scheduled[i].action.plain == action) return;
-        if (!scheduled[i].action.plain)
+        if (scheduled[i].action.plain == action) return; // Action is already scheduled.
+        if (!scheduled[i].action.plain) // An empty task is found.
         {
             scheduled[i].action = action;
             scheduled[i].binding = nullptr;
@@ -42,16 +38,11 @@ void Thread::sync(Action action, Context context)
 
 void Thread::sync(BindingAction action, void *argument, Context context)
 {
-    if (!action || !context) return;
-    if ((context == application && !dispatcherStarted) || (context == frame && !displayStarted))
-    {
-        action(argument);
-        return;
-    }
+    if (!action || !context) return; // Ignore call if no data to proceed.
     for (uint8_t i = 0; i < max; i++)
     {
-        if (scheduled[i].action.binding == action) return;
-        if (!scheduled[i].action.binding)
+        if (scheduled[i].action.binding == action) return; // Action is already scheduled.
+        if (!scheduled[i].action.binding) // An empty task is found.
         {
             scheduled[i].action = action;
             scheduled[i].binding = argument;
@@ -63,26 +54,14 @@ void Thread::sync(BindingAction action, void *argument, Context context)
     }
 }
 
-void Thread::syncISR(Action action, Context context)
-{
-    if (((context == application && dispatcherStarted) || (context == frame && displayStarted)) && fromISR())
-        sync(action, context); else action();
-}
-
-void Thread::syncISR(BindingAction action, void *argument, Context context)
-{
-    if (((context == application && dispatcherStarted) || (context == frame && displayStarted)) && fromISR())
-        sync(action, argument, context); else action(argument);
-}
-
-bool Thread::fromISR()
+bool Thread::isISRContext()
 {
     return (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0;
 }
 
 void Thread::warnISR()
 {
-    if (fromISR()) Log::msg(LogMessage::error, "Invalid call from ISR, system compromised!");
+    if (isISRContext()) Log::msg(LogMessage::error, "Invalid call from ISR, system compromised!");
 }
 
 void Thread::dispatchLoop()
