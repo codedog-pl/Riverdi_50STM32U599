@@ -13,6 +13,8 @@ namespace FS
 class Test final
 {
 
+STATIC(Test)
+
 public:
 
     static constexpr size_t bufferSize = 16384; // Test buffer size.
@@ -116,25 +118,35 @@ public:
 
 private:
 
+    /// @brief Fills the buffer with zeroes.
+    /// @param buffer The buffer pointer.
     static void bufferClear(char* buffer)
     {
         memset(buffer, 0, bufferSize);
     }
 
+    /// @brief Fills the buffer with known non-zero values but leaves some bytes unset.
+    /// @param buffer The buffer pointer.
     static void bufferFill(char* buffer)
     {
         for (size_t i = 0; i < bufferSize - slack; ++i) buffer[i] = offsetValue(i);
     }
 
+    /// @brief Tests if the buffer is filled with known non-zero values up to the limit of the file length.
+    /// @param buffer The buffer pointer.
+    /// @return The buffer contains the same values that were set with `bufferFill` method.
     static bool bufferTest(char* buffer)
     {
         for (size_t i = 0; i < bufferSize - slack; ++i) if (buffer[i] != offsetValue(i)) return false;
         return true;
     }
 
+    /// @brief Returns the byte value that should be placed at specified offset, effectively provide the "known values".
+    /// @param offset An offset location from the begining of the file.
+    /// @return The byte value that is expected to be at that offset.
     static char offsetValue(size_t offset)
     {
-        return (offset & 0xffu) ^ 0xAA;
+        return (offset & 0xffu) ^ 0xAA; // We flip every other bit of subsequent values to make them a little less boring.
     }
 
 };
