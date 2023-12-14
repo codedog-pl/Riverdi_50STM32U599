@@ -19,7 +19,7 @@ void HMI::start()
     OS::semaphoreDelete(initSemaphore);
     initSemaphore = 0;
     Log::msg("HMI: Initialization complete.");
-    // FS::Test::fileAPI("0:/", "fs-test.dat");
+    FS::Test::fileAPI("0:/", "fs-test.dat");
     Thread::dispatchLoop(); // This will wait indefinitely for thread synchronization events.
 }
 
