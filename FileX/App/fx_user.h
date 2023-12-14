@@ -92,7 +92,7 @@
 
 /* Defined, enables 64-bits sector addresses used in I/O driver.  */
 
-#define FX_DRIVER_USE_64BIT_LBA
+/* #define FX_DRIVER_USE_64BIT_LBA */
 
 /* Defined, FileX is able to access exFAT file system.
 
@@ -142,7 +142,7 @@
 /* Defines the maximum number of logical sectors that can be cached by FileX. The cache memory
    supplied to FileX at fx_media_open determines how many sectors can actually be cached.  */
 
-/* #define FX_MAX_SECTOR_CACHE         256 */
+#define FX_MAX_SECTOR_CACHE       16
 
 /* Defined, the file search cache optimization is disabled.  */
 
@@ -150,7 +150,7 @@
 
 /* Defined, gathering of media statistics is disabled.  */
 
-/* #define FX_MEDIA_STATISTICS_DISABLE */
+#define FX_MEDIA_STATISTICS_DISABLE
 
 /* Defined, local path logic is disabled.  */
 
@@ -231,9 +231,7 @@ The FX_EXFAT_MAX_CACHE_SIZE is 2 power of FX_EXFAT_MAX_CACHE_SIZE_NB_BIT.  */
 /* Define the size of fault tolerant cache, which is used when freeing FAT chain.
 	The FX_FAULT_TOLERANT_CACHE_SIZE is 2 power of FX_FAULT_TOLERANT_CACHE_SIZE_NB_SIZE.  */
 
-/*
-#define FX_FAULT_TOLERANT_CACHE_SIZE            1024
-*/
+#define FX_FAULT_TOLERANT_CACHE_SIZE            512
 
 /* USER CODE BEGIN 2 */
 
