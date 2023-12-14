@@ -15,13 +15,12 @@ class Test final
 
 public:
 
-    static constexpr size_t bufferSize = 16384;
-    static constexpr size_t slack = 10;
+    static constexpr size_t bufferSize = 16384; // Test buffer size.
+    static constexpr size_t slack = 10; // Make the actual file size this amount of byte smaller than the buffer size.
 
     /// @brief Tests the file API.
     /// @param root File system root path.
     /// @param fileName Test file name.
-    /// @param bufferSize Buffer size in bytes.
     /// @return True if passed, false if failed.
     static bool fileAPI(const char* root, const char* fileName)
     {
@@ -38,7 +37,7 @@ public:
             return false;
         }
         char buffer[bufferSize];
-        {
+        { // Those braces delimit the life span of the file object...
             Log::msg("Creating file...");
             File file(fs, fileName, FileMode::write | FileMode::createAlways);
             if (!file.isOpen)
@@ -54,8 +53,8 @@ public:
                 Log::msg(LogMessage::error, "Write failed!");
                 return false;
             }
-        }
-        {
+        } // ...and it is closed here, or wherever the braced block is left.
+        { // The file for the write operation is closed to free the stack memory.
             Log::msg("Opening file...");
             File file(fs, fileName, FileMode::read);
             if (!file.isOpen)
@@ -81,28 +80,28 @@ public:
                 Log::msg(LogMessage::error, "Invalid file data!", readResult.value());
                 return false;
             }
-        }
-        {
+        } // And now it can and should be closed before we modify its entry.
+        { // We prefix the created file with a dot, to make it hidden for Linux based systems.
             Log::msg("Prefixing the file...");
             Path prefixed(fs, ".%s", fileName);
-            if (fileExists(fs, prefixed.relativePath))
+            if (fileExists(fs, prefixed.relativePath)) // But if the file with the new name exists, it would fail...
             {
                 Log::msg("Prefixed file exists, deleting prefixed...");
-                if (!fileDelete(fs, prefixed.relativePath))
+                if (!fileDelete(fs, prefixed.relativePath)) // So we delete it first to make sure the rename operation will succeed.
                 {
                     Log::msg("Delete prefixed failed!");
-                    return false;
+                    return false; // Of course it should not happen.
                 }
             }
             if (!prefixed.isValid())
             {
                 Log::msg(LogMessage::error, "Prefixed path considered invalid!");
-                return false;
+                return false; // If it failed here, the `Path` module would be useless ;)
             }
             if (!fileRename(fs, fileName, prefixed.relativePath))
             {
                 Log::msg(LogMessage::error, "Rename failed!");
-                return false;
+                return false; // This basically should not happen if previous operations completed successfully.
             }
             Log::msg("Deleting the file...");
             if (!fileDelete(fs, prefixed.relativePath))
