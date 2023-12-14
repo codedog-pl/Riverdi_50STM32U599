@@ -6,6 +6,12 @@
 namespace FS
 {
 
+/// @returns The SD card file system pointer if it was mounted. Null pointer otherwise.
+FileSystem* SD();
+
+/// @return The USB disk file system pointer if it was mounted. Null pointer otherwise.
+FileSystem* USB();
+
 /// @brief Gets the file or directory creation time.
 /// @param fs File system pointer.
 /// @param path File or directory path.

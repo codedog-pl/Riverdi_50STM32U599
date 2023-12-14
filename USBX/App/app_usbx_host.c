@@ -118,14 +118,14 @@ VOID USBX_Event_Dispatcher(VOID)
     );
     if (storage_media_flag & STORAGE_MEDIA_CONNECTED)
     {
-      fs_mount(media[msc_index], "1:/");
-      log_msg(3, "USBH: External storage mounted as \"1:/\".");
+      fs_mount(media[msc_index], FS_USB_ROOT);
+      log_msg(3, "USBH: External storage mounted as \"%s\".", FS_USB_ROOT);
       HMI_TriggerUSBMediaMounted();
     }
     else if (storage_media_flag & STORAGE_MEDIA_DISCONNECTED)
     {
-      fs_umount("1:/");
-      log_msg(3, "USBH: External storage at \"1:/\" disconnected.");
+      fs_umount(FS_USB_ROOT);
+      log_msg(3, "USBH: External storage at \"%s\" disconnected.", FS_USB_ROOT);
       HMI_TriggerUSBMediaUnmounted();
     }
   }
@@ -207,21 +207,6 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Host_Init1 */
 
-  // /* Allocate the stack for storrage app thread  */
-  // if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-  //                      ( 2* UX_HOST_APP_THREAD_STACK_SIZE), TX_NO_WAIT) != TX_SUCCESS)
-  // {
-  //   return TX_POOL_ERROR;
-  // }
-
-  // /* Create the storage applicative process thread */
-  // if (tx_thread_create(&msc_app_thread, "MSC App thread", msc_process_thread_entry,
-  //                      0, pointer, ( 2* UX_HOST_APP_THREAD_STACK_SIZE), 23, 23, 0,
-  //                      TX_AUTO_START) != TX_SUCCESS)
-  // {
-  //   return TX_THREAD_ERROR;
-  // }
-
   /* USER CODE END MX_USBX_Host_Init1 */
 
   return ret;
@@ -235,9 +220,11 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 static VOID app_ux_host_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_host_thread_entry */
+
   USBH_UsrLog("USBH: Hardware initialization...");
   USBX_APP_Host_Init();
   USBX_Event_Dispatcher();
+
   /* USER CODE END app_ux_host_thread_entry */
 }
 

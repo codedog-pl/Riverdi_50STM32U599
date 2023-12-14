@@ -90,8 +90,8 @@ bool fx_mount_sd_card()
   );
   if (status == FX_SUCCESS)
   {
-    fs_mount(&sdio_disk, "0:/");
-    log_msg(3, "FILEX: SD card mounted as \"0:/\".");
+    fs_mount(&sdio_disk, FS_SD_ROOT);
+    log_msg(3, "FILEX: SD card mounted as \"%s\".", FS_SD_ROOT);
   }
   else
   {

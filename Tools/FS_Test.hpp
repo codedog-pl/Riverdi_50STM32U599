@@ -21,23 +21,17 @@ public:
     static constexpr size_t slack = 10; // Make the actual file size this amount of byte smaller than the buffer size.
 
     /// @brief Tests the file API.
-    /// @param root File system root path.
+    /// @param fs File system pointer.
     /// @param fileName Test file name.
     /// @return True if passed, false if failed.
-    static bool fileAPI(const char* root, const char* fileName)
+    static bool fileAPI(FileSystem* fs, const char* fileName)
     {
-        if (!root || !fileName || bufferSize < slack + 1)
+        if (!fs || !fileName || bufferSize < slack + 1)
         {
             Log::msg(LogMessage::error, "Invalid parameters!");
             return false;
         }
-        Log::msg("Testing FS file API, file = %s%s:", root, fileName);
-        auto fs = FileSystemTable::find(root);
-        if (!fs)
-        {
-            Log::msg(LogMessage::error, "File system not found!");
-            return false;
-        }
+        Log::msg("Testing FS file API, file = %s%s:", fs->root, fileName);
         char buffer[bufferSize];
         { // Those braces delimit the life span of the file object...
             Log::msg("Creating file...");

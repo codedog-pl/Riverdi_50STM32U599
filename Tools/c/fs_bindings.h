@@ -3,6 +3,11 @@
 #include <stddef.h>
 #include "bindings.h"
 
+// Predefined root paths:
+
+#define FS_SD_ROOT  "0:/"
+#define FS_USB_ROOT "1:/"
+
 // Common types:
 
 /// @brief A placeholder structure for a NULL file system.
