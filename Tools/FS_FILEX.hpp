@@ -27,11 +27,15 @@ public:
     Status find(Media& media, const char* path, DirectoryEntry& entry) override
     {
         Status result = OK;
-        result = tx_mutex_get(&media.fx_media_protect, TX_WAIT_ERROR);
-        if (result != OK) return false;
-        result = _fx_directory_search(&media, (CHAR*)path, &entry, nullptr, nullptr);
-        tx_mutex_put(&media.fx_media_protect);
-        return result = OK;
+        if (media.fx_media_id != FX_MEDIA_ID) return FX_MEDIA_NOT_OPEN; // Exit early if the media is not open.
+        result = tx_mutex_get(&media.fx_media_protect, TX_WAIT_FOREVER); // Before WRITING to the media structure we must ensure no other thread is using it.
+        if (result != OK) return result; // Acquiring the mutex failed.
+        entry.fx_dir_entry_name = media.fx_media_name_buffer + FX_MAX_LONG_NAME_LEN; // Setup pointer to media name buffer.
+        entry.fx_dir_entry_short_name[0] =  0; // Clear the short name string.
+        result = tx_mutex_put(&media.fx_media_protect); // Now we MUST release the mutex taken.
+        if (result != OK) while(1); // OOPSIE! If we can't release a mutex taken, we crashed!
+        result = _fx_directory_search(&media, (CHAR*)path, &entry, nullptr, nullptr); // Now the result tells if we fetched the entry.
+        return result;
     }
 
     /// @brief Gets the file or directory creation time.
@@ -74,13 +78,13 @@ public:
     /// @brief Tests if a file exist on the media.
     /// @param media Media structure reference.
     /// @param path File path.
-    /// @return True if the file exists, false otherwise.
-    bool fileExists(Media& media, const char* path) override
+    /// @return FX_SUCCESS (0x00) if the file exitsts. FX_NOT_FOUND (0x04), FX_NOT_A_FILE (0x05) or other codes otherwise.
+    Status fileExists(Media& media, const char* path) override
     {
         DirectoryEntry entry = {};
         Status result = find(media, path, entry);
-        if (result != OK) return false;
-        return (entry.fx_dir_entry_attributes & (FX_VOLUME | FX_DIRECTORY)) == 0;
+        if (result != OK) return result;
+        return (entry.fx_dir_entry_attributes & (FX_VOLUME | FX_DIRECTORY)) == 0 ? FX_SUCCESS : FX_NOT_A_FILE;
     }
 
     /// @brief Opens a file.
@@ -186,8 +190,8 @@ public:
     /// @brief Tests if a directory exists on the media.
     /// @param media Media structure reference.
     /// @param path Directory name.
-    /// @return Status.
-    bool directoryExists(Media& media, const char* path) override
+    /// @return FX_SUCCESS (0x00) if file exitsts. FX_NOT_FOUND (0x04) if it doesn't exist. Other code if another error occurred.
+    Status directoryExists(Media& media, const char* path) override
     {
         DirectoryEntry entry = {};
         Status result = find(media, path, entry);
@@ -214,8 +218,6 @@ public:
         return fx_directory_delete(&media, (CHAR*)path);
     }
 
-
-
 private:
 
     /// @brief Converts the FILEX date and time into a `DateTime` structure.
@@ -232,7 +234,6 @@ private:
         dateTime.second = (time & FX_SECOND_MASK) * 2;
         dateTime.fraction = 0;
     }
-
 
 };
 

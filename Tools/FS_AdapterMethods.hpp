@@ -50,8 +50,8 @@ public:
     /// @brief Tests if a file exist on the media.
     /// @param media Media structure reference.
     /// @param path File path.
-    /// @return True if the file exists, false otherwise.
-    virtual bool fileExists(Media& media, const char* path) = 0;
+    /// @return Status.
+    virtual Status fileExists(Media& media, const char* path) = 0;
 
     /// @brief Opens a file.
     /// @param media Media structure reference.
@@ -110,7 +110,7 @@ public:
     /// @param media Media structure reference.
     /// @param path Directory name.
     /// @return Status.
-    virtual bool directoryExists(Media& media, const char* path) = 0;
+    virtual Status directoryExists(Media& media, const char* path) = 0;
 
     /// @brief Renames a directory on the media.
     /// @param media Media structure reference.
