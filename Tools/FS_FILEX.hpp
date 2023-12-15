@@ -26,14 +26,8 @@ public:
     /// @return Status.
     Status find(Media& media, const char* path, DirectoryEntry& entry) override
     {
-        Status result = OK;
-        if (media.fx_media_id != FX_MEDIA_ID) return FX_MEDIA_NOT_OPEN; // Exit early if the media is not open.
-        result = tx_mutex_get(&media.fx_media_protect, TX_WAIT_FOREVER); // Before WRITING to the media structure we must ensure no other thread is using it.
-        if (result != OK) return result; // Acquiring the mutex failed.
-        entry.fx_dir_entry_name = media.fx_media_name_buffer + FX_MAX_LONG_NAME_LEN; // Setup pointer to media name buffer.
-        entry.fx_dir_entry_short_name[0] =  0; // Clear the short name string.
-        result = tx_mutex_put(&media.fx_media_protect); // Now we MUST release the mutex taken.
-        if (result != OK) while(1); // OOPSIE! If we can't release a mutex taken, we crashed!
+        Status result = initializeEntry(media, entry); // The entry should be initialized first or the internal function call crash.
+        if (result != OK) return result; // Entry initialization failed.
         result = _fx_directory_search(&media, (CHAR*)path, &entry, nullptr, nullptr); // Now the result tells if we fetched the entry.
         return result;
     }
@@ -219,6 +213,22 @@ public:
     }
 
 private:
+
+    /// @brief Initializes the entry for the use with internal FILEX functions.
+    /// @param media Media structure reference.
+    /// @param entry Uninitialized directory entry reference.
+    inline static Status initializeEntry(Media& media, DirectoryEntry& entry)
+    {
+        Status result = OK;
+        if (media.fx_media_id != FX_MEDIA_ID) return FX_MEDIA_NOT_OPEN; // Exit early if the media is not open.
+        result = tx_mutex_get(&media.fx_media_protect, TX_WAIT_FOREVER); // Before WRITING to the media structure we must ensure no other thread is using it.
+        if (result != OK) return result; // Acquiring the mutex failed.
+        entry.fx_dir_entry_name = media.fx_media_name_buffer + FX_MAX_LONG_NAME_LEN; // Setup pointer to media name buffer.
+        entry.fx_dir_entry_short_name[0] =  0; // Clear the short name string.
+        result = tx_mutex_put(&media.fx_media_protect); // Now we MUST release the mutex taken.
+        if (result != OK) while(1); // OOPSIE! If we can't release a mutex taken, we crashed!
+        return result;
+    }
 
     /// @brief Converts the FILEX date and time into a `DateTime` structure.
     /// @param date FILEX date.
