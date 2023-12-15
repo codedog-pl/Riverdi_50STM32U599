@@ -13,15 +13,15 @@ struct FileSystem final : public AdapterTypes
 {
 
     /// @brief Creates an empty file system target definition.
-    FileSystem() : m_root(), m_media(), m_isMounted() { }
+    FileSystem() : m_root(), m_media() { }
 
     /// @brief Creates a file system target definition.
     /// @param root The root path of the file system.
     /// @param media Media handle reference.
-    FileSystem(const char* root, Media& media) : m_root(root), m_media(&media), m_isMounted(0) { }
+    FileSystem(const char* root, Media& media) : m_root(root), m_media(&media) { }
 
     /// @brief Clears the file system target definition making it empty for reuse.
-    void clear(void) { m_root = nullptr; m_media = nullptr; m_isMounted = false; }
+    void clear(void) { m_root = nullptr; m_media = nullptr; }
 
     /// @returns The file system root path.
     inline const char* root() const { return m_root; }
@@ -30,7 +30,7 @@ struct FileSystem final : public AdapterTypes
     inline Media* media() const { return m_media; }
 
     /// @returns True if the file system is actually mounted.
-    inline bool isMounted() const { return m_isMounted; }
+    inline bool isMounted() const { return !!m_root && !!m_media; }
 
 private:
 friend class FileSystemTable;
@@ -38,7 +38,6 @@ friend class MediaServices;
 
     const char* m_root;           // File system target root path pointer.
     Media* m_media;               // File system media handle pointer.
-    bool m_isMounted;             // True if the file system is mounted.
 
 };
 
@@ -62,7 +61,6 @@ public:
         if (!entry) return nullptr;
         entry->m_root = root;
         entry->m_media = media;
-        entry->m_isMounted = false;
         return entry;
     }
 
