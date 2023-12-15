@@ -89,7 +89,6 @@ public:
             return false;
         }
         else entry->m_media = &media; // Existing entry without media set.
-        entry->m_isMounted = true;
         return true;
     }
 
