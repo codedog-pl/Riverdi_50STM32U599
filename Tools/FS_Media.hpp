@@ -83,14 +83,13 @@ public:
             entry = FileSystemTable::add(root, &media);
             if (!entry) return false; // FS table full.
         }
-        else if (entry->media) // Existing entry with media set.
+        else if (entry->m_media) // Existing entry with media set.
         {
-            if (entry->media == &media) return OK; // Already mounted to this media.
+            if (entry->m_media == &media) return OK; // Already mounted to this media.
             return false;
         }
-        else entry->media = &media; // Existing entry without media set.
-        entry->isMounted = true;
-        entry->isIdle = true;
+        else entry->m_media = &media; // Existing entry without media set.
+        entry->m_isMounted = true;
         return true;
     }
 

@@ -3,6 +3,8 @@
 #include "FS_AdapterMethods.hpp"
 #include <cstring>
 
+#if !defined(USE_FILEX) && !defined(USE_FATFS)
+
 namespace FS
 {
 
@@ -57,7 +59,7 @@ public:
     /// @param media Media structure reference.
     /// @param path File path.
     /// @return True if the file exists, false otherwise.
-    bool fileExists(Media& media, const char* path) override
+    Status fileExists(Media& media, const char* path) override
     {
         return FS_NEGATIVE;
     }
@@ -148,7 +150,7 @@ public:
     /// @param media Media structure reference.
     /// @param path Directory name.
     /// @return Status.
-    bool directoryExists(Media& media, const char* path) override
+    Status directoryExists(Media& media, const char* path) override
     {
         return FS_NEGATIVE;
     }
@@ -175,3 +177,5 @@ public:
 };
 
 }
+
+#endif

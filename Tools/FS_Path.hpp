@@ -23,9 +23,9 @@ struct Path : protected AdapterTypes
     template<class ...va> Path(const char* path, va ...args) : m_fileSystem(), m_absolutePath(), m_relativePath()
     {
         m_fileSystem = FileSystemTable::find(path);
-        if (!m_fileSystem || !m_fileSystem->root) return;
+        if (!m_fileSystem || !m_fileSystem->root()) return;
         std::snprintf(&m_absolutePath[0], maxLength, path, args...);
-        std::snprintf(&m_relativePath[0], maxLength, path + std::strlen(m_fileSystem->root), args...);
+        std::snprintf(&m_relativePath[0], maxLength, path + std::strlen(m_fileSystem->root()), args...);
     }
 
     /// @brief Creates a target file system information from a file system target pointer, relative path string and optional arguments.
@@ -35,10 +35,10 @@ struct Path : protected AdapterTypes
     /// @param ...args Optional arguments used to format the path.
     template<class ...va> Path(FileSystem* fs, const char* path, va ...args) : m_fileSystem(), m_absolutePath(), m_relativePath()
     {
-        if (!fs || !fs->root) return;
+        if (!fs || !fs->root()) return;
         m_fileSystem = fs;
-        auto rootLength = std::strlen(m_fileSystem->root);
-        std::memcpy(&m_absolutePath, &m_fileSystem->root, rootLength);
+        auto rootLength = std::strlen(m_fileSystem->root());
+        std::memcpy(&m_absolutePath, m_fileSystem->root(), rootLength);
         std::snprintf(&m_relativePath[0], maxLength, path, args...);
         std::snprintf(&m_absolutePath[0] + rootLength, maxLength - rootLength, path, args...);
     }
@@ -55,7 +55,7 @@ struct Path : protected AdapterTypes
     /// @returns True if the path target is fully configured.
     bool isValid() const
     {
-        return !!m_fileSystem && !!m_fileSystem->root && !!m_fileSystem->media && !!m_absolutePath[0] && !!m_relativePath[0];
+        return !!m_fileSystem && !!m_fileSystem->root() && !!m_fileSystem->media() && !!m_absolutePath[0] && !!m_relativePath[0];
     }
 
 protected:

@@ -13,20 +13,32 @@ struct FileSystem final : public AdapterTypes
 {
 
     /// @brief Creates an empty file system target definition.
-    FileSystem() : root(), media(), isMounted(), isIdle() { }
+    FileSystem() : m_root(), m_media(), m_isMounted() { }
 
     /// @brief Creates a file system target definition.
     /// @param root The root path of the file system.
     /// @param media Media handle reference.
-    FileSystem(const char* root, Media& media) : root(root), media(&media), isMounted(0), isIdle(0) { }
+    FileSystem(const char* root, Media& media) : m_root(root), m_media(&media), m_isMounted(0) { }
 
     /// @brief Clears the file system target definition making it empty for reuse.
-    void clear(void) { root = nullptr; media = nullptr; isMounted = false; isIdle = false; }
+    void clear(void) { m_root = nullptr; m_media = nullptr; m_isMounted = false; }
 
-    const char* root;           // File system target root path pointer.
-    Media* media;               // File system media handle pointer.
-    bool isMounted;             // True if the file system is mounted.
-    bool isIdle;                // True if the file system is idle.
+    /// @returns The file system root path.
+    inline const char* root() const { return m_root; }
+
+    /// @returns The file system media structure pointer.
+    inline Media* media() const { return m_media; }
+
+    /// @returns True if the file system is actually mounted.
+    inline bool isMounted() const { return m_isMounted; }
+
+private:
+friend class FileSystemTable;
+friend class MediaServices;
+
+    const char* m_root;           // File system target root path pointer.
+    Media* m_media;               // File system media handle pointer.
+    bool m_isMounted;             // True if the file system is mounted.
 
 };
 
@@ -45,13 +57,12 @@ public:
     static FileSystem* add(const char* root, Media* media)
     {
         auto existingEntry = find(root);
-        if (existingEntry) return existingEntry->media == media ? existingEntry : nullptr;
+        if (existingEntry) return existingEntry->m_media == media ? existingEntry : nullptr;
         auto entry = getFree();
         if (!entry) return nullptr;
-        entry->root = root;
-        entry->media = media;
-        entry->isMounted = false;
-        entry->isIdle = false;
+        entry->m_root = root;
+        entry->m_media = media;
+        entry->m_isMounted = false;
         return entry;
     }
 
@@ -63,9 +74,9 @@ public:
         for (size_t i = 0; i < max; i++)
         {
             auto& entry = entries[i];
-            if (!entry.root) continue;
-            auto rootLength = std::strlen(entry.root);
-            if (std::strncmp(path, entry.root, rootLength) == 0) return &entry;
+            if (!entry.m_root) continue;
+            auto rootLength = std::strlen(entry.m_root);
+            if (std::strncmp(path, entry.m_root, rootLength) == 0) return &entry;
         }
         return nullptr;
     }
@@ -75,7 +86,7 @@ public:
     /// @return Mount table entry if the media is found, `nullptr` otherwise.
     static FileSystem* find(Media* media)
     {
-        for (size_t i = 0; i < max; i++) if (entries[i].media == media) return &entries[i];
+        for (size_t i = 0; i < max; i++) if (entries[i].m_media == media) return &entries[i];
         return nullptr;
     }
 
@@ -84,7 +95,7 @@ private:
     /// @returns A free mount table entry or `nullptr` if there are no free entries left.
     static FileSystem* getFree(void)
     {
-        for (size_t i = 0; i < max; ++i) if (!entries[i].root) return &entries[i];
+        for (size_t i = 0; i < max; ++i) if (!entries[i].m_root) return &entries[i];
         return nullptr;
     }
 

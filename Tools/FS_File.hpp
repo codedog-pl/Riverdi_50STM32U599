@@ -82,7 +82,7 @@ private:
     void open()
     {
         if (!isValid()) return; // Invalid path or media, obviously file not found.
-        m_isOpen = adapter.fileOpen(*m_fileSystem->media, m_file, m_relativePath, m_mode) == OK;
+        m_isOpen = adapter.fileOpen(*m_fileSystem->media(), m_file, m_relativePath, m_mode) == OK;
     }
 
     FileHandle m_file;    // File handle.

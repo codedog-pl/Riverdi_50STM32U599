@@ -31,7 +31,7 @@ public:
             Log::msg(LogMessage::error, "Invalid parameters!");
             return false;
         }
-        Log::msg("Testing FS file API, file = %s%s:", fs->root, fileName);
+        Log::msg("Testing FS file API, file = %s%s:", fs->root(), fileName);
         char buffer[bufferSize];
         { // Those braces delimit the life span of the file object...
             Log::msg("Creating file...");
