@@ -9,11 +9,13 @@
 #include "DateTime.hpp"
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/DateTimeSetterMasksBottom.hpp>
+#include <gui/containers/DateTimeSetterMasksBottomSVG.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/scrollers/ScrollWheel.hpp>
 #include <gui/containers/DateTimeSetter2DigitsN.hpp>
 #include <gui/containers/DateTimeSetter4DigitsN.hpp>
 #include <gui/containers/DateTimeSetterMasksTop.hpp>
+#include <gui/containers/DateTimeSetterMasksTopSVG.hpp>
 
 class DateTimeSetterBase : public touchgfx::Container
 {
@@ -90,6 +92,7 @@ protected:
      */
     touchgfx::Box background;
     DateTimeSetterMasksBottom dateTimeSetterMasksBottom;
+    DateTimeSetterMasksBottomSVG dateTimeSetterMasksBottomSVG;
     touchgfx::Container separators;
     touchgfx::TextArea ts2;
     touchgfx::TextArea ts1;
@@ -109,6 +112,7 @@ protected:
     touchgfx::ScrollWheel yearWheel;
     touchgfx::DrawableListItems<DateTimeSetter4DigitsN, 8> yearWheelListItems;
     DateTimeSetterMasksTop dateTimeSetterMasksTop;
+    DateTimeSetterMasksTopSVG dateTimeSetterMasksTopSVG;
 
 private:
 

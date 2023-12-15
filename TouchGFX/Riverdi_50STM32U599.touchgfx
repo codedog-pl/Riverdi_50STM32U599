@@ -3,6 +3,7 @@
     "Screens": [
       {
         "Name": "Screen1",
+        "CanvasBufferSize": 12000,
         "Components": [
           {
             "Type": "CustomContainerInstance",
@@ -257,7 +258,15 @@
             "Name": "dateTimeSetterMasksBottom",
             "Width": 480,
             "Height": 272,
+            "Visible": false,
             "CustomContainerDefinitionName": "DateTimeSetterMasksBottom"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetterMasksBottomSVG",
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetterMasksBottomSVG"
           },
           {
             "Type": "Container",
@@ -273,7 +282,7 @@
                 "X": 388,
                 "Y": -9,
                 "Width": 9,
-                "Height": 46,
+                "Height": 55,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -285,7 +294,7 @@
                 "X": 328,
                 "Y": -9,
                 "Width": 9,
-                "Height": 46,
+                "Height": 55,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -297,7 +306,7 @@
                 "X": 194,
                 "Y": -6,
                 "Width": 13,
-                "Height": 46,
+                "Height": 55,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -309,7 +318,7 @@
                 "X": 130,
                 "Y": -6,
                 "Width": 13,
-                "Height": 46,
+                "Height": 55,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -438,7 +447,15 @@
             "Name": "dateTimeSetterMasksTop",
             "Width": 480,
             "Height": 272,
+            "Visible": false,
             "CustomContainerDefinitionName": "DateTimeSetterMasksTop"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "dateTimeSetterMasksTopSVG",
+            "Width": 480,
+            "Height": 272,
+            "CustomContainerDefinitionName": "DateTimeSetterMasksTopSVG"
           }
         ],
         "Interactions": [],
@@ -790,6 +807,314 @@
                   "Blue": 255
                 },
                 "Alpha": 199
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetterMasksBottomSVG",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "wheelShadows",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "SvgImage",
+                "Name": "secondShadowRight",
+                "X": 451,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "secondShadowLeft",
+                "X": 387,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "minuteShadowRight",
+                "X": 391,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "minuteShadowLeft",
+                "X": 327,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "hourShadowRight",
+                "X": 331,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "hourShadowLeft",
+                "X": 267,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "dayShadowRight",
+                "X": 261,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "dayShadowLeft",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "monthShadowRight",
+                "X": 197,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "monthShadowLeft",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "yearShadowRight",
+                "X": 133,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_left_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "yearShadowLeft",
+                "X": 20,
+                "Width": 8,
+                "Height": 272,
+                "LockPosition": true,
+                "Image": "gradient_black_right_025.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 0.05,
+                "ImageVerticalScale": 1.79
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "viewWindowBackground",
+            "Y": 112,
+            "Width": 480,
+            "Height": 48,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "Box",
+                "Name": "digitsHighlight",
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 61,
+                  "Green": 191,
+                  "Blue": 180
+                },
+                "Alpha": 199
+              }
+            ]
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "DateTimeSetterMasksTopSVG",
+        "Width": 480,
+        "Height": 272,
+        "IsCacheableContainer": true,
+        "Components": [
+          {
+            "Type": "Container",
+            "Name": "masks",
+            "Width": 480,
+            "Height": 272,
+            "LockPosition": true,
+            "Components": [
+              {
+                "Type": "SvgImage",
+                "Name": "maskBottomGradient",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Image": "gradient_white_down_100.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 3.16,
+                "ImageVerticalScale": 0.74
+              },
+              {
+                "Type": "SvgImage",
+                "Name": "maskTopGradient",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Image": "gradient_white_up_100.svg",
+                "FitImageToSize": true,
+                "ImageHorizontalScale": 3.16,
+                "ImageVerticalScale": 0.74
+              },
+              {
+                "Type": "Box",
+                "Name": "maskBottom",
+                "Y": 160,
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              },
+              {
+                "Type": "Box",
+                "Name": "maskTop",
+                "Width": 480,
+                "Height": 112,
+                "LockPosition": true,
+                "Color": {
+                  "Red": 255,
+                  "Green": 255,
+                  "Blue": 255
+                },
+                "Alpha": 159
+              },
+              {
+                "Type": "Container",
+                "Name": "viewWindow",
+                "Y": 112,
+                "Width": 480,
+                "Height": 48,
+                "LockPosition": true,
+                "Components": [
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowBottomShade",
+                    "Y": 44,
+                    "Width": 480,
+                    "Height": 4,
+                    "LockPosition": true,
+                    "Image": "gradient_black_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.03
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowTopShade",
+                    "Width": 480,
+                    "Height": 4,
+                    "Image": "gradient_black_up_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.03
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowBottomHighligh",
+                    "Y": 24,
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Image": "gradient_black_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.16
+                  },
+                  {
+                    "Type": "SvgImage",
+                    "Name": "windowTopHighligt",
+                    "Width": 480,
+                    "Height": 24,
+                    "LockPosition": true,
+                    "Image": "gradient_white_down_025.svg",
+                    "FitImageToSize": true,
+                    "ImageHorizontalScale": 3.16,
+                    "ImageVerticalScale": 0.16
+                  }
+                ]
               }
             ]
           }

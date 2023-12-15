@@ -16,7 +16,11 @@ DateTimeSetterBase::DateTimeSetterBase() :
     add(background);
 
     dateTimeSetterMasksBottom.setXY(0, 0);
+    dateTimeSetterMasksBottom.setVisible(false);
     add(dateTimeSetterMasksBottom);
+
+    dateTimeSetterMasksBottomSVG.setXY(0, 0);
+    add(dateTimeSetterMasksBottomSVG);
 
     separators.setPosition(0, 112, 480, 48);
     ts2.setXY(388, -9);
@@ -133,7 +137,11 @@ DateTimeSetterBase::DateTimeSetterBase() :
     add(digits);
 
     dateTimeSetterMasksTop.setXY(0, 0);
+    dateTimeSetterMasksTop.setVisible(false);
     add(dateTimeSetterMasksTop);
+
+    dateTimeSetterMasksTopSVG.setXY(0, 0);
+    add(dateTimeSetterMasksTopSVG);
 }
 
 DateTimeSetterBase::~DateTimeSetterBase()
@@ -144,6 +152,7 @@ DateTimeSetterBase::~DateTimeSetterBase()
 void DateTimeSetterBase::initialize()
 {
     dateTimeSetterMasksBottom.initialize();
+    dateTimeSetterMasksBottomSVG.initialize();
     secondWheel.initialize();
     for (int i = 0; i < secondWheelListItems.getNumberOfDrawables(); i++)
     {
@@ -175,6 +184,7 @@ void DateTimeSetterBase::initialize()
         yearWheelListItems[i].initialize();
     }
     dateTimeSetterMasksTop.initialize();
+    dateTimeSetterMasksTopSVG.initialize();
 }
 
 void DateTimeSetterBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex)
