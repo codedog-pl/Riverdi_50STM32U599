@@ -1,7 +1,9 @@
 /**
  * @file        Counter.hpp
  * @author      CodeDog
- * @brief       High precision clock counter, header file.
+ *
+ * @brief       High precision clock counter, header file. Header only.
+ * @remarks     Requires `COUNTER_TIM` macro set to HAL `TIM` instance and `COUNTER_1S` set to number of `TIM` ticks per second.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -10,24 +12,16 @@
 
 #include "main.h"
 #include <cstdint>
+#include "StaticClass.hpp"
 
-#ifndef COUNTER_TIM
-#error COUNTER_TIM must be defined.
-#else
-extern TIM_HandleTypeDef COUNTER_TIM;
-#endif
-#ifndef COUNTER_1S
-#error COUNTER_1S must be defined.
-#endif
+#if defined(COUNTER_TIM) && defined(COUNTER_1S)
 
 /// @brief High precision clock counter.
 class Counter
 {
 public:
 
-    Counter() = delete;
-    Counter(const Counter& other) = delete;
-    Counter(Counter&& other) = delete;
+    STATIC(Counter)
 
     /// @brief Starts the hardware timer, must be run at least a second before precise measurement can be done.
     static inline void init() { HAL_TIM_Base_Start(&COUNTER_TIM); }
@@ -51,3 +45,8 @@ public:
     }
 
 };
+
+#else
+#warning COUNTER_TIM and COUNTER_1S macros should be defined in "main.h" (one way is to use CubeMX generator for this).
+
+#endif

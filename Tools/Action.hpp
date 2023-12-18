@@ -1,8 +1,10 @@
 /**
  * @file        Action.hpp
  * @author      CodeDog
- * @brief       Basic callback actions and functions signatures.
- * @remarks     Just for the sake of code readability.
+ *
+ * @brief       Basic callback actions and functions signatures. Header only.
+ *
+ * @remarks     Just for the sake of readability.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */

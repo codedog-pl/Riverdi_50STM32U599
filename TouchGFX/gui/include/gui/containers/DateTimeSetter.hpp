@@ -8,7 +8,7 @@ class DateTimeSetter : public DateTimeSetterBase
 public:
 
     DateTimeSetter() :
-        currentSetting(yearMin),
+        currentSetting(yearMin, 1, 1),
         yearWheelItemSelectedCallback(this, &DateTimeSetter::yearWheelItemSelectedHandler),
         monthWheelItemSelectedCallback(this, &DateTimeSetter::monthWheelItemSelectedHandler),
         dayWheelItemSelectedCallback(this, &DateTimeSetter::dayWheelItemSelectedHandler),

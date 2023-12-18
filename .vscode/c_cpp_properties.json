@@ -54,13 +54,7 @@
             ],
             "defines": [
                 "STM32U5A9xx",
-                "CORE=cm33",
-                "MCU_PREFIX=stm32u5a9",
-                "HAL_PREFIX=stm32u5xx_hal",
                 "USE_HAL_DRIVER",
-                "USE_AZURE_RTOS",
-                "USE_FILEX",
-                "BSP_USE_CMSIS_OS",
                 "TX_INCLUDE_USER_DEFINE_FILE",
                 "TX_SINGLE_MODE_NON_SECURE=1",
                 "FX_INCLUDE_USER_DEFINE_FILE",

@@ -2,9 +2,9 @@
 
 #include <cstdint>
 
-class TimeSpan
+/// @brief A structure to store and manipulate time span values.
+struct TimeSpan
 {
-public:
 
     /// @brief Creates zero time span.
     TimeSpan();
@@ -13,50 +13,51 @@ public:
     TimeSpan(double value);
 
     /// @brief Creates a time span from hours, minutes and seconds.
-    TimeSpan(uint8_t hours, uint8_t minutes, double seconds);
+    TimeSpan(uint16_t hours, uint8_t minutes, double seconds);
 
     /// @brief Creates a time span from days, hours, minutes and seconds.
     TimeSpan(int days, uint8_t hours, uint8_t minutes, double seconds);
 
     /// @returns Seconds component of the time span.
-    double seconds();
+    double seconds() const;
 
     /// @returns Minutes component of the time span.
-    uint8_t minutes();
+    uint8_t minutes() const;
 
     /// @returns Hours component of the time span.
-    uint8_t hours();
+    uint8_t hours() const;
 
     /// @returns Days component of the time span.
-    int days();
+    int days() const;
 
     /// @returns Sign component of the time span, -1 if negative, 1 if positive, 0 otherwise.
-    int sign();
+    int sign() const;
 
     /// @returns Total number of seconds.
-    double totalSeconds();
+    double totalSeconds() const;
 
     /// @returns Total number of minutes.
-    double totalMinutes();
+    double totalMinutes() const;
 
     /// @returns Total number of hours.
-    double totalHours();
+    double totalHours() const;
 
     /// @returns Total number of days.
-    double totalDays();
+    double totalDays() const;
 
     TimeSpan& operator+=(TimeSpan& other);
     TimeSpan& operator-=(TimeSpan& other);
     TimeSpan& operator+=(double other);
     TimeSpan& operator-=(double other);
 
-    bool operator==(TimeSpan& other);
-    bool operator!=(TimeSpan& other);
-    bool operator<=(TimeSpan& other);
-    bool operator>=(TimeSpan& other);
-    bool operator<(TimeSpan& other);
-    bool operator>(TimeSpan& other);
+    bool operator==(TimeSpan& other) const;
+    bool operator!=(TimeSpan& other) const;
+    bool operator<=(TimeSpan& other) const;
+    bool operator>=(TimeSpan& other) const;
+    bool operator<(TimeSpan& other) const;
+    bool operator>(TimeSpan& other) const;
 
 private:
-    double m_value;
+    double m_value; // Internal number of seconds.
+
 };

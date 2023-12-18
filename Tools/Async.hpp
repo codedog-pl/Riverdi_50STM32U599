@@ -1,9 +1,10 @@
 /**
  * @file        Async.hpp
  * @author      CodeDog
- * @brief       Minimalistic asynchronous function helper.
  *
- * @remarks     Defines a set of classes and functions to create, manage and consume asynchronous operations.
+ * @brief       Minimalistic asynchronous function helper. Header only.
+ *
+ * @remarks     Defines a set of classes and functions to create, manage and await asynchronous operations.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -200,6 +201,8 @@ public:
 
 using AsyncState = AsyncStateT<void>;
 using AsyncResult = AsyncResultT<void>;
+
+
 
 /**
  * @brief Creates, completes and discards asynchronous results.

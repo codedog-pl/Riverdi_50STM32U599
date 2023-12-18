@@ -72,8 +72,9 @@ public:
     /// @return Status.
     Status fileOpen(Media& media, FileHandle& file, const char* path, FileMode mode = FileMode::read) override
     {
-        if (!(mode & FileMode::write) || file.isUsed) return FS_NEGATIVE;
+        if ((mode & FileMode::write) == 0 || file.isUsed) return FS_NEGATIVE;
         file.isUsed = true;
+        return OK;
     }
 
     /// @brief Moves the file pointer to the specified offset.

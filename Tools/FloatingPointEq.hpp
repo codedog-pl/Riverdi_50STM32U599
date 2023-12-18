@@ -1,6 +1,7 @@
 /**
- * @file        FP.hpp
+ * @file        FloatingPointEq.hpp
  * @author      CodeDog
+ *
  * @brief       Defines a single `eq` function that tests if 2 double arguments are approximately equal.
  *
  * @copyright	(c)2023 CodeDog, All rights reserved.

@@ -1,12 +1,15 @@
 /**
  * @file        hal_target.h
  * @author      CodeDog
+ *
  * @brief       A header file for targeting HAL header files.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
 #pragma once
+
+#include "target.h"
 
 #define _VALUE(x) x
 #define _STRING(x) #x

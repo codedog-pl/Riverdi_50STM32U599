@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "target.h"
 #if defined(USE_AZURE_RTOS)
 #include "OSAzureRTOS.hpp"
 #elif defined(USE_FREE_RTOS)

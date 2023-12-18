@@ -1,5 +1,6 @@
 #pragma once
 
+#include "target.h"
 #if defined(USE_FILEX)
 #include "FS_FILEX.hpp"
 #define USE_ADAPTER extern FILEX adapter;

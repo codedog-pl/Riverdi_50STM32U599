@@ -1,6 +1,7 @@
 /**
  * @file        BitFlags.hpp
  * @author      CodeDog
+ *
  * @brief       Bit flag macros and templates.
  *
  * @copyright	(c)2023 CodeDog, All rights reserved.

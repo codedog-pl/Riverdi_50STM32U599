@@ -1,6 +1,7 @@
 /**
  * @file        OSFreeRTOS.hpp
  * @author      CodeDog
+ *
  * @brief       Unified FreeRTOS API.
  *
  * @remarks     Used to abstract a subset of basic RTOS functions with a common API.

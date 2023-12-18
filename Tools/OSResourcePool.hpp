@@ -1,7 +1,12 @@
 /**
  * @file        OSResourcePool.hpp
  * @author      CodeDog
- * @brief       Defines RTOS resources metadata.
+ *
+ * @brief       Defines RTOS resources metadata pools.
+ *
+ * @remarks     It is used to statically preallocate some handle pools
+ *              for the target RTOS, especially one that does not use
+ *              dynamic allocation that is to be avoided on embedded.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */

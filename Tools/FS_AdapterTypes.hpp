@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <optional>
 #include "fs_bindings.h"
+#include "BitFlags.hpp"
 
 namespace FS
 {

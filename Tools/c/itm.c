@@ -1,7 +1,9 @@
 /**
  * @file        itm.c
  * @author      CodeDog
+ *
  * @brief       Redirects standard output into SWV ITM Data Console.
+ *
  * @remarks     Reuqires SWV debugging enabled in trace mode.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
@@ -22,7 +24,7 @@ void ITM_Enable(void)
 }
 
 /**
- * @brief Sends data to the SWV ITM Data Console.
+ * @brief Sends data to the SWV ITM Data Console (used for `stdout` output).
  * @remarks This function will block when there are unsent characters in the buffer and the console is connected.
  *
  * @param file Ignored.

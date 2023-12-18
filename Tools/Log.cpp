@@ -1,21 +1,20 @@
 /**
- * @file        c_log.cpp
+ * @file        Log.cpp
  * @author      CodeDog
- * @brief       Provides debug log C bindings and hardware LED setting.
+ *
+ * @brief       Provides debug log C bindings.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
-#include <c/bindings.h>
+#include "bindings.h"
 #include "Log.hpp"
 #include <cstdarg>
 #include <cstring>
 
-
 EXTERN_C_BEGIN
 
-#include <c/log.h>
-#include "main.h"
+#include "log.h"
 
 void log_level(bool isRelease) { Log::init(isRelease); }
 

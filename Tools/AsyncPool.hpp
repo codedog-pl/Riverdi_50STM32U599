@@ -1,5 +1,15 @@
+/**
+ * @file        AsyncPool.hpp
+ * @author      CodeDog
+ *
+ * @brief       Provides pre-allocated asynchronous results pool. Header only.
+ *
+ * @copyright   (c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
+#include "target.h"
 #include "Pool.hpp"
 
 /// @brief AsyncResult instance generic placeholder for the pool.
@@ -49,7 +59,7 @@ public:
 };
 
 /// @brief Provides pre-allocated asynchronous results pool.
-class AsyncPool final : public Pool<64, AsyncResultGeneric>
+class AsyncPool final : public Pool<WTK_ASYNC_RESULTS, AsyncResultGeneric>
 {
 
 public:

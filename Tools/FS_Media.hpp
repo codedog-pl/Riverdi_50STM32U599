@@ -19,17 +19,8 @@ enum class MediaFormat {
     DEFAULT, ExFAT, FAT12, FAT16, FAT32
 };
 
-#if defined(USE_FILEX)
-
-using MediaDriver = VOID(*)(FX_MEDIA*); // Media driver type.
-using MediaDriverInfo = VOID*;          // Media driver optional data.
-
-#else
-
-using MediaDriver = Placeholder;        // Media driver type.
-using MediaDriverInfo = void*;          // Media driver optional data.
-
-#endif
+using MediaDriver = FS_MediaDriver;         // Media driver type.
+using MediaDriverInfo = FS_MediaDriverInfo; // Media driver optional argument type.
 
 /// @brief Contains system media configuration.
 struct MediaConfiguration

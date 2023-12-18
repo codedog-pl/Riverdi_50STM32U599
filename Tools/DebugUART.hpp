@@ -1,3 +1,12 @@
+/**
+ * @file        DebugUART.hpp
+ * @author      CodeDog
+ *
+ * @brief       HAL UART port debug output implementation. Header only.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "hal.h"
@@ -19,9 +28,11 @@ private:
         sendNext(); // In case if the pool already contains unsent messages.
     }
 
-    DebugUART(const DebugUART&) = delete;
-    DebugUART(DebugUART&&) = delete;
+    DebugUART(const DebugUART&) = delete; // Instances should not be copied.
 
+    DebugUART(DebugUART&&) = delete; // Instances should not be moved.
+
+    /// @brief Unregisters the HAL UART callback.
     ~DebugUART()
     {
         HAL_UART_UnRegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID);

@@ -1,3 +1,12 @@
+/**
+ * @file        DebugITM.hpp
+ * @author      CodeDog
+ *
+ * @brief       ST ITM console debug output implementation. Header only.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "hal.h"
@@ -28,9 +37,11 @@ private:
         sendNext(); // In case if the pool already contains unsent messages.
     }
 
-    DebugITM(const DebugITM&) = delete;
-    DebugITM(DebugITM&&) = delete;
+    DebugITM(const DebugITM&) = delete; // Instances should not be copied.
 
+    DebugITM(DebugITM&&) = delete; // Instances should not be moved.
+
+    /// @brief Releases the RTOS resources used to create an instance of this class.
     ~DebugITM()
     {
         OS::threadDelete(m_threadId);

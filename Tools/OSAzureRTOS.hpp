@@ -1,18 +1,10 @@
 /**
  * @file        OSAzureRTOS.hpp
  * @author      CodeDog
+ *
  * @brief       Unified AzureRTOS API.
  *
  * @remarks     Used to abstract a subset of basic RTOS functions with a common API.
- *
- *              Since AzureRTOS requires preallocated handles, this class preallocates 16 of each type.
- *              If the handles get depleted, the `lastError` is set to `TX_CEILING_EXCEEDED`
- *              and the thread is halted for debugging.
- *              The number of handles can be set in compiler defines as:
- *                  TX_EVENT_GROUPS
- *                  TX_MUTEXES
- *                  TX_SEMAPHORES
- *                  TX_THREADS
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -425,26 +417,26 @@ private:
         unsigned char stack[threadDefaultStackSize];    // Thread stack.
     };
 
-#ifdef TX_EVENT_GROUPS
-    inline static OSResourcePool<EventData, TX_EVENT_GROUPS> m_eventPool;
+#ifdef OS_EVENT_GROUPS
+    inline static OSResourcePool<EventData, OS_EVENT_GROUPS> m_eventPool;
 #else
     inline static OSResourcePool<EventData, 16> m_eventPool;
 #endif
 
-#ifdef TX_MUTEXES
-    inline static OSResourcePool<MutexData, TX_MUTEXES> m_mutexPool;
+#ifdef OS_MUTEXES
+    inline static OSResourcePool<MutexData, OS_MUTEXES> m_mutexPool;
 #else
     inline static OSResourcePool<MutexData, 16> m_mutexPool;
 #endif
 
-#ifdef TX_SEMAPHORES
-    inline static OSResourcePool<SemaphoreData, TX_SEMAPHORES> m_semaphorePool;
+#ifdef OS_SEMAPHORES
+    inline static OSResourcePool<SemaphoreData, OS_SEMAPHORES> m_semaphorePool;
 #else
     inline static OSResourcePool<SemaphoreData, 16> m_semaphorePool;
 #endif
 
-#ifdef TX_THREADS
-    inline static OSResourcePool<ThreadData, TX_THREADS> m_threadPool;
+#ifdef OS_THREADS
+    inline static OSResourcePool<ThreadData, OS_THREADS> m_threadPool;
 #else
     inline static OSResourcePool<ThreadData, 16> m_threadPool;
 #endif

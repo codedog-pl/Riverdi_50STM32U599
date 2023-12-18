@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 #include "bindings.h"
+#include "target.h"
 
 // Predefined root paths:
 

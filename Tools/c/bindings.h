@@ -1,6 +1,7 @@
 /**
- * @file        c_bindings.h
+ * @file        bindings.h
  * @author      CodeDog
+ *
  * @brief       Defines EXTERN_C C/C++ interoperaion macros.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
