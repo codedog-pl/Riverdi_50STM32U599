@@ -67,6 +67,17 @@ struct File final : public Path
         return adapter.fileRead(m_file, buffer, size, bytesRead) == OK ? ReadResult(bytesRead) : ReadResult();
     }
 
+    /// @brief Reads a structure or a primitive type from the file.
+    /// @tparam T The type of the structure, can also be a primitive type.
+    /// @param data The data reference.
+    /// @return True if read successfully, false if not read at all or less than required length read.
+    template<typename T> bool read(T& data)
+    {
+        constexpr size_t size = sizeof(data);
+        ReadResult result = read(&data, size);
+        return result.has_value() && result.value() == size;
+    }
+
     /// @brief Writes the data to the file.
     /// @param buffer Buffer pointer.
     /// @param size Number of bytes to write.
@@ -76,6 +87,12 @@ struct File final : public Path
         if (!m_isOpen || !buffer || !size) return false;
         return adapter.fileWrite(m_file, buffer, size) == OK;
     }
+
+    /// @brief Writes a structure or a primitive type to the file.
+    /// @tparam T  The type of the structure, can also be a primitive type.
+    /// @param data The data reference.
+    /// @return True if written successfully. False otherwise.
+    template<typename T> bool write(T& data) { return write(&data, sizeof(data)); }
 
     /// @brief Closes the file if it was opened.
     void close()

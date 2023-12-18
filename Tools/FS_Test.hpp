@@ -88,28 +88,23 @@ public:
         } // And now it can and should be closed before we modify its entry.
         { // We prefix the created file with a dot, to make it hidden for Linux based systems.
             Log::msg("Prefixing the file...");
-            Path prefixed(fs, ".%s", fileName);
-            if (fileExists(fs, prefixed.relativePath())) // But if the file with the new name exists, it would fail...
+            const char* prefix = ".%s"; // Prefixed file name format.
+            if (fileExists(fs, prefix, fileName)) // But if the file with the new name exists, it would fail...
             {
                 Log::msg("Prefixed file exists, deleting prefixed...");
-                if (!fileDelete(fs, prefixed.relativePath())) // So we delete it first to make sure the rename operation will succeed.
+                if (!fileDelete(fs, prefix, fileName)) // So we delete it first to make sure the rename operation will succeed.
                 {
                     Log::msg("Delete prefixed failed!");
                     return false; // Of course it should not happen.
                 }
             }
-            if (!prefixed.isValid())
-            {
-                Log::msg(LogMessage::error, "Prefixed path considered invalid!");
-                return false; // If it failed here, the `Path` module would be useless ;)
-            }
-            if (!fileRename(fs, fileName, prefixed.relativePath()))
+            if (!fileRename(fs, fileName, prefix, fileName))
             {
                 Log::msg(LogMessage::error, "Rename failed!");
                 return false; // This basically should not happen if previous operations completed successfully.
             }
             Log::msg("Deleting the file...");
-            if (!fileDelete(fs, prefixed.relativePath()))
+            if (!fileDelete(fs, prefix, fileName))
             {
                 Log::msg(LogMessage::error, "Delete failed!");
                 return false;

@@ -1,7 +1,8 @@
 /**
  * @file        Mutex.hpp
  * @author      CodeDog
- * @brief       Mutex C++ RAII implementation using CMSIS_OS mutex.
+ *
+ * @brief       Mutex C++ RAII implementation using the target RTOS mutex.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -10,20 +11,18 @@
 
 #include "OS.hpp"
 
-/**
- * @brief A base class for std::mutex replacement implementations.
- */
-class MutexBase
+/// @brief An interface for std::Mutex implementation.
+class IStdMutex
 {
 public:
 
-    MutexBase() = default;
-    virtual ~MutexBase() = default;
+    IStdMutex() = default;
+    virtual ~IStdMutex() = default;
 
-    MutexBase(const MutexBase&) = delete;
-    MutexBase(MutexBase&&) = delete;
-    MutexBase& operator=(const MutexBase&) = delete;
-    MutexBase& operator=(MutexBase&&) = delete;
+    IStdMutex(const IStdMutex&) = delete;
+    IStdMutex(IStdMutex&&) = delete;
+    IStdMutex& operator=(const IStdMutex&) = delete;
+    IStdMutex& operator=(IStdMutex&&) = delete;
 
     virtual void lock() = 0;    // Locks the mutex, blocks if the mutex is not available.
     virtual void unlock() = 0;  // Unlocks the mutex.
@@ -33,10 +32,8 @@ public:
 namespace std
 {
 
-/**
- * @brief Mutex C++ RAII implementation using RTOS mutex.
- */
-class Mutex : MutexBase
+/// @brief RTOS implemented RAII mutex.
+class Mutex : IStdMutex
 {
 public:
 
@@ -47,9 +44,7 @@ public:
 
     ~Mutex() { if (m_mutex) OS::mutexDelete(m_mutex); }
 
-    /**
-     * @brief Locks the mutex, blocks if the mutex is not available.
-     */
+    /// @brief Locks the mutex, blocks if the mutex is not available.
     virtual void lock()
     {
         if (!m_mutex)
@@ -59,9 +54,7 @@ public:
         OS::mutexWait(m_mutex, m_timeout);
     }
 
-    /**
-     * @brief Unlocks the mutex.
-     */
+    /// @brief Unlocks the mutex.
     virtual void unlock()
     {
         if (!m_mutex) return;
@@ -70,7 +63,7 @@ public:
 
 private:
     OS::MutexId m_mutex;    // OS mutex.
-    OS::Timeout m_timeout;     // Default timeout.
+    OS::Timeout m_timeout;  // Default timeout.
 
 };
 

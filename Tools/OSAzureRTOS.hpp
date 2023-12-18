@@ -2,33 +2,29 @@
  * @file        OSAzureRTOS.hpp
  * @author      CodeDog
  *
- * @brief       Unified AzureRTOS API.
- *
- * @remarks     Used to abstract a subset of basic RTOS functions with a common API.
+ * @brief       Provides adapter for Azure RTOS API.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
 #pragma once
 
+#include "target.h"
 #ifdef USE_AZURE_RTOS
 
 #include <cstdint>
 #include "app_threadx.h"
 #include "tx_api.h"
 #include "OSResourcePool.hpp"
+#include "StaticClass.hpp"
 
 #define TX_RESOURCE_HANLDES_DEPLETED ((UINT) 0xFFFF)
 
-/// @brief RTOS compatibility wrapper, maps to AzureRTOS.
+/// @brief Azure RTOS adapter.
 class OS
 {
 
-public:
-
-    OS() = delete;
-    OS(const OS&) = delete;
-    OS(OS&&) = delete;
+    STATIC(OS)
 
 public:
 
@@ -56,17 +52,21 @@ public:
     static constexpr ThreadPriority threadPriorityLowest = TX_MAX_PRIORITIES - 1;
     static constexpr uint32_t threadDefaultStackSize = 1024;   // Stack frame assigned to new threads.
 
-    /// @brief Yields the current thread allowing the other threads to proceed.
-    inline static void yield(void)
-    {
-        tx_thread_relinquish();
+    /// @returns The current thread identifier.
+    inline static ThreadId currentThreadId() {
+        auto tcb = tx_thread_identify();
+        auto instance = m_threadPool.getInstance([tcb] (ThreadData& i) { return &i.controlBlock == tcb; });
+        return instance ? instance->id : 0;
     }
+
+    /// @returns The current thread priority value.
+    inline static ThreadPriority currentThreadPriority() { return tx_thread_identify()->tx_thread_priority; }
 
     /// @brief Changes the current thread priority.
     /// @param newPriority New priority value.
     /// @param oldPriority An optional pointer to the old priority value.
     /// @return False if error occurred, true otherwise.
-    inline static bool changeCurrentThreadPriority(ThreadPriority newPriority, ThreadPriority* oldPriority = nullptr)
+    inline static bool currentThreadPriority(ThreadPriority newPriority, ThreadPriority* oldPriority = nullptr)
     {
         lastError = tx_thread_priority_change(tx_thread_identify(), newPriority, oldPriority);
         return lastError == TX_SUCCESS;
@@ -385,6 +385,12 @@ public:
         if (lastError != TX_SUCCESS) return false;
         m_threadPool.returnInstance(id);
         return true;
+    }
+
+    /// @brief Yields the current thread allowing the other threads to proceed.
+    inline static void yield(void)
+    {
+        tx_thread_relinquish();
     }
 
     /// @brief Last operation error code.

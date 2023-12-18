@@ -3,7 +3,7 @@
  * @author      CodeDog
  * @brief       Unified RTOS API.
  *
- * @remarks     Used to abstract a subset of basic RTOS functions with a common API.
+ * @remarks     Includes the target specific RTOS calls adapter.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */

@@ -80,3 +80,9 @@ Please report all issues found on GitHub.
 The toolkit is created by Adam Łyskawa for CodeDog Sp. z o.o.
 
 It's realeased as Open Source under MIT license.
+
+## Road map
+
+- FS: Structure read / write methods.
+- FS: FATFS support.
+- FreeRTOS: statically allocated control blocks.

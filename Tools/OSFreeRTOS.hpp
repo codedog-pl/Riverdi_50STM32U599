@@ -2,9 +2,7 @@
  * @file        OSFreeRTOS.hpp
  * @author      CodeDog
  *
- * @brief       Unified FreeRTOS API.
- *
- * @remarks     Used to abstract a subset of basic RTOS functions with a common API.
+ * @brief       Provides adapter for FreeRTOS API.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
@@ -16,16 +14,15 @@
 #include <cstdint>
 #include "cmsis_os.h"
 #include "FreeRTOSConfig.h"
+#include "StaticClass.hpp"
 
-/// @brief RTOS compatibility wrapper, maps to FreeRTOS CMSIS (current version).
+/// @brief Free RTOS adapter.
 class OS
 {
 
-public:
+    STATIC(OS)
 
-    OS() = delete;
-    OS(const OS&) = delete;
-    OS(OS&&) = delete;
+public:
 
     using Status = osStatus;                            // RTOS status code.
     using EventGroupId = osEventFlagsId_t;              // Event group identifier.
