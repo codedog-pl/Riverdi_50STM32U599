@@ -19,6 +19,9 @@ namespace FS
 
 static AdapterTypes::Status ok = AdapterTypes::OK;
 
+/// @returns The eMMC chip file system pointer if it was mounted. Null pointer otherwise.
+inline FileSystem* eMMC() { return FileSystemTable::find(FS_eMMC_ROOT); }
+
 /// @returns The SD card file system pointer if it was mounted. Null pointer otherwise.
 inline FileSystem* SD() { return FileSystemTable::find(FS_SD_ROOT); }
 

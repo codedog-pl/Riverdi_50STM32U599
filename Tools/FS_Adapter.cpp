@@ -13,7 +13,9 @@ namespace FS
 {
 
 #if defined(USE_FILEX)
-FILEX adapter;
+FILEXAdapter adapter;
+#elif defined(USE_FATFS)
+FATFSAdapter adapter;
 #else
 NullAdapter adapter;
 #endif

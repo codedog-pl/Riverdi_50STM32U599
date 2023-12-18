@@ -6,8 +6,9 @@
 
 // Predefined root paths:
 
-#define FS_SD_ROOT  "0:/"
-#define FS_USB_ROOT "1:/"
+#define FS_eMMC_ROOT    "0:/"
+#define FS_SD_ROOT      "1:/"
+#define FS_USB_ROOT     "2:/"
 
 // Common types:
 
@@ -20,7 +21,7 @@ typedef struct __FS_Placeholder
 /// @brief Physical media type.
 typedef enum
 {
-    FS_MEDIA_NONE, FS_MEDIA_SD, FS_MEDIA_USB
+    FS_MEDIA_NONE, FS_MEDIA_eMMC, FS_MEDIA_SD, FS_MEDIA_USB
 } FS_MediaType;
 
 typedef enum
@@ -42,6 +43,21 @@ typedef FX_DIR_ENTRY    FS_DirectoryEntry;
 typedef FX_FILE         FS_FileHandle;
 typedef ULONG           FS_FileOffset;
 typedef UINT            FS_Status;
+
+#elif defined(USE_FATFS)
+
+#include "fatfs.h"
+
+typedef Diskio_drvTypeDef*                  FS_MediaDriver;
+typedef void*                               FS_MediaDriverInfo;
+typedef FATFS                               FS_Media;
+
+typedef struct { DIR dir; FILINFO info; }   FS_DirectoryEntry;
+typedef FIL                                 FS_FileHandle;
+
+
+typedef FSIZE_t                             FS_FileOffset;
+typedef FRESULT                             FS_Status;
 
 #else
 

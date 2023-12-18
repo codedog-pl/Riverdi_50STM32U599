@@ -23,7 +23,7 @@ namespace FS
 {
 
 /// @brief A unified file system access API for FILEX.
-class FILEX final : public AdapterMethods
+class FILEXAdapter final : public AdapterMethods
 {
 
 public:

@@ -20,7 +20,7 @@ namespace FS
 
 /// @brief Physical media type.
 enum class MediaType {
-    NONE, SD, USB
+    NONE, eMMC, SD, USB
 };
 
 /// @brief Media file system format.

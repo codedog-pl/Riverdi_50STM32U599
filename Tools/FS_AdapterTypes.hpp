@@ -54,6 +54,12 @@ public:
     static constexpr Status OK = FX_SUCCESS;                        // Successful operation status.
     static constexpr FileOffset offsetMax = -1UL;                   // Last possible file offset.
 
+#elif defined(USE_FATFS)
+
+    static constexpr size_t lfnMaxLength = _MAX_LFN;    // Maximum length of the path string.
+    static constexpr Status OK = FR_OK;                 // Successful operation status.
+    static constexpr FileOffset offsetMax = -1UL;       // Last possible file offset.
+
 #else
 
     static constexpr size_t lfnMaxLength = 256;     // Maximum length of the path string.
