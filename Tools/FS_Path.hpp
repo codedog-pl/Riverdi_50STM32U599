@@ -1,3 +1,12 @@
+/**
+ * @file        FS_Path.hpp
+ * @author      CodeDog
+ *
+ * @brief       Defines a file system path in a file system context.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_FileSystem.hpp"
@@ -7,7 +16,7 @@
 namespace FS
 {
 
-/// @brief A file system path in the file system context.
+/// @brief A file system path in a file system context.
 struct Path : protected AdapterTypes
 {
 

@@ -1,3 +1,12 @@
+/**
+ * @file        FS_AdapterTypes.hpp
+ * @author      CodeDog
+ *
+ * @brief       Defines the types used by the file system adapter.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include <cstdint>

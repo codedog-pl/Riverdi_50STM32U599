@@ -1,3 +1,12 @@
+/**
+ * @file        FS_FILEX.hpp
+ * @author      CodeDog
+ *
+ * @brief       File system adapter for the AzureRTOS FILEX backend.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #ifdef USE_FILEX

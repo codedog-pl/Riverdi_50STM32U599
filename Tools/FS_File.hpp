@@ -1,3 +1,12 @@
+/**
+ * @file        FS_File.hpp
+ * @author      CodeDog
+ *
+ * @brief       RAII file access API. Header only, but requires some implementation files compiled.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_Path.hpp"

@@ -1,3 +1,12 @@
+/**
+ * @file        FS_Adapter.hpp
+ * @author      CodeDog
+ *
+ * @brief       Includes the appropriate file system adapter depending on the target configuration.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "target.h"

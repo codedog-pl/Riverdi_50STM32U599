@@ -1,3 +1,15 @@
+/**
+ * @file        FS_NullAdapter.hpp
+ * @author      CodeDog
+ *
+ * @brief       An empty file system adapter for no file system backend defined.
+ *
+ * @remarks     Used as a template for concrete file system adapters or as a template for a new file system adapter.
+ *              Simulates Linux /dev/null device.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_AdapterMethods.hpp"

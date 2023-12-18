@@ -1,3 +1,12 @@
+/**
+ * @file        FS_Media.cpp
+ * @author      CodeDog
+ *
+ * @brief       Defines C bindings for the file system media services.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #include "FS_Media.hpp"
 #include "fs_bindings.h"
 

@@ -1,15 +1,24 @@
+/**
+ * @file        FS_Adapter.hpp
+ * @author      CodeDog
+ *
+ * @brief       File system adapter methods API.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "DateTime.hpp"
 #include "FS_AdapterTypes.hpp"
 #include "FS_FileSystem.hpp"
 
-#define FS_MOUNT_MTAB_FULL          0xfff0
-#define FS_MOUNT_CONFLICT           0xfff1
-#define FS_MOUNT_ROOT_NOT_FOUND     0xfff2
-#define FS_MOUNT_MEDIA_NOT_FOUND    0xfff3
-#define FS_NEGATIVE                 0xfffe
-#define FS_ERROR                    0xffff
+#define FS_MOUNT_MTAB_FULL          0xfff0  // The file system table is full.
+#define FS_MOUNT_CONFLICT           0xfff1  // A file system already mounted for a different media.
+#define FS_MOUNT_ROOT_NOT_FOUND     0xfff2  // Cannot find the file system root in the file system table.
+#define FS_MOUNT_MEDIA_NOT_FOUND    0xfff3  // Cannot find the media in the file system table.
+#define FS_NEGATIVE                 0xfffe  // The file system backend refuses to perform the action.
+#define FS_ERROR                    0xffff  // Unspecifed error occurred.
 
 namespace FS
 {

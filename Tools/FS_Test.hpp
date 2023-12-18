@@ -1,3 +1,12 @@
+/**
+ * @file        FS_Test.hpp
+ * @author      CodeDog
+ *
+ * @brief       Tests the file system module.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_API.hpp"

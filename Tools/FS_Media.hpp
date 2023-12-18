@@ -1,3 +1,12 @@
+/**
+ * @file        FS_Media.hpp
+ * @author      CodeDog
+ *
+ * @brief       Provides C++ types and services for the file system media.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #if defined(USE_FILEX)

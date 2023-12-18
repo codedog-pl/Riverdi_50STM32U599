@@ -1,3 +1,12 @@
+/**
+ * @file        FS_FileSystem.hpp
+ * @author      CodeDog
+ *
+ * @brief       Provides `FileSystemTable`, a static storage structure to store file systems configuration and mount state.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_AdapterTypes.hpp"

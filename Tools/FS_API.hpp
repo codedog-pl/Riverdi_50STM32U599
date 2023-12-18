@@ -1,3 +1,12 @@
+/**
+ * @file        FS_API.hpp
+ * @author      CodeDog
+ *
+ * @brief       Declares the file system adapter functions in the `FS` namespace.
+ *
+ * @copyright	(c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "FS_File.hpp"

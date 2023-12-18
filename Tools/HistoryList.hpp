@@ -1,6 +1,7 @@
 /**
  * @file        HistoryList.hpp
  * @author      CodeDog
+ *
  * @brief       A collection of a fixed amount of history elements
  *              that can be added, removed and iterated from the most recent one.
  *              Setting the page size allows the standard iterator to iterate over a subset of elements.

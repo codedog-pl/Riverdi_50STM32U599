@@ -18,9 +18,9 @@
 #include "Crash.hpp"
 #include "WaitHandle.hpp"
 
-/// @brief Delays execution of actions in application thread
-///        by forking a waiting thread that waits and executes the action in the application thread.
-///        It requires the Thread::dispatchLoop() to be running!
+/// @brief      Delays execution of actions in application thread
+///             by forking a waiting thread that waits and executes the action in the application thread.
+/// @remarks    It requires the Thread::dispatchLoop() to be running!
 class Delay final
 {
 public:
