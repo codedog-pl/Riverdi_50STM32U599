@@ -14,18 +14,18 @@
 #include <integer.h>
 #include "hal.h"
 
-#define ISO_DATE_F "%04u-%02u-%02u" ///< ISO8601 date format.
-#define ISO_DATE_L 11 ///< Date string length (trailing zero included).
-#define ISO_TIME_F "%02u-%02u-%02u" ///< ISO8601 time format.
-#define ISO_TIME_L 9 ///< Time string length (trailing zero included).
-#define ISO_DATE_TIME_F "%04u-%02u-%02u %02u-%02u-%02u" ///< ISO8601 date/time format.
-#define ISO_DATE_TIME_L 20 ///< ISO8601 date/time length (trailing zero included).
-#define ISO_DATE_TIME_MS_F "%04u-%02u-%02u %02u:%02u:%06.3f" ///< ISO8601 date/time + milliseconds format.
-#define ISO_DATE_TIME_MS_L 24 ///< ISO8601 date/time + milliseconds length (trailing zero included).
-#define ISO_DATE_TIME_US_F "%04u-%02u-%02u %02u:%02u:%09.6f" ///< ISO8601 date/time + microseconds format.
-#define ISO_DATE_TIME_US_L 27 ///< ISO8601 date/time + microseconds length (trailing zero included).
-#define ISO_DATE_TIME_NS_F "%04u-%02u-%02u %02u:%02u:%012.9f" ///< ISO8601 date/time + nanoseconds format.
-#define ISO_DATE_TIME_NS_L 30 ///< ISO8601 date/time + nanoseconds length (trailing zero included).
+#define ISO_DATE_F "%04u-%02u-%02u" // ISO8601 date format.
+#define ISO_DATE_L 11 // Date string length (trailing zero included).
+#define ISO_TIME_F "%02u-%02u-%02u" // ISO8601 time format.
+#define ISO_TIME_L 9 // Time string length (trailing zero included).
+#define ISO_DATE_TIME_F "%04u-%02u-%02u %02u-%02u-%02u" // ISO8601 date/time format.
+#define ISO_DATE_TIME_L 20 // ISO8601 date/time length (trailing zero included).
+#define ISO_DATE_TIME_MS_F "%04u-%02u-%02u %02u:%02u:%06.3f" // ISO8601 date/time + milliseconds format.
+#define ISO_DATE_TIME_MS_L 24 // ISO8601 date/time + milliseconds length (trailing zero included).
+#define ISO_DATE_TIME_US_F "%04u-%02u-%02u %02u:%02u:%09.6f" // ISO8601 date/time + microseconds format.
+#define ISO_DATE_TIME_US_L 27 // ISO8601 date/time + microseconds length (trailing zero included).
+#define ISO_DATE_TIME_NS_F "%04u-%02u-%02u %02u:%02u:%012.9f" // ISO8601 date/time + nanoseconds format.
+#define ISO_DATE_TIME_NS_L 30 // ISO8601 date/time + nanoseconds length (trailing zero included).
 
 /**
  * @def FAT_TIME

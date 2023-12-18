@@ -1,5 +1,5 @@
 /**
- * @file        DebugITM.hpp
+ * @file        LogITM.hpp
  * @author      CodeDog
  *
  * @brief       ST ITM console debug output implementation. Header only.
@@ -10,19 +10,19 @@
 #pragma once
 
 #include "hal.h"
-#include "IDebugOutput.hpp"
+#include "ILogOutput.hpp"
 #include "ILogMessagePool.hpp"
 #include "OS.hpp"
 
 /// @brief ITM console debug output.
-class DebugITM : public IDebugOutput
+class LogITM : public ILogOutput
 {
 
 private:
 
     /// @brief Creates ITM console debug output for the message pool.
     /// @param pool Message pool reference.
-    DebugITM(ILogMessagePool& pool) :
+    LogITM(ILogMessagePool& pool) :
         m_pool(pool), m_threadId(0), m_semaphoreId(0), m_isAsync(0), m_isSending(0)
     {
         DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
@@ -37,12 +37,12 @@ private:
         sendNext(); // In case if the pool already contains unsent messages.
     }
 
-    DebugITM(const DebugITM&) = delete; // Instances should not be copied.
+    LogITM(const LogITM&) = delete; // Instances should not be copied.
 
-    DebugITM(DebugITM&&) = delete; // Instances should not be moved.
+    LogITM(LogITM&&) = delete; // Instances should not be moved.
 
     /// @brief Releases the RTOS resources used to create an instance of this class.
-    ~DebugITM()
+    ~LogITM()
     {
         OS::threadDelete(m_threadId);
         OS::semaphoreDelete(m_semaphoreId);
@@ -55,15 +55,15 @@ public:
     /// @brief Creates the ITM debug output instance.
     /// @param pool Message pool reference.
     /// @return Singleton instance.
-    static DebugITM* getInstance(ILogMessagePool& pool)
+    static LogITM* getInstance(ILogMessagePool& pool)
     {
-        static DebugITM instance(pool);
+        static LogITM instance(pool);
         return m_instance = &instance;
     }
 
     /// @brief Gets the singleton instance of the ITM debug output.
     /// @return Singleton instance.
-    static inline DebugITM* getInstance()
+    static inline LogITM* getInstance()
     {
         return m_instance;
     }
@@ -78,7 +78,7 @@ public:
     void startAsync(void) override
     {
         if (m_threadId) return;
-        m_semaphoreId = OS::semaphoreCreate("DebugITM");
+        m_semaphoreId = OS::semaphoreCreate("LogITM");
         m_threadId = OS::threadStart("ITM", senderThreadEntry, 30);
     }
 
@@ -189,6 +189,6 @@ private:
     bool m_isAsync;                             // True if the sender thread is started (asynchronous mode).
     bool m_isSending;                           // True if the sender thread is busy sending a message.
 
-    static inline DebugITM* m_instance = {};    // Singleton instance pointer for static methods.
+    static inline LogITM* m_instance = {};    // Singleton instance pointer for static methods.
 
 };

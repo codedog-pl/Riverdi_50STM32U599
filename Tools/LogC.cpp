@@ -1,5 +1,5 @@
 /**
- * @file        Log.cpp
+ * @file        LogC.cpp
  * @author      CodeDog
  *
  * @brief       Provides debug log C bindings.

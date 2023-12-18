@@ -24,7 +24,8 @@
 #define OS_SEMAPHORES           16                  // The number of pre-allocated semaphores for the application, default 16.
 #define OS_THREADS              16                  // The number of pre-allocated threads for the application, default 16.
 
-
 #define WTK_ASYNC_RESULTS       32                  // The number of pre-allocated asynchronous operation result handles, default 32.
+#define WTK_LOG_Q               64                  // The number of log messages that can be stored in RAM before the first one is committed.
+#define WTK_LOG_MSG_SIZE        128                 // The number of bytes allocated for 1 system log message.
 #define WTK_TASKS               32                  // The number of pre-allocated scheduled tasks, default 32.
 #define WTK_WAIT_HANDLES        (OS_THREADS / 2)    // The number of pre-allocated wait handles, default `OS_THREADS` / 2.

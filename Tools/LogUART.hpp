@@ -1,5 +1,5 @@
 /**
- * @file        DebugUART.hpp
+ * @file        LogUART.hpp
  * @author      CodeDog
  *
  * @brief       HAL UART port debug output implementation. Header only.
@@ -10,11 +10,11 @@
 #pragma once
 
 #include "hal.h"
-#include "IDebugOutput.hpp"
+#include "ILogOutput.hpp"
 #include "ILogMessagePool.hpp"
 
 /// @brief UART port debugger output.
-class DebugUART final : public IDebugOutput
+class LogUART final : public ILogOutput
 {
 
 private:
@@ -22,18 +22,18 @@ private:
     /// @brief Creates UART port debugger output.
     /// @param huart UART handle pointer.
     /// @param pool Message pool reference.
-    DebugUART(UART_HandleTypeDef* huart, ILogMessagePool& pool) : m_uart(huart), m_pool(pool)
+    LogUART(UART_HandleTypeDef* huart, ILogMessagePool& pool) : m_uart(huart), m_pool(pool)
     {
         HAL_UART_RegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID, tx_complete);
         sendNext(); // In case if the pool already contains unsent messages.
     }
 
-    DebugUART(const DebugUART&) = delete; // Instances should not be copied.
+    LogUART(const LogUART&) = delete; // Instances should not be copied.
 
-    DebugUART(DebugUART&&) = delete; // Instances should not be moved.
+    LogUART(LogUART&&) = delete; // Instances should not be moved.
 
     /// @brief Unregisters the HAL UART callback.
-    ~DebugUART()
+    ~LogUART()
     {
         HAL_UART_UnRegisterCallback(m_uart, HAL_UART_TX_COMPLETE_CB_ID);
         m_uart = nullptr;
@@ -44,15 +44,15 @@ public:
     /// @brief Creates the UART debug output instance.
     /// @param pool Message pool reference.
     /// @return Singleton instance.
-    static DebugUART* getInstance(UART_HandleTypeDef* huart, ILogMessagePool& pool)
+    static LogUART* getInstance(UART_HandleTypeDef* huart, ILogMessagePool& pool)
     {
-        static DebugUART instance(huart, pool);
+        static LogUART instance(huart, pool);
         return m_instance = &instance;
     }
 
     /// @brief Gets the singleton instance of the UART debug output.
     /// @return Singleton instance.
-    static inline DebugUART* getInstance()
+    static inline LogUART* getInstance()
     {
         return m_instance;
     }
@@ -96,6 +96,6 @@ private:
     UART_HandleTypeDef* m_uart;                 // Configured UART handle pointer.
     ILogMessagePool& m_pool;                    // Log message pool reference.
     bool m_isSending;                           // True if the port DMA is busy sending a message.
-    static inline DebugUART* m_instance = {};   // Singleton instance pointer for static methods.
+    static inline LogUART* m_instance = {};   // Singleton instance pointer for static methods.
 
 };

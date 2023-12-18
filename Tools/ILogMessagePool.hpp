@@ -1,3 +1,12 @@
+/**
+ * @file        ILogMessagePool.hpp
+ * @author      CodeDog
+ *
+ * @brief       Declares an interface for the system log message pool. Header only.
+ *
+ * @copyright   (c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "LogMessage.hpp"

@@ -1,3 +1,12 @@
+/**
+ * @file        IData.hpp
+ * @author      CodeDog
+ *
+ * @brief       Declares an interface to use virtual data array.
+ *
+ * @copyright   (c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include <cstddef>

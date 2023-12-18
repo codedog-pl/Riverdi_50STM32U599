@@ -1,6 +1,7 @@
 /**
  * @file        IndexIterator.hpp
  * @author      CodeDog
+ *
  * @brief       Iterator for indexable collections.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.

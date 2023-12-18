@@ -1,3 +1,12 @@
+/**
+ * @file        LogMessagePool.hpp
+ * @author      CodeDog
+ *
+ * @brief       Implements the system log message pool with a static storage. Header only.
+ *
+ * @copyright   (c)2023 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include "ILogMessagePool.hpp"

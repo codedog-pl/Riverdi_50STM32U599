@@ -1,22 +1,26 @@
 /**
- * @file        Debug.hpp
+ * @file        LogBase.hpp
  * @author      CodeDog
- * @brief       Provides serial port debugging. Header file.
+ *
+ * @brief       Defines a base class for the system log implementation.
  *
  * @copyright   (c)2023 CodeDog, All rights reserved.
  */
 
 #pragma once
 
-#include "IDebugOutput.hpp"
+#include "ILogOutput.hpp"
 #include "LogMessagePool.hpp"
+#include "StaticClass.hpp"
 #include <cstdio>
 
-/// @brief Provides methods of sending message to a static system log.
+/// @brief Provides methods of sending messages to a static system log.
 /// @tparam TSize Message pool size.
 template<size_t TSize>
 class LogBase
 {
+
+    STATIC(LogBase)
 
 public:
 
@@ -33,12 +37,10 @@ public:
         m_level = value;
     }
 
-    /**
-     * @brief Prints a formatted debug message.
-     *
-     * @param format Text format.
-     * @param ...args Variadic arguments.
-     */
+    /// @brief Formats and sends a message.
+    /// @tparam ...va Variadic argument type.
+    /// @param format Text format.
+    /// @param ...args Variadic arguments.
     template<class ...va> static void printf(const char* format, va ...args)
     {
         if (m_output && !m_output->isAvailable()) return;
@@ -47,12 +49,10 @@ public:
         if (m_output && !offset) m_output->send(offset);
     }
 
-    /**
-     * @brief Prints a formatted debug message with a time stamp.
-     *
-     * @param format Text format.
-     * @param ... Optional arguments.
-     */
+    /// @brief Formats and sends a message with a time stamp.
+    /// @tparam ...va Variadic arguments type.
+    /// @param format Text format.
+    /// @param ...args Variadic arguments.
     template<class ...va> static void tsprintf(const char* format, va ...args)
     {
         if (m_output && !m_output->isAvailable()) return;
@@ -61,12 +61,10 @@ public:
         if (m_output && !offset) m_output->send(offset);
     }
 
-    /**
-     * @brief Adds a formatted debug message to the log, for the detail level and above.
-     *
-     * @param format Text format.
-     * @param args... Variadic arguments.
-     */
+    /// @brief Formats and sends a messge for the `detail` severity with indentation.
+    /// @tparam ...va Variadic arguments type.
+    /// @param format Text format.
+    /// @param ...args Variadic arguments.
     template<class ...va> static void dump(const char* format, va ...args)
     {
         if (m_output && !m_output->isAvailable()) return;
@@ -77,12 +75,10 @@ public:
         if (m_output && !offset) m_output->send(offset);
     }
 
-    /**
-     * @brief Adds a formatted debug message to the log with a timestamp.
-     *
-     * @param format Text format.
-     * @param args... Variadic arguments.
-     */
+    /// @brief Formats and sends a message with a timestamp.
+    /// @tparam ...va Variadic arguments type.
+    /// @param format Text format.
+    /// @param ...args Variadic arguments.
     template<class ...va> static void msg(const char* format, va ...args)
     {
         if (m_output && !m_output->isAvailable()) return;
@@ -91,13 +87,11 @@ public:
         if (m_output && !offset) m_output->send(offset);
     }
 
-    /**
-     * @brief Adds a formatted message to the log with a timestamp.
-     *
-     * @param severity Message severity.
-     * @param format Text format.
-     * @param args... Variadic arguments.
-     */
+    /// @brief Formats and sends a message with a timestamp.
+    /// @tparam ...va Variadic arguments type.
+    /// @param severity Message severity.
+    /// @param format Text format.
+    /// @param ...args Variadic arguments.
     template<class ...va> static void msg(LogMessage::Severity severity, const char* format, va ...args)
     {
         if (m_output && !m_output->isAvailable()) return;
@@ -136,10 +130,6 @@ public:
 
 protected:
 
-    LogBase() = delete;
-    LogBase(const LogBase&) = delete;
-    LogBase& operator=(const LogBase&) = delete;
-
     /// @returns A tuple of:
     ///             - An empty message from the pool, or `nullptr` when the pool is exhausted.
     ///             - Message pool offset.
@@ -153,7 +143,7 @@ protected:
 
     static inline LogMessage::Severity m_level = LogMessage::detail;    // Default log level. Messages above this level will be discarded.
     static inline LogMessagePool<TSize> m_pool = {};                    // Static message pool.
-    static inline IDebugOutput* m_output = {};                          // Message output implementation.
+    static inline ILogOutput* m_output = {};                            // Message output implementation.
     static inline size_t m_dumpIndentation = dumpIndentationDefault;    // Current dump line indentation.
 
 };
