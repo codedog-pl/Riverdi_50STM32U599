@@ -18,8 +18,20 @@ Screen2ViewBase::Screen2ViewBase() :
     backBtn.setClickCallback(backBtnClickCallback);
     add(backBtn);
 
-    header.setXY(15, 15);
-    add(header);
+    squareLED1.setXY(124, 98);
+    add(squareLED1);
+
+    squareLED2.setXY(124, 162);
+    add(squareLED2);
+
+    squareLED3.setXY(124, 226);
+    add(squareLED3);
+
+    squareLED4.setXY(124, 290);
+    add(squareLED4);
+
+    sysBar1.setXY(0, 0);
+    add(sysBar1);
 }
 
 Screen2ViewBase::~Screen2ViewBase()
@@ -31,7 +43,11 @@ void Screen2ViewBase::setupScreen()
 {
     background.initialize();
     backBtn.initialize();
-    header.initialize();
+    squareLED1.initialize();
+    squareLED2.initialize();
+    squareLED3.initialize();
+    squareLED4.initialize();
+    sysBar1.initialize();
 }
 
 void Screen2ViewBase::backBtnClickCallbackHandler()

@@ -11,6 +11,6 @@
 #	cpp_source_files
 
 ADDITIONAL_INCLUDE_PATHS := ../Tools
-ADDITIONAL_SOURCES := ../Tools/DateTime.cpp ../Tools/TimeSpan.cpp
+ADDITIONAL_SOURCES := ../Tools/TimeSpan.cpp
 ADDITIONAL_LIBRARY_PATHS :=
 ADDITIONAL_LIBRARIES :=

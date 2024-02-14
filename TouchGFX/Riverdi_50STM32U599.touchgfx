@@ -23,21 +23,19 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "header",
-            "X": 15,
-            "Y": 15,
-            "Width": 204,
-            "Height": 28,
-            "CustomContainerDefinitionName": "Header"
-          },
-          {
-            "Type": "CustomContainerInstance",
             "Name": "dateTimeSetter1",
             "X": 160,
             "Y": 104,
             "Width": 480,
             "Height": 272,
             "CustomContainerDefinitionName": "DateTimeSetter"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "sysBar1",
+            "Width": 800,
+            "Height": 48,
+            "CustomContainerDefinitionName": "SysBar"
           }
         ],
         "Interactions": [
@@ -77,12 +75,46 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "header",
-            "X": 15,
-            "Y": 15,
-            "Width": 204,
-            "Height": 28,
-            "CustomContainerDefinitionName": "Header"
+            "Name": "squareLED1",
+            "X": 124,
+            "Y": 98,
+            "Width": 64,
+            "Height": 64,
+            "CustomContainerDefinitionName": "SquareLED"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "squareLED2",
+            "X": 124,
+            "Y": 162,
+            "Width": 64,
+            "Height": 64,
+            "CustomContainerDefinitionName": "SquareLED"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "squareLED3",
+            "X": 124,
+            "Y": 226,
+            "Width": 64,
+            "Height": 64,
+            "CustomContainerDefinitionName": "SquareLED"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "squareLED4",
+            "X": 124,
+            "Y": 290,
+            "Width": 64,
+            "Height": 64,
+            "CustomContainerDefinitionName": "SquareLED"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "sysBar1",
+            "Width": 800,
+            "Height": 48,
+            "CustomContainerDefinitionName": "SysBar"
           }
         ],
         "Interactions": [
@@ -139,7 +171,7 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 43,
+            "Height": 32,
             "TextId": "_PREV",
             "TextRotation": "0",
             "AutoSize": true
@@ -185,7 +217,7 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 43,
+            "Height": 32,
             "TextId": "_NEXT",
             "TextRotation": "0",
             "AutoSize": true
@@ -628,7 +660,7 @@
             "Name": "digitsTxt",
             "Y": -3,
             "Width": 48,
-            "Height": 92,
+            "Height": 110,
             "LockPosition": true,
             "TextId": "_DTS_VALUE",
             "TextRotation": "0",
@@ -661,7 +693,7 @@
             "Name": "digitsTxt",
             "Y": -3,
             "Width": 96,
-            "Height": 92,
+            "Height": 110,
             "LockPosition": true,
             "TextId": "_DTS_VALUE",
             "TextRotation": "0",
@@ -795,6 +827,269 @@
           }
         ],
         "Interactions": []
+      },
+      {
+        "Name": "SquareLED",
+        "Width": 64,
+        "Height": 64,
+        "Includes": "enum class LEDColor\r\n{\r\n    off, red, green, yellow\r\n};",
+        "Components": [
+          {
+            "Type": "BoxWithBorder",
+            "Name": "shape",
+            "X": 7,
+            "Y": 7,
+            "Width": 50,
+            "Height": 50,
+            "Color": {
+              "Red": 68,
+              "Green": 68,
+              "Blue": 68
+            },
+            "BorderSize": 5
+          },
+          {
+            "Type": "Container",
+            "Name": "red",
+            "Width": 64,
+            "Height": 64,
+            "Visible": false,
+            "Components": [
+              {
+                "Type": "BoxWithBorder",
+                "Name": "lightR",
+                "X": 7,
+                "Y": 7,
+                "Width": 50,
+                "Height": 50,
+                "Color": {
+                  "Red": 255
+                },
+                "BorderSize": 5
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "glowR",
+                "Width": 64,
+                "Height": 64,
+                "Filename": "circular_gradient_r.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "green",
+            "Width": 64,
+            "Height": 64,
+            "Visible": false,
+            "Components": [
+              {
+                "Type": "BoxWithBorder",
+                "Name": "lightGreen",
+                "X": 7,
+                "Y": 7,
+                "Width": 50,
+                "Height": 50,
+                "Color": {
+                  "Green": 255
+                },
+                "BorderSize": 5
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "glowGreen",
+                "Width": 64,
+                "Height": 64,
+                "Filename": "circular_gradient_g.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              }
+            ]
+          },
+          {
+            "Type": "Container",
+            "Name": "yellow",
+            "Width": 64,
+            "Height": 64,
+            "Visible": false,
+            "Components": [
+              {
+                "Type": "BoxWithBorder",
+                "Name": "lightYellow",
+                "X": 7,
+                "Y": 7,
+                "Width": 50,
+                "Height": 50,
+                "Color": {
+                  "Red": 255,
+                  "Green": 204
+                },
+                "BorderSize": 5
+              },
+              {
+                "Type": "ScalableImage",
+                "Name": "glowYellow",
+                "Width": 64,
+                "Height": 64,
+                "Filename": "circular_gradient_y.png",
+                "ScalingAlgorithm": "Nearest-neighbor"
+              }
+            ]
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "highlight",
+            "X": -8,
+            "Y": -8,
+            "Width": 80,
+            "Height": 80,
+            "Filename": "circular_gradient_w.png",
+            "Alpha": 144,
+            "ScalingAlgorithm": "Nearest-neighbor"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "BlinkAnimation",
+            "Trigger": {
+              "Type": "TriggerOnEveryTick",
+              "TickCount": 15
+            },
+            "Action": {
+              "Type": "ActionCustom2",
+              "ActionCustomTypeName": "Call SquareLED tick",
+              "ActionComponent": "SquareLED"
+            }
+          }
+        ],
+        "CustomActions": [
+          {
+            "Name": "setState",
+            "Description": "Sets the LED state.",
+            "HasValue": true,
+            "ValueType": "LEDColor"
+          },
+          {
+            "Name": "setBlink",
+            "Description": "Sets the blinking time.",
+            "HasValue": true,
+            "ValueType": "int"
+          },
+          {
+            "Name": "tick",
+            "Description": "Advances the blink animation."
+          }
+        ]
+      },
+      {
+        "Name": "SysBar",
+        "Width": 800,
+        "Height": 48,
+        "Components": [
+          {
+            "Type": "BoxWithBorder",
+            "Name": "background",
+            "Width": 800,
+            "Height": 48,
+            "Color": {
+              "Red": 17,
+              "Green": 147,
+              "Blue": 193
+            },
+            "BorderColor": {
+              "Green": 130,
+              "Blue": 173
+            },
+            "BorderSize": 2
+          },
+          {
+            "Type": "TextArea",
+            "Name": "clockTxt",
+            "X": 248,
+            "Y": 4,
+            "Width": 305,
+            "Height": 40,
+            "TextId": "__SingleUse_OC0E",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_C1M8",
+              "UseBuffer": true,
+              "BufferSize": 24
+            }
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "setClockBtn",
+            "X": 248,
+            "Width": 305,
+            "Height": 48,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 305,
+                "Height": 48,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "SetClockClick",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "setClockBtn"
+            },
+            "Action": {
+              "Type": "ActionEmit",
+              "TriggerCustomTypeName": "SysBar setClock happens"
+            }
+          },
+          {
+            "InteractionName": "FrameTickUpdate",
+            "Trigger": {
+              "Type": "TriggerOnEveryTick",
+              "TickCount": 1
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "updateTime"
+            }
+          }
+        ],
+        "CustomTriggers": [
+          {
+            "Name": "setClock",
+            "Description": "Triggered when the clock is clicked"
+          }
+        ]
       }
     ],
     "Name": "Riverdi_50STM32U599",
@@ -850,6 +1145,6 @@
       "VectorFonts"
     ]
   },
-  "Version": "4.23.0",
+  "Version": "4.23.1",
   "CreatedBy": "4.22.0"
 }

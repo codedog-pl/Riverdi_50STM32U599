@@ -21,9 +21,9 @@ struct Typography
 
 struct TypographyFontIndex
 {
-    static const touchgfx::FontId DEFAULT = 0;            // Vector_segoeui_32
-    static const touchgfx::FontId LARGE = 1;              // Vector_verdana_40
-    static const touchgfx::FontId SMALL = 2;              // Vector_verdana_10
+    static const touchgfx::FontId DEFAULT = 0;            // Ubuntu_Regular_32_4bpp
+    static const touchgfx::FontId LARGE = 1;              // verdana_40_4bpp
+    static const touchgfx::FontId SMALL = 2;              // verdana_10_4bpp
     static const touchgfx::FontId DATETIMESETTERTEXT = 3; // impact_45_4bpp
     static const uint16_t NUMBER_OF_FONTS = 4;
 };

@@ -18,11 +18,11 @@ Screen1ViewBase::Screen1ViewBase() :
     fwdBtn.setClickCallback(fwdBtnClickCallback);
     add(fwdBtn);
 
-    header.setXY(15, 15);
-    add(header);
-
     dateTimeSetter1.setXY(160, 104);
     add(dateTimeSetter1);
+
+    sysBar1.setXY(0, 0);
+    add(sysBar1);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -34,8 +34,8 @@ void Screen1ViewBase::setupScreen()
 {
     background.initialize();
     fwdBtn.initialize();
-    header.initialize();
     dateTimeSetter1.initialize();
+    sysBar1.initialize();
 }
 
 void Screen1ViewBase::fwdBtnClickCallbackHandler()

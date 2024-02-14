@@ -10,8 +10,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/Background.hpp>
 #include <gui/containers/FwdBtn.hpp>
-#include <gui/containers/Header.hpp>
 #include <gui/containers/DateTimeSetter.hpp>
+#include <gui/containers/SysBar.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -31,8 +31,8 @@ protected:
     touchgfx::Box __background;
     Background background;
     FwdBtn fwdBtn;
-    Header header;
     DateTimeSetter dateTimeSetter1;
+    SysBar sysBar1;
 
 private:
 

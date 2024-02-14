@@ -9,6 +9,33 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Release_FUCKED/Middlewares/USBX/UX\ Host\ CoreStack/subdir.mk
+-include Release_FUCKED/Middlewares/USBX/UX\ Host\ Controllers/subdir.mk
+-include Release_FUCKED/Middlewares/USBX/UX\ Host\ Class\ MSC/subdir.mk
+-include Release_FUCKED/Middlewares/USBX/Core\ System/subdir.mk
+-include Release_FUCKED/Middlewares/ThreadX/Core/subdir.mk
+-include Release_FUCKED/Middlewares/FileX/SD\ interface/subdir.mk
+-include Release_FUCKED/Middlewares/FileX/Core/subdir.mk
+-include Release_FUCKED/Drivers/STM32U5xx_HAL_Driver/subdir.mk
+-include Release_FUCKED/Drivers/Custom/subdir.mk
+-include Release_FUCKED/Drivers/CMSIS/subdir.mk
+-include Release_FUCKED/Drivers/BSP/Components/mx25lm51245g/subdir.mk
+-include Release_FUCKED/Application/User/gui/subdir.mk
+-include Release_FUCKED/Application/User/generated/subdir.mk
+-include Release_FUCKED/Application/User/USBX/Target/subdir.mk
+-include Release_FUCKED/Application/User/USBX/App/subdir.mk
+-include Release_FUCKED/Application/User/TouchGFX/target/generated/subdir.mk
+-include Release_FUCKED/Application/User/TouchGFX/target/subdir.mk
+-include Release_FUCKED/Application/User/TouchGFX/App/subdir.mk
+-include Release_FUCKED/Application/User/Tools/c/subdir.mk
+-include Release_FUCKED/Application/User/Tools/subdir.mk
+-include Release_FUCKED/Application/User/Startup/subdir.mk
+-include Release_FUCKED/Application/User/HMI/subdir.mk
+-include Release_FUCKED/Application/User/FileX/Target/subdir.mk
+-include Release_FUCKED/Application/User/FileX/App/subdir.mk
+-include Release_FUCKED/Application/User/Core/subdir.mk
+-include Release_FUCKED/Application/User/AZURE_RTOS/App/subdir.mk
+-include Release_FUCKED/subdir.mk
 -include Middlewares/USBX/UX\ Host\ CoreStack/subdir.mk
 -include Middlewares/USBX/UX\ Host\ Controllers/subdir.mk
 -include Middlewares/USBX/UX\ Host\ Class\ MSC/subdir.mk
@@ -20,6 +47,35 @@ RM := rm -rf
 -include Drivers/Custom/subdir.mk
 -include Drivers/CMSIS/subdir.mk
 -include Drivers/BSP/Components/mx25lm51245g/subdir.mk
+-include Debug_FUCKED/Middlewares/USBX/UX\ Host\ CoreStack/subdir.mk
+-include Debug_FUCKED/Middlewares/USBX/UX\ Host\ Controllers/subdir.mk
+-include Debug_FUCKED/Middlewares/USBX/UX\ Host\ Class\ MSC/subdir.mk
+-include Debug_FUCKED/Middlewares/USBX/UX\ Host\ Class\ HUB/subdir.mk
+-include Debug_FUCKED/Middlewares/USBX/Core\ System/subdir.mk
+-include Debug_FUCKED/Middlewares/ThreadX/Core/subdir.mk
+-include Debug_FUCKED/Middlewares/FileX/SD\ interface/subdir.mk
+-include Debug_FUCKED/Middlewares/FileX/Core/subdir.mk
+-include Debug_FUCKED/Drivers/STM32U5xx_HAL_Driver/subdir.mk
+-include Debug_FUCKED/Drivers/Custom/subdir.mk
+-include Debug_FUCKED/Drivers/CMSIS/subdir.mk
+-include Debug_FUCKED/Drivers/BSP/Components/mx25lm51245g/subdir.mk
+-include Debug_FUCKED/Application/User/gui/subdir.mk
+-include Debug_FUCKED/Application/User/generated/subdir.mk
+-include Debug_FUCKED/Application/User/USBX/Target/subdir.mk
+-include Debug_FUCKED/Application/User/USBX/App/subdir.mk
+-include Debug_FUCKED/Application/User/TouchGFX/target/generated/subdir.mk
+-include Debug_FUCKED/Application/User/TouchGFX/target/subdir.mk
+-include Debug_FUCKED/Application/User/TouchGFX/App/subdir.mk
+-include Debug_FUCKED/Application/User/Tools/c/subdir.mk
+-include Debug_FUCKED/Application/User/Tools/OS/subdir.mk
+-include Debug_FUCKED/Application/User/Tools/FS/subdir.mk
+-include Debug_FUCKED/Application/User/Tools/subdir.mk
+-include Debug_FUCKED/Application/User/Startup/subdir.mk
+-include Debug_FUCKED/Application/User/HMI/subdir.mk
+-include Debug_FUCKED/Application/User/FileX/Target/subdir.mk
+-include Debug_FUCKED/Application/User/FileX/App/subdir.mk
+-include Debug_FUCKED/Application/User/Core/subdir.mk
+-include Debug_FUCKED/Application/User/AZURE_RTOS/App/subdir.mk
 -include Application/User/gui/subdir.mk
 -include Application/User/generated/subdir.mk
 -include Application/User/USBX/Target/subdir.mk
@@ -28,6 +84,8 @@ RM := rm -rf
 -include Application/User/TouchGFX/target/subdir.mk
 -include Application/User/TouchGFX/App/subdir.mk
 -include Application/User/Tools/c/subdir.mk
+-include Application/User/Tools/OS/subdir.mk
+-include Application/User/Tools/FS/subdir.mk
 -include Application/User/Tools/subdir.mk
 -include Application/User/Startup/subdir.mk
 -include Application/User/HMI/subdir.mk

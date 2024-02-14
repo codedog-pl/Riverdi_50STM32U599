@@ -45,6 +45,10 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksBottomBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\DateTimeSetterMasksTop.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\DateTimeSetterMasksTopBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\SquareLED.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\SquareLEDBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\SysBar.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\SysBarBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -219,6 +223,10 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksBottomBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\DateTimeSetterMasksTop.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\DateTimeSetterMasksTopBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\SquareLED.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SquareLEDBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\SysBar.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SysBarBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

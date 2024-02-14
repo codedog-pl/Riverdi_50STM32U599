@@ -10,7 +10,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <gui/containers/Background.hpp>
 #include <gui/containers/BackBtn.hpp>
-#include <gui/containers/Header.hpp>
+#include <gui/containers/SquareLED.hpp>
+#include <gui/containers/SysBar.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -30,7 +31,11 @@ protected:
     touchgfx::Box __background;
     Background background;
     BackBtn backBtn;
-    Header header;
+    SquareLED squareLED1;
+    SquareLED squareLED2;
+    SquareLED squareLED3;
+    SquareLED squareLED4;
+    SysBar sysBar1;
 
 private:
 
