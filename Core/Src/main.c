@@ -152,6 +152,7 @@ int main(void)
   MX_ADC1_Init();
   MX_DCACHE1_Init();
   MX_DCACHE2_Init();
+  MX_TIM1_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
@@ -162,8 +163,8 @@ int main(void)
     }
 
   log_msg(3, "Configuring media...");
-  fs_register_type(FS_MEDIA_SD, fx_stm32_sd_driver, NULL);
-  fs_register_type(FS_MEDIA_USB, _ux_host_class_storage_driver_entry, NULL);
+  fs_register_type(FS_MEDIA_SD, FS_SD_ROOT, fx_stm32_sd_driver);
+  fs_register_type(FS_MEDIA_USB, FS_USB_ROOT, _ux_host_class_storage_driver_entry);
   log_msg(3, "Starting RTOS...");
   /* USER CODE END 2 */
 
@@ -220,7 +221,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLMBOOST = RCC_PLLMBOOST_DIV1;
   RCC_OscInitStruct.PLL.PLLM = 4;
   RCC_OscInitStruct.PLL.PLLN = 80;
-  RCC_OscInitStruct.PLL.PLLP = 8;
+  RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLLVCIRANGE_0;

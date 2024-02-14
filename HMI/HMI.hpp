@@ -11,7 +11,7 @@
 
 #include "hmi.h"
 #include "StaticClass.hpp"
-#include "OS.hpp"
+#include "OS/Semaphore.hpp"
 
 class HMI final
 {
@@ -34,6 +34,6 @@ public:
 
 private:
 
-    inline static OS::SemaphoreId initSemaphore = 0; // Initialization semaphore.
+    inline static OS::Semaphore initSemaphore = {}; // Initialization semaphore.
 
 };

@@ -8,25 +8,27 @@
 
 #include "HMI.hpp"
 #include "Log.hpp"
-#include "Thread.hpp"
-#include "FS_Test.hpp"
+#include "OS/AppThread.hpp"
+#include "OS/CurrentThread.hpp"
+#include "FS/Test.hpp"
+#include "DACTest.hpp"
 
 void HMI::start()
 {
     Log::msg("HMI: Initializing...");
-    initSemaphore = OS::semaphoreCreate("HMI_Initialization");
-    while ((HMI_SysInit & HMI_ALL) != HMI_ALL) OS::semaphoreWait(initSemaphore);
-    OS::semaphoreDelete(initSemaphore);
-    initSemaphore = 0;
+    while ((HMI_SysInit & HMI_ALL) != HMI_ALL) initSemaphore.wait();
     Log::msg("HMI: Initialization complete.");
     FS::Test::fileAPI(FS::SD(), "fs-test.dat");
-    Thread::dispatchLoop(); // This will wait indefinitely for thread synchronization events.
+    DACTest dacTest;
+    dacTest.start();
+    OS::AppThread::start(); // This will wait indefinitely for thread synchronization events.
+    dacTest.stop();
 }
 
 void HMI::init(uint32_t flags)
 {
     HMI_SysInit |= flags;
-    if (initSemaphore) OS::semaphoreRelease(initSemaphore);
+    initSemaphore.release();
 }
 
 void HMI::USBMediaMounted()
@@ -59,12 +61,12 @@ void HMI_Init(uint32_t flags)
 
 void HMI_TriggerUSBMediaMounted()
 {
-    Thread::sync(HMI::USBMediaMounted);
+    OS::AppThread::sync(HMI::USBMediaMounted);
 }
 
 void HMI_TriggerUSBMediaUnmounted()
 {
-    Thread::sync(HMI::USBMediaUnmounted);
+    OS::AppThread::sync(HMI::USBMediaUnmounted);
 }
 
 }

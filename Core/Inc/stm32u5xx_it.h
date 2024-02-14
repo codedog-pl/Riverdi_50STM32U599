@@ -55,6 +55,7 @@ void DebugMon_Handler(void);
 void EXTI6_IRQHandler(void);
 void GPDMA1_Channel0_IRQHandler(void);
 void GPDMA1_Channel1_IRQHandler(void);
+void GPDMA1_Channel2_IRQHandler(void);
 void ADC1_2_IRQHandler(void);
 void TIM2_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
