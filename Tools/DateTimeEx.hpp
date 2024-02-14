@@ -1,10 +1,11 @@
 /**
  * @file        DateTimeEx.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       DateTime class extended with RTC / FAT methods.
+ * @brief       `DateTime` class extension with HAL RTC access.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -15,11 +16,13 @@ EXTERN_C_BEGIN
 #include "datetime.h"
 EXTERN_C_END
 
-class __attribute__((__packed__)) DateTimeEx : public DateTime
+/// @brief `DateTime` class extension with HAL RTC access.
+class __attribute__((__packed__)) DateTimeEx final : public DateTime
 {
+
 public:
 
-    /// @brief Creates an empty `DateTimeEx` object, with all fields set to zero.
+    /// @brief Creates an empty `DateTimeEx` object.
     DateTimeEx() : DateTime() { }
 
     /// @brief Creates an initialized `DateTimeEx` object, either with zero or the current time.
@@ -28,25 +31,17 @@ public:
 
     /// @brief Creates a `DateTimeEx` object from `DateTimeTypeDef` reference.
     /// @param dt `DateTimeTypeDef` reference.
-    DateTimeEx(DateTimeTypeDef& dt) : DateTime(dt.date.y, dt.date.m, dt.date.d, dt.time.h, dt.time.m, dt.time.s, dt.time.f) { }
+    DateTimeEx(const DateTimeTypeDef& dt) : DateTime(dt.date.y, dt.date.m, dt.date.d, dt.time.h, dt.time.m, dt.time.s, dt.time.f) { }
 
     /// @returns Reinterpretted C compatible `DateTimeTypeDef` pointer.
-    DateTimeTypeDef* c_ptr() { return (DateTimeTypeDef*)(void*)this; }
+    inline DateTimeTypeDef* c_ptr() const { return (DateTimeTypeDef*)(void*)this; }
 
     /// @brief Loads current real time clock into this structure.
-    /// @return 1: Success. 0: Failure.
-    bool getRTC() { return RTC_GetDateTime(c_ptr()) == HAL_OK; }
+    /// @returns 1: Success. 0: Failure.
+    inline bool getRTC() { return RTC_GetDateTime(c_ptr()) == HAL_OK; }
 
     /// @brief Sets the real time clock with value with this structure.
-    /// @return 1: Success. 0: Failure.
-    bool setRTC() { return RTC_SetDateTime(c_ptr()) == HAL_OK; }
-
-    /// @brief Sets this structure with the FATFS timestamp value.
-    /// @param ftd FATFS timestamp value.
-    void getFAT(DWORD ftd) { FAT2DateTime(ftd, c_ptr()); }
-
-    /// @brief Sets the FATFS timestamp value with this structure.
-    /// @param ftd FATFS timestamp reference.
-    void setFAT(DWORD& ftd) { ftd = DateTime2FAT(c_ptr()); }
+    /// @returns 1: Success. 0: Failure.
+    inline bool setRTC() { return RTC_SetDateTime(c_ptr()) == HAL_OK; }
 
 };

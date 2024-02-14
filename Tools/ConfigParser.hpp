@@ -1,10 +1,11 @@
 /**
  * @file        ConfigParser.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Simple configuration file parser. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -34,7 +35,7 @@ public:
 
     /// @brief Calculates a buffer size for the `n` lines.
     /// @param n Maximal number of lines.
-    /// @return Size in bytes aligned to 32 bits.
+    /// @returns Size in bytes aligned to 32 bits.
     static constexpr int bufferSizeForNLines(int n) { return (((n * maxLineLength - 1) >> 2) << 2) + 4; }
 
     /// @brief A setter function that will receive parsed values.
@@ -42,8 +43,7 @@ public:
 
     /// @brief Creates a parser over a C string buffer.
     /// @param content Content address.
-    /// @param length Content length.
-    ConfigParser(void* content, size_t length) : m_content(content), m_contentLength(length) { }
+    ConfigParser(const char* content) : m_content(content), m_keys() { }
 
     ConfigParser(const ConfigParser&) = delete; // Instances should not be copied.
 
@@ -57,8 +57,7 @@ public:
         if (!setter || !keys) return;
         m_setter = setter;
         m_keys = keys;
-        m_keysLength = strlen(m_keys);
-        if (m_keysLength) parse();
+        parse();
     }
 
 private:
@@ -72,7 +71,9 @@ private:
     /// @brief Starts parsing the content.
     void parse()
     {
-        if (!m_setter || !m_keys || !m_keysLength) return;
+        size_t contentLength = strlen(m_content);
+        size_t keysLength = strlen(m_keys);
+        if (!m_setter || !m_keys || !keysLength) return;
         char key[maxTokenLength] = {};
         char value[maxTokenLength] = {};
         uint8_t keyOffset = 0;
@@ -80,10 +81,10 @@ private:
         bool isParsingValue = false;
         char c; // Current character.
         bool isLast; // Current character is the last character of the text.
-        for (size_t i = 0; i < m_contentLength; ++i)
+        for (size_t i = 0; i < contentLength; ++i)
         {
-            c = reinterpret_cast<char*>(m_content)[i];
-            isLast = i == m_contentLength - 1 || !c;
+            c = m_content[i];
+            isLast = i == contentLength - 1 || !c;
             if (c == SP || c == HT || c == CR) continue; // Ignore whitespace.
             if (c == LF || isLast) // End of line or end of text:
             {
@@ -125,19 +126,22 @@ private:
     /// @returns A zero based index of the key in the provided key list or -1 if the key is not found on the list.
     int matchKey(const char* key)
     {
-        if (!m_keys || !m_keysLength || !key) return -1;
-        int itemIndex = 0;
-        int itemOffset = 0;
-        int keyLength = strlen(key);
+        if (!m_keys || !key) return -1;
+        size_t keysLength = strlen(m_keys);
+        if (!keysLength) return -1;
+        size_t itemIndex = 0;
+        size_t itemOffset = 0;
+        size_t keyLength = strlen(key);
+        if (!keyLength) return -1;
         char c; // Current character.
         bool isLast; // Current character is the last character of the text.
-        for (int i = 0; i < m_keysLength; i++)
+        for (size_t i = 0; i < keysLength; i++)
         {
             c = m_keys[i];
-            isLast = i == m_keysLength - 1;
+            isLast = i == keysLength - 1;
             if (c == keyListSeparator || isLast)
             {
-                if (itemOffset + keyLength <= m_keysLength &&
+                if (itemOffset + keyLength <= keysLength &&
                     (isLast || m_keys[itemOffset + keyLength] == keyListSeparator) &&
                     memcmp(&m_keys[itemOffset], key, keyLength) == 0) return itemIndex;
                 itemOffset = i + 1;
@@ -147,10 +151,8 @@ private:
         return -1;
     }
 
-    void* m_content{};          // Content buffer address.
-    size_t m_contentLength = 0; // Content buffer length.
-    const char* m_keys{};       // Recognized keys list.
-    int m_keysLength = 0;       // The precalculated length of the key list.
-    Setter m_setter{};          // A function to be called when a key list match is found.
+    const char* m_content;      // Content buffer address.
+    const char* m_keys;         // Recognized keys list.
+    Setter m_setter;            // A function to be called when a key list match is found.
 
 };

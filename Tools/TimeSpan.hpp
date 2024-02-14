@@ -1,3 +1,13 @@
+/**
+ * @file        TimeSpan.hpp
+ * @author      Adam Łyskawa
+ *
+ * @brief       A structure to store and manipulate time span values. Header file.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright	(c)2024 CodeDog, All rights reserved.
+ */
+
 #pragma once
 
 #include <cstdint>

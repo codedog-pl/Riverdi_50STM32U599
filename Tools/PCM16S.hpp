@@ -1,9 +1,11 @@
 /**
  * @file        PCM16S.hpp
- * @author      CodeDog
- * @brief       A 16-bit stereo PCM sample type. Header file.
+ * @author      Adam Łyskawa
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @brief       A 16-bit stereo PCM sample type. Header file.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

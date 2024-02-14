@@ -1,10 +1,11 @@
 /**
  * @file        c_debug.h
- * @author      CodeDog
- * @brief       Debug module C bindings.
- * @remarks     -
+ * @author      Adam Łyskawa
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @brief       Debug module C bindings. Header file.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

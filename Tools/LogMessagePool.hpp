@@ -1,10 +1,11 @@
 /**
  * @file        LogMessagePool.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Implements the system log message pool with a static storage. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

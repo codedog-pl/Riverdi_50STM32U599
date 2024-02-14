@@ -1,10 +1,11 @@
 /**
  * @file        LogITM.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       ST ITM console debug output implementation. Header only.
+ * @brief       ST ITM console debug output implementation. Header file.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright	(c)2023 CodeDog, All rights reserved.
+ * @copyright	(c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -12,137 +13,60 @@
 #include "hal.h"
 #include "ILogOutput.hpp"
 #include "ILogMessagePool.hpp"
-#include "OS.hpp"
+#include "OS/Thread.hpp"
+#include "OS/Semaphore.hpp"
 
 /// @brief ITM console debug output.
-class LogITM : public ILogOutput
+class LogITM final : public ILogOutput
 {
 
 private:
 
     /// @brief Creates ITM console debug output for the message pool.
     /// @param pool Message pool reference.
-    LogITM(ILogMessagePool& pool) :
-        m_pool(pool), m_threadId(0), m_semaphoreId(0), m_isAsync(0), m_isSending(0)
-    {
-        DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
-        ITM->LAR = 0xC5ACCE55;
-        ITM->TER = 0x1;
-        if (!isITMAvailable()) return;
-        for (int i = 0; i < 2; ++i)
-        {
-            while (!isITMReadyToSend()) __NOP();
-            sendITM('\n');
-        }
-        sendNext(); // In case if the pool already contains unsent messages.
-    }
+    LogITM(ILogMessagePool& pool);
 
     LogITM(const LogITM&) = delete; // Instances should not be copied.
 
     LogITM(LogITM&&) = delete; // Instances should not be moved.
 
-    /// @brief Releases the RTOS resources used to create an instance of this class.
-    ~LogITM()
-    {
-        OS::threadDelete(m_threadId);
-        OS::semaphoreDelete(m_semaphoreId);
-        m_semaphoreId = 0;
-        m_threadId = 0;
-    }
-
 public:
 
     /// @brief Creates the ITM debug output instance.
     /// @param pool Message pool reference.
-    /// @return Singleton instance.
-    static LogITM* getInstance(ILogMessagePool& pool)
-    {
-        static LogITM instance(pool);
-        return m_instance = &instance;
-    }
+    /// @returns Singleton instance.
+    static LogITM* getInstance(ILogMessagePool& pool);
 
     /// @brief Gets the singleton instance of the ITM debug output.
-    /// @return Singleton instance.
-    static inline LogITM* getInstance()
-    {
-        return m_instance;
-    }
+    /// @returns Singleton instance.
+    static inline LogITM* getInstance() { return m_instance; }
 
     /// @returns true if the output is currently available.
-    bool isAvailable(void) override
-    {
-        return isITMAvailable();
-    }
+    inline bool isAvailable(void) override { return isITMAvailable(); }
 
     /// @brief Switches to asynchronous operation as soon as the RTOS is started.
-    void startAsync(void) override
-    {
-        if (m_threadId) return;
-        m_semaphoreId = OS::semaphoreCreate("LogITM");
-        m_threadId = OS::threadStart("ITM", senderThreadEntry, 30);
-    }
+    void startAsync(void) override;
 
     /// @brief Sends a message to the output.
     /// @param index Message index.
-    void send(int index) override
-    {
-        if (m_isSending || index > m_pool.lastIndex() || !isITMAvailable()) return;
-        LogMessage* msg = m_pool[index];
-        if (!msg || msg->empty()) return;
-        m_isSending = true;
-        m_pool.lastSentIndex(index);
-        if (m_isAsync) sendAsync(); else sendImmediately();
-    }
+    void send(int index) override;
 
 private:
 
     /// @brief Sends the next message from the pool if available.
-    void sendNext()
-    {
-        if (m_pool.lastSentIndex() < m_pool.lastIndex()) send(m_pool.lastSentIndex(m_pool.lastSentIndex() + 1));
-        else m_pool.clear();
-    }
+    void sendNext();
 
     /// @brief Sends the current message immediately in blocking mode.
-    void sendImmediately()
-    {
-        LogMessage& msg = *m_pool.lastSent();
-        for (size_t i = 0; i < msg.length(); i++)
-        {
-            while (!isITMReadyToSend()) __NOP();
-            sendITM(msg[i]);
-        }
-        msg.clear();
-        m_isSending = false;
-        sendNext();
-    }
+    void sendImmediately();
 
     /// @brief Sends the current message asynchronously without blocking the calling thread.
-    void sendAsync()
+    inline void sendAsync()
     {
-        if (m_semaphoreId) OS::semaphoreRelease(m_semaphoreId);
+        m_semaphore.release();
     }
 
     /// @brief Sends the current message asynchronously if it's ready and yields the thread waiting for the next message.
-    static void senderThreadEntry(OS::ThreadEntryArgType)
-    {
-        m_instance->m_isAsync = true;
-        while (m_instance->m_semaphoreId && OS::semaphoreWait(m_instance->m_semaphoreId))
-        { // When it gets the signal from `sendAsync()` it starts sending the data with yielding the thread after each character...
-            if (m_instance->m_pool.lastSentIndex() < 0) continue;
-            LogMessage& msg = *m_instance->m_pool.lastSent();
-            if (msg.empty()) continue;
-            for (size_t i = 0, n = msg.length(); i < n; ++i)
-            {
-                while (!isITMReadyToSend()) OS::yield();
-                sendITM(msg[i]);
-            }
-            msg.clear();
-            m_instance->m_isSending = false;
-            m_instance->sendNext();
-        } // Then it waits for the next signal.
-        m_instance->m_isAsync = false;
-    }
+    static void senderThreadEntry(OS::ThreadArg);
 
     /// @returns true if the ITM debugger is enabled.
     static inline bool isDebuggerEnabled()
@@ -153,7 +77,11 @@ private:
     /// @returns true if the ITM debugger is connected.
     static inline bool isDebuggerConnected()
     {
+#ifndef DCB
+        return (CoreDebug->DHCSR & 1UL) != 0UL;
+#else
         return (DCB->DHCSR & 1UL) != 0UL;
+#endif
     }
 
     /// @returns true if the ITM debugger is enabled and connected.
@@ -184,11 +112,11 @@ private:
 
 private:
     ILogMessagePool& m_pool;                    // Log message pool reference.
-    OS::ThreadId m_threadId;                    // Sender thread identifier.
-    OS::SemaphoreId m_semaphoreId;              // Sender thread release semaphore identifier.
+    OS::Thread m_thread;                        // Sender thread.
+    OS::Semaphore m_semaphore;                  // Sender thread release semaphore.
     bool m_isAsync;                             // True if the sender thread is started (asynchronous mode).
     bool m_isSending;                           // True if the sender thread is busy sending a message.
 
-    static inline LogITM* m_instance = {};    // Singleton instance pointer for static methods.
+    static inline LogITM* m_instance = {};      // Singleton instance pointer for static methods.
 
 };

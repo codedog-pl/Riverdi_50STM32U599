@@ -1,10 +1,11 @@
 /**
  * @file        AsyncPool.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Provides pre-allocated asynchronous results pool. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -13,8 +14,9 @@
 #include "Pool.hpp"
 
 /// @brief AsyncResult instance generic placeholder for the pool.
-class AsyncResultGeneric
+class AsyncResultGeneric final
 {
+
 public:
 
     /// @brief Creates an empty, available instance.

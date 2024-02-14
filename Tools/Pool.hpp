@@ -1,12 +1,14 @@
 /**
  * @file        Pool.hpp
- * @author      CodeDog
- * @brief       Provides generic pre-allocated item pool API with RAII item wrapper.
+ * @author      Adam Łyskawa
+ *
+ * @brief       Provides generic pre-allocated item pool API with RAII item wrapper. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
  * @remarks     Intended to use on embedded systems to avoid dynamic memory allocations.
  *              Pool sizes must be set at compile time.
  *
- * @copyright	(c)2023 CodeDog, All rights reserved.
+ * @copyright	(c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

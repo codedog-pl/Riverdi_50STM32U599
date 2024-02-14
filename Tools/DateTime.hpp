@@ -1,10 +1,11 @@
 /**
  * @file        DateTime.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       A universal, simple date / time storage class. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright	(c)2023 CodeDog, All rights reserved.
+ * @copyright	(c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -32,14 +33,18 @@ struct DateTime
     double fraction;    // Additional fraction of the second value (x >= 0 && x < 1).
 
     /// @brief Creates an empty DateTime instance.
-    DateTime() : year(startYearUnix), month(1), day(1), hour(0), minute(0), second(0), fraction(0) { }
+    DateTime() : year(0), month(1), day(1), hour(0), minute(0), second(0), fraction(0) { }
 
     /// @brief Constructs a `DateTime` instance from a `time_t` value.
     /// @param cTime C time.
     DateTime(time_t cTime)
     {
         struct tm ltm;
+        #ifdef _WIN32
+        localtime_s(&ltm, &cTime);
+        #else
         localtime_r(&cTime, &ltm);
+        #endif
         year = startYearCTime + ltm.tm_year;
         month = ltm.tm_mon + 1; // `tm_mon` is 0-based!
         day = ltm.tm_mday;      // ...and `tm_mday` is not!
@@ -58,22 +63,28 @@ struct DateTime
     /// @param _second Second number, 0..59.
     /// @param _fraction Fraction of second floating point value, 0..1, less than 1.
     DateTime(
-        int16_t _year, uint8_t _month = 1, uint8_t _day = 1,
+        int16_t _year, uint8_t _month, uint8_t _day,
         uint8_t _hour = 0, uint8_t _minute = 0, uint8_t _second = 0, double _fraction = 0)
         : year(_year), month(_month), day(_day),
           hour(_hour), minute(_minute), second(_second), fraction(_fraction) { }
 
     /// @brief Calculates the number of days in month.
-    static uint8_t daysInMonth(uint16_t _year, uint8_t _month)
+    static inline uint8_t daysInMonth(uint16_t _year, uint8_t _month)
     {
         return _month != 2 ? 30 + ((_month % 2) ^ (_month > 7)) : 28 + (_year % 4 == 0 && (_year % 100 != 0 || _year % 400 == 0));
     }
 
     /// @returns 1: The date is set. 0: The date is empty / zero.
-    inline bool isSet() { return year != 0 || month != 1 || day != 1 || hour != 0 || minute != 0 || second != 0 || fraction != 0.0; }
+    inline bool isSet() const
+    {
+        return
+            (year != 0 && year != startYearCTime && year != startYearUnix) ||
+            month != 1 || day != 1 ||
+            hour != 0 || minute != 0 || second != 0 || fraction != 0.0;
+    }
 
     /// @returns 1: The data is valid. 0: The data is invalid.
-    inline bool isValid()
+    inline bool isValid() const
     {
         return
             month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth(year, month) &&
@@ -81,10 +92,13 @@ struct DateTime
     }
 
     /// @returns 1: The other date has the same day.
-    inline bool isTheSameDay(DateTime& other) { return year == other.year && month == other.month && day == other.day; }
+    inline bool isTheSameDay(DateTime& other) const
+    {
+        return year == other.year && month == other.month && day == other.day;
+    }
 
     /// @returns 1: This time is at least 1 second ahead of the other time (the other time lags behind).
-    bool atLeastSecondAheadOf(DateTime& other)
+    bool atLeastSecondAheadOf(DateTime& other) const
     {
         if (year > other.year) return true;
         if (year < other.year) return false;
@@ -104,7 +118,7 @@ struct DateTime
     /// @brief Resets time to the empty / zero value.
     inline void reset()
     {
-        year = startYearUnix; month = 1; day = 1;
+        year = 0; month = 1; day = 1;
         hour = 0; minute = 0; second = 0; fraction = 0.0;
     }
 
@@ -121,6 +135,9 @@ struct DateTime
         return mktime(&ltm);
     }
 
+    /// @brief The object will evaluate to true if it's set to a non-default value.
+    inline operator bool() const { return isSet(); }
+
     /// @returns A time span between this and the other date/time object.
     TimeSpan operator-(DateTime& other) const
     {
@@ -131,12 +148,35 @@ struct DateTime
         return diffIntPart + diffFractPart;
     }
 
-    bool operator==(DateTime& other) const { return eq(other); }
-    bool operator!=(DateTime& other) const { return !eq(other); }
-    bool operator<=(DateTime& other) const { return cmp(other, true, true); }
-    bool operator>=(DateTime& other) const { return cmp(other, false, true); }
-    bool operator<(DateTime& other) const { return cmp(other, true, false); }
-    bool operator>(DateTime& other) const { return cmp(other, false, false); }
+    /// @brief Tests if this instance value is equal to the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if equal.
+    bool operator ==(const DateTime& other) const { return eq(other); }
+
+    /// @brief Tests if this instance value is NOT equal to the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if NOT equal.
+    bool operator !=(const DateTime& other) const { return !eq(other); }
+
+    /// @brief Tests if this instance value is less or equal to the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if less or equal.
+    bool operator <=(const DateTime& other) const { return cmp(other, true, true); }
+
+    /// @brief Tests if this instance value is greater or equal to the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if greater or equal.
+    bool operator >=(const DateTime& other) const { return cmp(other, false, true); }
+
+    /// @brief Tests if this instance value is less than the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if less (earlier).
+    bool operator <(const DateTime& other) const { return cmp(other, true, false); }
+
+    /// @brief Tests if this instance value is greater than the other instance value.
+    /// @param other Other instance reference.
+    /// @returns True if greater (later).
+    bool operator >(const DateTime& other) const { return cmp(other, false, false); }
 
 protected:
 
@@ -144,8 +184,8 @@ protected:
     /// @param other The other time reference.
     /// @param lt 1: Return true if this time is less (or equal if `eq` is set) than the other time.
     /// @param eq 1: Return true also when the times are equal. 0: Return true only when the times differ.
-    /// @return Comparison result dependent on `lt` and `eq` arguments.
-    bool cmp(DateTime& other, bool lt, bool eq) const
+    /// @returns Comparison result dependent on `lt` and `eq` arguments.
+    bool cmp(const DateTime& other, bool lt, bool eq) const
     {
         if (year < other.year) return lt;
         if (year > other.year) return !lt;
@@ -166,8 +206,8 @@ protected:
 
     /// @brief Returns true only if the other time is equal to this time.
     /// @param other The other time reference.
-    /// @return 1: Times are equal. 0: Times are different.
-    bool eq(DateTime& other) const
+    /// @returns 1: Times are equal. 0: Times are different.
+    bool eq(const DateTime& other) const
     {
         return
             year == other.year &&

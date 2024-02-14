@@ -1,10 +1,11 @@
 /**
  * @file        DataSetT.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       An indexable and iterable, fixed size data set class template. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright	(c)2023 CodeDog, All rights reserved.
+ * @copyright	(c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -44,12 +45,17 @@ public:
 
     /// @brief Gets the point reference at specified index. No range checking is made.
     /// @param index Data point index.
-    /// @return Data point reference.
+    /// @returns Data point reference.
     TPoint& operator[](int index) const { return m_points[index]; }
 
+    /// @brief Gets the point reference at specified index. No range checking is made.
+    /// @param index Data point index.
+    /// @returns Data point reference.
+    TPoint& operator[](int index) { return m_points[index]; }
+
     /// @brief Returns the data set capacity as the maximum number of points that can be stored in this type.
-    /// @return
-    inline static const int capacity() const { return Capacity; }
+    /// @returns
+    inline static int capacity() { return Capacity; }
 
     /// @returns The number of the data points actually stored in this instance.
     int length() const { return m_lastIndex + 1; }
@@ -57,14 +63,26 @@ public:
     /// @returns The first data point reference.
     TPoint& first() const { return m_points[0]; }
 
+    /// @returns The first data point reference.
+    TPoint& first() { return m_points[0]; }
+
     /// @returns The last data point reference.
     TPoint& last() const { return m_points[m_lastIndex]; }
+
+    /// @returns The last data point reference.
+    TPoint& last() { return m_points[m_lastIndex]; }
 
     /// @returns The first point iterator.
     Iterator begin() const { return Iterator(this, 0); }
 
+    /// @returns The first point iterator.
+    Iterator begin() { return Iterator(this, 0); }
+
     /// @returns The point beyond the last point iterator.
     Iterator end() const { return Iterator(this, m_lastIndex + 1); }
+
+    /// @returns The point beyond the last point iterator.
+    Iterator end() { return Iterator(this, m_lastIndex + 1); }
 
     /// @returns A value indicating that the collection is empty.
     bool empty() const { return m_lastIndex < 0; }

@@ -1,10 +1,11 @@
 /**
  * @file        IData.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Declares an interface to use virtual data array.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -21,7 +22,7 @@ class IData
 
 public:
 
-    /// @return The number of elements the backing array contains.
+    /// @returns The number of elements the backing array contains.
     virtual const size_t size() const = 0;
 
 protected:
@@ -55,8 +56,14 @@ class StaticData : public virtual IData<TElement>
 
 public:
 
-    /// @return The number of elements the backing array contains.
+    /// @returns The number of elements the backing array contains.
     const size_t size() const override { return TSize; }
+
+    /// @returns The pointer to the backing array.
+    inline TElement* data() override { return m_data; }
+
+    /// @returns The read only pointer to the backing array.
+    inline const TElement* data() const override { return m_data; }
 
 protected:
 
@@ -74,13 +81,7 @@ protected:
     /// @brief This type is not moveable.
     StaticData(StaticData&&) = delete;
 
-    /// @returns The pointer to the backing array.
-    inline TElement* data() override { return m_data; }
-
-    /// @returns The read only pointer to the backing array.
-    inline const TElement* data() const override { return m_data; }
-
-    /// @returns The element pointer at index, or nullptr on invalid index.
+    /// @returns The element pointer at index, or nullptr if index out of bounds.
     inline TElement* operator[](size_t index) override { return index < TSize ? &m_data[index] : nullptr; }
 
     /// @returns The element pointer at index, or nullptr if index out of bounds.

@@ -1,17 +1,19 @@
 /**
- * @file      datetime.h
- * @author    CodeDog
- * @brief     Date / time tools, header file.
- * @remarks
- *            Introduces DateTypeDef, TimeTypeDef, DateTimeTypeDef types.
- *            Supports RTC_DateTypeDef, RTC_TimeTypeDef and DWORD FAT time types and provides conversions between them.
+ * @file        datetime.h
+ * @author      Adam Łyskawa
  *
- * @copyright	(c)2022 CodeDog, All rights reserved.
+ * @brief       Date and time types and functions. Header file.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @remarks
+ *              Introduces DateTypeDef, TimeTypeDef, DateTimeTypeDef types.
+ *              Supports RTC_DateTypeDef and RTC_TimeTypeDef time types and provides conversions between them.
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
 
-#include <integer.h>
 #include "hal.h"
 
 #define ISO_DATE_F "%04u-%02u-%02u" // ISO8601 date format.
@@ -26,18 +28,6 @@
 #define ISO_DATE_TIME_US_L 27 // ISO8601 date/time + microseconds length (trailing zero included).
 #define ISO_DATE_TIME_NS_F "%04u-%02u-%02u %02u:%02u:%012.9f" // ISO8601 date/time + nanoseconds format.
 #define ISO_DATE_TIME_NS_L 30 // ISO8601 date/time + nanoseconds length (trailing zero included).
-
-/**
- * @def FAT_TIME
- * @brief Returns FAT time calculated from date components.
- */
-#define FAT_TIME(y, M, d, h, m, s) ((DWORD)(y-1980)<<25|(DWORD)M<<21|(DWORD)d<<16|(DWORD)h<<11|(DWORD)m<<5|(DWORD)s>>1)
-
-/**
- * @def FAT_TIME_SET
- * @brief Sets the date components from FAT time.
- */
-#define FAT_TIME_SET(f, y, M, d, h, m, s) {y=1980+(f>>25&127);M=f>>21&15;d=f>>16&31;h=f>>11&31;m=f>>5&63;s=(f&15)<<1;}
 
 extern RTC_HandleTypeDef hrtc;
 
@@ -87,7 +77,3 @@ void RTC2DateTime(RTC_DateTypeDef* rd, RTC_TimeTypeDef* rt, DateTimeTypeDef* dt)
 void DateTime2RTC(DateTimeTypeDef* dt, RTC_DateTypeDef* rd, RTC_TimeTypeDef* rt);
 HAL_StatusTypeDef RTC_GetDateTime(DateTimeTypeDef* dt);
 HAL_StatusTypeDef RTC_SetDateTime(DateTimeTypeDef* dt);
-DWORD DateTime2FAT(DateTimeTypeDef* dt);
-DWORD RTC2FAT(RTC_DateTypeDef* rd, RTC_TimeTypeDef* rt);
-void FAT2DateTime(DWORD ft, DateTimeTypeDef* dt);
-DWORD RTC_GetFATTime();

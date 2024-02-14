@@ -1,9 +1,11 @@
 /**
  * @file        Tone.hpp
- * @author      CodeDog
- * @brief       A simple tone generator for any sample type that can be set from a `double` normalized value.
+ * @author      Adam Łyskawa
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @brief       A simple tone generator for any sample type that can be set from a `double` normalized value.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -11,13 +13,10 @@
 #include <cstdint>
 #include <cmath>
 
-/**
- * @brief Represents a single period of an audio tone.
- *
- * @tparam TSample Sample type.
- * @tparam TRate Sample rate.
- * @tparam TFrequency Tone frequency in Hz.
- */
+/// @brief Represents a single period of an audio tone.
+/// @tparam TSample Sample type.
+/// @tparam TRate Sample rate.
+/// @tparam TFrequency Tone frequency in Hz.
 template<typename TSample, uint32_t TRate, uint32_t TFrequency>
 class Tone final
 {
@@ -26,19 +25,14 @@ public:
 
     static constexpr size_t length = TRate / TFrequency; // Samples buffer length (in samples).
 
-    /**
-     * @brief Waveform shape.
-     */
+    /// @brief Waveform shape.
     enum Waveform { Sine, Square };
 
 public:
 
-    /**
-     * @brief Creates a tone.
-     *
-     * @param level Sound volume level in dB where 0 is full volume. Default 0.
-     * @param waveform Waveform type. Default `Sine`.
-     */
+    /// @brief Creates a tone.
+    /// @param level Sound volume level in dB where 0 is full volume. Default 0.
+    /// @param waveform Waveform type. Default `Sine`.
     Tone(double level = 0, Waveform waveform = Sine) : m_samples()
     {
         double normalized = 0;
@@ -59,22 +53,29 @@ public:
         }
     }
 
+    /// @brief Copies a tone.
+    /// @param other A tone to copy.
     Tone(const Tone& other) : m_samples()
     {
         for (size_t i = 0; i < length; i++) m_samples[i] = other.m_samples[i];
     }
 
-    Tone(Tone&& other) = delete;
+    /// @brief Not moveable.
+    Tone(Tone&&) = delete;
 
+    /// @brief Defines a copying assignment operator.
+    /// @param other A tone to copy.
+    /// @return This tone reference.
     Tone& operator=(const Tone& other) noexcept
     {
         if (&other == this) return *this;
         for (size_t i = 0; i < length; i++) m_samples[i] = other.m_samples[i];
+        return *this;
     }
 
     /// @brief Returns the data buffer pointer.
     template<typename T = uint8_t*>
-    T data() { return reinterpret_cast<T>(m_samples); }
+    const T data() { return reinterpret_cast<T>(m_samples); }
 
     /// @brief Returns the data buffer size in bytes.
     uint32_t size() { return static_cast<uint32_t>(length * sizeof(TSample)); }

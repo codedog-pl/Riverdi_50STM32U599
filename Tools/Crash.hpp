@@ -1,10 +1,10 @@
 /**
  * @file        Crash.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Crashes the application for debugging on unrecoverable error.
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

@@ -1,9 +1,11 @@
 /**
  * @file        PCM16S.cpp
- * @author      CodeDog
- * @brief       A 16-bit stereo PCM sample type.
+ * @author      Adam Łyskawa
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @brief       A 16-bit stereo PCM sample type. Implementation.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #include "PCM16S.hpp"

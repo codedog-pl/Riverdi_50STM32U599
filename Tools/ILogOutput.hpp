@@ -1,10 +1,11 @@
 /**
  * @file        ILogOutput.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       System logger interface for message output.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

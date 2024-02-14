@@ -1,9 +1,11 @@
 /**
  * @file        PageingFilter.hpp
- * @author      CodeDog
- * @brief       Pageing filter for indexable collections.
+ * @author      Adam Łyskawa
  *
- * @copyright   (c)2022 CodeDog, All rights reserved.
+ * @brief       Pageing filter for indexable collections. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

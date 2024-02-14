@@ -1,15 +1,17 @@
 /**
  * @file        LogC.cpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       Provides debug log C bindings.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #include "bindings.h"
 #include "Log.hpp"
 #include <cstdarg>
+#include <cstdio>
 #include <cstring>
 
 EXTERN_C_BEGIN

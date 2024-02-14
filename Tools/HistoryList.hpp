@@ -1,12 +1,13 @@
 /**
  * @file        HistoryList.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       A collection of a fixed amount of history elements
  *              that can be added, removed and iterated from the most recent one.
  *              Setting the page size allows the standard iterator to iterate over a subset of elements.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -27,36 +28,24 @@ class HistoryList
 {
 
 public: // Type aliases:
+
     using ThisType = HistoryList<TNum, TItem>;
     using ValueType = TItem;
     using Iterator = IndexIterator<ThisType>;
 
 public: // Static:
+
     static const unsigned int capacity = TNum; ///< Fixed list capacity.
 
 public: // API:
 
-    /**
-     * @brief Creates a new history list.
-     */
+    /// @brief Creates a new empty history list.
     HistoryList() : m_length(0), m_offset(-1), m_elements() { }
 
-    /**
-     * @brief Deletes the copy constructor.
-     */
-    HistoryList(const HistoryList&) = delete;
+    /// @returns The current length of the list.
+    inline unsigned int length() const { return m_length; }
 
-    /**
-     * @returns The current length of the list.
-     */
-    unsigned int length() const
-    {
-        return m_length;
-    }
-
-    /**
-     * @brief Resets the history list.
-     */
+    /// @brief Resets the history list.
     void reset()
     {
         m_length = 0;
@@ -64,9 +53,7 @@ public: // API:
         trim();
     }
 
-    /**
-     * @returns A reference to a new element.
-     */
+    /// @returns A reference to a new element.
     TItem& add(void)
     {
         ++m_length;
@@ -75,19 +62,11 @@ public: // API:
         return m_elements[m_offset];
     }
 
-    /**
-     * @returns True if there are any elements in the list.
-     */
-    bool any() const
-    {
-        return m_length > 0;
-    }
+    /// @returns True if there are any elements in the list.
+    inline bool any() const { return m_length > 0; }
 
-    /**
-     * @brief Removes the last added element from the list.
-     *
-     * @returns The previously added element's reference or the first (empty) element's reference.
-     */
+    /// @brief Removes the last added element from the list.
+    /// @returns The previously added element's reference or the first (empty) element's reference.
     TItem& back()
     {
         if (m_length > 1)
@@ -99,24 +78,13 @@ public: // API:
         return current();
     }
 
-    /**
-     * @returns The last added element's reference or the first (empty) element's reference.
-     */
-    TItem& current() const
-    {
-        return m_offset >= 0 ? m_elements[m_offset] : m_elements[0];
-    }
+    /// @returns The last added element's reference or the first (empty) element's reference.
+    TItem& current() const { return m_offset >= 0 ? m_elements[m_offset] : m_elements[0]; }
 
-    /**
-     * @brief    Gets the reference to the element at the specified history level.
-     *
-     * @param    level A history level, 0 is the most recent (current).
-     * @return   A reference to the element at specified level.
-     */
-    TItem& operator[](int level)
-    {
-        return m_elements[(capacity + m_offset - level) % capacity];
-    }
+    /// @brief Gets the reference to the element at the specified history level.
+    /// @param level A history level, 0 is the most recent (current).
+    /// @returns A reference to the element at the specified level.
+    TItem& operator[](int level) { return m_elements[(capacity + m_offset - level) % capacity]; }
 
 public: // Iterator API:
 

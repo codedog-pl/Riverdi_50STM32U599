@@ -1,11 +1,13 @@
 /**
  * @file        Counter.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       High precision clock counter, header file. Header only.
+ * @brief       High precision clock counter. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
+ *
  * @remarks     Requires `COUNTER_TIM` macro set to HAL `TIM` instance and `COUNTER_1S` set to number of `TIM` ticks per second.
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -15,6 +17,8 @@
 #include "StaticClass.hpp"
 
 #if defined(COUNTER_TIM) && defined(COUNTER_1S)
+
+extern TIM_HandleTypeDef COUNTER_TIM;
 
 /// @brief High precision clock counter.
 class Counter

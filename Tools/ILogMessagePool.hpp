@@ -1,10 +1,11 @@
 /**
  * @file        ILogMessagePool.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       Declares an interface for the system log message pool. Header only.
+ * @brief       Declares an interface for the system log message pool.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

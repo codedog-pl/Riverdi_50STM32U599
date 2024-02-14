@@ -1,10 +1,11 @@
 /**
  * @file        FloatingPointEq.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       Defines a single `eq` function that tests if 2 double arguments are approximately equal.
+ * @brief       Defines a single `eq` function that tests if 2 double arguments are approximately equal. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright	(c)2023 CodeDog, All rights reserved.
+ * @copyright	(c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
@@ -13,14 +14,11 @@
 #include <limits>
 #include <type_traits>
 
-/**
- * @brief Tests if the 2 numbers are approximately equal, with the floating point rounding error taken into account.
- *
- * @tparam T double or float.
- * @param a Compared value.
- * @param b Reference value.
- * @returns 1: Approximately equal. 0: Not approximately equal.
- */
+/// @brief Tests if the 2 numbers are approximately equal, with the floating point rounding error taken into account.
+/// @tparam T `double` or `float`.
+/// @param a Compared value.
+/// @param b Reference value.
+/// @returns 1: Approximately equal. 0: Not approximately equal.
 template<typename T = double>
 inline bool eq(T a, T b)
 {
@@ -32,16 +30,13 @@ inline bool eq(T a, T b)
     return fabs(a - b) <= ((_a < _b ? _b : _a) * std::numeric_limits<T>::epsilon());
 }
 
-/**
- * @brief Tests if the 2 numbers are approximately equal, up to the constant deviation.
- * @remarks Rounding errors are still taken into account.
- *
- * @tparam T double or float.
- * @param a Compared value.
- * @param b Reference value.
- * @param d Maximal absolute difference between the numbers.
- * @returns 1: Approximately equal. 0: Not approximately equal.
- */
+/// @brief Tests if the 2 numbers are approximately equal, up to the constant deviation.
+/// @remarks Rounding errors are still taken into account.
+/// @tparam T `double` or `float`.
+/// @param a Compared value.
+/// @param b Reference value.
+/// @param d Maximal absolute difference between the numbers.
+/// @returns 1: Approximately equal. 0: Not approximately equal.
 template<typename T = double>
 inline bool eq(T a, T b, T d)
 {

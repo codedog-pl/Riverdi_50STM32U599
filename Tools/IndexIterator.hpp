@@ -1,10 +1,11 @@
 /**
  * @file        IndexIterator.hpp
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
- * @brief       Iterator for indexable collections.
+ * @brief       Iterator for indexable collections. Header only.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once

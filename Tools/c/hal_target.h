@@ -1,10 +1,11 @@
 /**
  * @file        hal_target.h
- * @author      CodeDog
+ * @author      Adam Łyskawa
  *
  * @brief       A header file for targeting HAL header files.
+ * @remark      A part of the Woof Toolkit (WTK).
  *
- * @copyright   (c)2023 CodeDog, All rights reserved.
+ * @copyright   (c)2024 CodeDog, All rights reserved.
  */
 
 #pragma once
