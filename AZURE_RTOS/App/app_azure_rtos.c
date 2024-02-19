@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "app_azure_rtos.h"
+#include "app_touchgfx.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "sdmmc.h"
@@ -70,6 +71,15 @@ static TX_BYTE_POOL FILEX_MEM_POOL_VAR_NAME;
 #endif
 __ALIGN_BEGIN static UCHAR  ux_host_byte_pool_buffer[UX_HOST_APP_MEM_POOL_SIZE] __ALIGN_END;
 static TX_BYTE_POOL ux_host_app_byte_pool;
+
+/* USER CODE BEGIN TouchGFX_Pool_Buffer */
+
+/* USER CODE END TouchGFX_Pool_Buffer */
+#if defined ( __ICCARM__ )
+#pragma data_alignment=4
+#endif
+__ALIGN_BEGIN static UCHAR touchgfx_byte_pool_buffer[TOUCHGFX_APP_MEM_POOL_SIZE] __ALIGN_END;
+static TX_BYTE_POOL touchgfx_app_byte_pool;
 
 #endif
 
@@ -172,6 +182,29 @@ VOID tx_application_define(VOID *first_unused_memory)
     /* USER CODE BEGIN  MX_USBX_Host_Init_Success */
 
     /* USER CODE END  MX_USBX_Host_Init_Success */
+  }
+    if (tx_byte_pool_create(&touchgfx_app_byte_pool, "TouchGFX App memory pool", touchgfx_byte_pool_buffer, TOUCHGFX_APP_MEM_POOL_SIZE) != TX_SUCCESS)
+    {
+        /* USER CODE BEGIN TouchGFX_Byte_Pool_Error */
+
+        /* USER CODE END TouchGFX_Byte_Pool_Error */
+    }
+    else
+    {
+        /* USER CODE BEGIN TouchGFX_Byte_Pool_Success */
+
+        /* USER CODE END TouchGFX_Byte_Pool_Success */
+
+        memory_ptr = (VOID*)&touchgfx_app_byte_pool;
+    if (MX_TouchGFX_Init(memory_ptr) != TX_SUCCESS)
+    {
+      /* USER CODE BEGIN  MX_X-CUBE-TOUCHGFX_Init_Error */
+
+      /* USER CODE END  MX_X-CUBE-TOUCHGFX_Init_Error */
+    }
+    /* USER CODE BEGIN  MX_X-CUBE-TOUCHGFX_Init_Success */
+
+    /* USER CODE END  MX_X-CUBE-TOUCHGFX_Init_Success */
   }
 #else
 /*
