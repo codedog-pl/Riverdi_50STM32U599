@@ -51,6 +51,18 @@
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Screen2"
             }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerCustom",
+              "TriggerCustomTypeName": "DateTimeSetter valueChanged happens",
+              "TriggerComponent": "dateTimeSetter1"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "setDateTime"
+            }
           }
         ]
       },

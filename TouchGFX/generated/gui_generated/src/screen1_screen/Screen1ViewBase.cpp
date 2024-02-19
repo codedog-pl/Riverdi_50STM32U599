@@ -5,7 +5,8 @@
 #include <touchgfx/Color.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
-    fwdBtnClickCallback(this, &Screen1ViewBase::fwdBtnClickCallbackHandler)
+    fwdBtnClickCallback(this, &Screen1ViewBase::fwdBtnClickCallbackHandler),
+    dateTimeSetter1ValueChangedCallback(this, &Screen1ViewBase::dateTimeSetter1ValueChangedCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -19,6 +20,7 @@ Screen1ViewBase::Screen1ViewBase() :
     add(fwdBtn);
 
     dateTimeSetter1.setXY(160, 104);
+    dateTimeSetter1.setValueChangedCallback(dateTimeSetter1ValueChangedCallback);
     add(dateTimeSetter1);
 
     sysBar1.setXY(0, 0);
@@ -44,4 +46,12 @@ void Screen1ViewBase::fwdBtnClickCallbackHandler()
     //When fwdBtn Click change screen to Screen2
     //Go to Screen2 with no screen transition
     application().gotoScreen2ScreenNoTransition();
+}
+
+void Screen1ViewBase::dateTimeSetter1ValueChangedCallbackHandler(DateTime& value)
+{
+    //Interaction2
+    //When dateTimeSetter1 valueChanged call virtual function
+    //Call setDateTime
+    setDateTime(value);
 }

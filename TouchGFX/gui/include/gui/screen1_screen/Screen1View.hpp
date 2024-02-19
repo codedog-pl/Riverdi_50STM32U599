@@ -11,7 +11,10 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
 protected:
+    void setDateTime(DateTime& value) override;
+
 };
 
 #endif // SCREEN1VIEW_HPP

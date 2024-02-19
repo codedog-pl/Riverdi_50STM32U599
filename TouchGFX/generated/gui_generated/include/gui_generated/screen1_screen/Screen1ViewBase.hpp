@@ -20,6 +20,14 @@ public:
     virtual ~Screen1ViewBase();
     virtual void setupScreen();
 
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void setDateTime(DateTime& value)
+    {
+        // Override and implement this function in Screen1
+    }
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
@@ -40,11 +48,13 @@ private:
      * Callback Declarations
      */
     touchgfx::Callback<Screen1ViewBase> fwdBtnClickCallback;
+    touchgfx::Callback<Screen1ViewBase, DateTime&> dateTimeSetter1ValueChangedCallback;
 
     /*
      * Callback Handler Declarations
      */
     void fwdBtnClickCallbackHandler();
+    void dateTimeSetter1ValueChangedCallbackHandler(DateTime& value);
 
 };
 
