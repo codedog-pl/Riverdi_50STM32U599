@@ -15,6 +15,8 @@ enum TEXTS
     T__BOARD,
     T__PREV,
     T__NEXT,
+    T___SINGLEUSE_AXW0,
+    T___SINGLEUSE_YITW,
     T___SINGLEUSE_C1M8,
     T___SINGLEUSE_OC0E,
     T__DTS2,

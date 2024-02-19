@@ -13,7 +13,8 @@ public:
     virtual void tearDownScreen();
 
 protected:
-    void setDateTime(DateTime& value) override;
+    void getTimeClick() override;
+    void setTimeClick() override;
 
 };
 

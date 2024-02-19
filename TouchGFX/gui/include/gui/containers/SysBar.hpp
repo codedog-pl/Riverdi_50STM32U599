@@ -2,15 +2,23 @@
 #define SYSBAR_HPP
 
 #include <gui_generated/containers/SysBarBase.hpp>
+#include "DateTime.hpp"
 
-class SysBar : public SysBarBase
+class SysBar final : public SysBarBase
 {
+
 public:
-    SysBar();
-    virtual ~SysBar() {}
 
     virtual void initialize();
-protected:
+    void resetTime();
+    DateTime& time();
+
+private:
+
+    void updateTime() override;
+
+    DateTime m_currentTime;
+
 };
 
 #endif // SYSBAR_HPP

@@ -23,8 +23,8 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "dateTimeSetter1",
-            "X": 160,
+            "Name": "dateTimeSetter",
+            "X": 30,
             "Y": 104,
             "Width": 480,
             "Height": 272,
@@ -32,10 +32,56 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "sysBar1",
+            "Name": "sysBar",
             "Width": 800,
             "Height": 48,
             "CustomContainerDefinitionName": "SysBar"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "getTimeBtn",
+            "X": 535,
+            "Y": 104,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_YITW",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "setTimeBtn",
+            "X": 535,
+            "Y": 326,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_AXW0",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
           }
         ],
         "Interactions": [
@@ -55,13 +101,23 @@
           {
             "InteractionName": "Interaction2",
             "Trigger": {
-              "Type": "TriggerCustom",
-              "TriggerCustomTypeName": "DateTimeSetter valueChanged happens",
-              "TriggerComponent": "dateTimeSetter1"
+              "Type": "TriggerClicked",
+              "TriggerComponent": "getTimeBtn"
             },
             "Action": {
               "Type": "ActionCustom",
-              "FunctionName": "setDateTime"
+              "FunctionName": "getTimeClick"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "setTimeBtn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "setTimeClick"
             }
           }
         ]

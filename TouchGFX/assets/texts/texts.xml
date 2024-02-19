@@ -16,6 +16,12 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_AXW0" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Set time</Translation>
+      </Text>
+      <Text Id="__SingleUse_YITW" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Get time</Translation>
+      </Text>
       <Text Id="__SingleUse_C1M8" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">02.02.2024   23:23:33</Translation>
       </Text>

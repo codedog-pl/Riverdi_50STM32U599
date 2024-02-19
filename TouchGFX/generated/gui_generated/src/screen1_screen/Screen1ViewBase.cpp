@@ -3,10 +3,12 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
+#include <images/BitmapDatabase.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
     fwdBtnClickCallback(this, &Screen1ViewBase::fwdBtnClickCallbackHandler),
-    dateTimeSetter1ValueChangedCallback(this, &Screen1ViewBase::dateTimeSetter1ValueChangedCallbackHandler)
+    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -19,12 +21,27 @@ Screen1ViewBase::Screen1ViewBase() :
     fwdBtn.setClickCallback(fwdBtnClickCallback);
     add(fwdBtn);
 
-    dateTimeSetter1.setXY(160, 104);
-    dateTimeSetter1.setValueChangedCallback(dateTimeSetter1ValueChangedCallback);
-    add(dateTimeSetter1);
+    dateTimeSetter.setXY(30, 104);
+    add(dateTimeSetter);
 
-    sysBar1.setXY(0, 0);
-    add(sysBar1);
+    sysBar.setXY(0, 0);
+    add(sysBar);
+
+    getTimeBtn.setXY(535, 104);
+    getTimeBtn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
+    getTimeBtn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_YITW));
+    getTimeBtn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    getTimeBtn.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    getTimeBtn.setAction(buttonCallback);
+    add(getTimeBtn);
+
+    setTimeBtn.setXY(535, 326);
+    setTimeBtn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
+    setTimeBtn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_AXW0));
+    setTimeBtn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    setTimeBtn.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    setTimeBtn.setAction(buttonCallback);
+    add(setTimeBtn);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -36,8 +53,8 @@ void Screen1ViewBase::setupScreen()
 {
     background.initialize();
     fwdBtn.initialize();
-    dateTimeSetter1.initialize();
-    sysBar1.initialize();
+    dateTimeSetter.initialize();
+    sysBar.initialize();
 }
 
 void Screen1ViewBase::fwdBtnClickCallbackHandler()
@@ -48,10 +65,20 @@ void Screen1ViewBase::fwdBtnClickCallbackHandler()
     application().gotoScreen2ScreenNoTransition();
 }
 
-void Screen1ViewBase::dateTimeSetter1ValueChangedCallbackHandler(DateTime& value)
+void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    //Interaction2
-    //When dateTimeSetter1 valueChanged call virtual function
-    //Call setDateTime
-    setDateTime(value);
+    if (&src == &getTimeBtn)
+    {
+        //Interaction2
+        //When getTimeBtn clicked call virtual function
+        //Call getTimeClick
+        getTimeClick();
+    }
+    if (&src == &setTimeBtn)
+    {
+        //Interaction3
+        //When setTimeBtn clicked call virtual function
+        //Call setTimeClick
+        setTimeClick();
+    }
 }

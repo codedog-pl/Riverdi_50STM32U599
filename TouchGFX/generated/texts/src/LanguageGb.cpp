@@ -11,13 +11,15 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE;
 TEXT_LOCATION_FLASH_PRAGMA
 KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
     22, // T__BOARD: "50STM32U599"
-    44, // T__PREV: "<<"
-    47, // T__NEXT: ">>"
+    62, // T__PREV: "<<"
+    65, // T__NEXT: ">>"
+    46, // T___SINGLEUSE_AXW0: "Set time"
+    37, // T___SINGLEUSE_YITW: "Get time"
     0,  // T___SINGLEUSE_C1M8: "02.02.2024   23:23:33"
-    37, // T___SINGLEUSE_OC0E: "<>"
-    41, // T__DTS2: "00"
+    55, // T___SINGLEUSE_OC0E: "<>"
+    59, // T__DTS2: "00"
     34, // T__DTS_VALUE: "<>\n"
-    39, // T__DTS4: "0000"
-    52, // T__DTS_TS: ":"
-    50  // T__DTS_DS: "-"
+    57, // T__DTS4: "0000"
+    70, // T__DTS_TS: ":"
+    68  // T__DTS_DS: "-"
 };

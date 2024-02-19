@@ -14,7 +14,12 @@ void DateTimeSetter::initialize()
     secondWheel.setItemSelectedCallback(secondWheelItemSelectedCallback);
 }
 
-void DateTimeSetter::setValue(DateTime &value)
+DateTime& DateTimeSetter::getValue()
+{
+    return currentSetting;
+}
+
+void DateTimeSetter::setValue(DateTime& value)
 {
     if (value.year < yearMin) value.year = yearMin;
     if (value.year > yearMax) value.year = yearMax;

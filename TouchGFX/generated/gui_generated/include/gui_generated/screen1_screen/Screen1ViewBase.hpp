@@ -12,6 +12,7 @@
 #include <gui/containers/FwdBtn.hpp>
 #include <gui/containers/DateTimeSetter.hpp>
 #include <gui/containers/SysBar.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -23,7 +24,11 @@ public:
     /*
      * Virtual Action Handlers
      */
-    virtual void setDateTime(DateTime& value)
+    virtual void getTimeClick()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void setTimeClick()
     {
         // Override and implement this function in Screen1
     }
@@ -39,8 +44,10 @@ protected:
     touchgfx::Box __background;
     Background background;
     FwdBtn fwdBtn;
-    DateTimeSetter dateTimeSetter1;
-    SysBar sysBar1;
+    DateTimeSetter dateTimeSetter;
+    SysBar sysBar;
+    touchgfx::ButtonWithLabel getTimeBtn;
+    touchgfx::ButtonWithLabel setTimeBtn;
 
 private:
 
@@ -48,13 +55,13 @@ private:
      * Callback Declarations
      */
     touchgfx::Callback<Screen1ViewBase> fwdBtnClickCallback;
-    touchgfx::Callback<Screen1ViewBase, DateTime&> dateTimeSetter1ValueChangedCallback;
+    touchgfx::Callback<Screen1ViewBase, const touchgfx::AbstractButton&> buttonCallback;
 
     /*
      * Callback Handler Declarations
      */
     void fwdBtnClickCallbackHandler();
-    void dateTimeSetter1ValueChangedCallbackHandler(DateTime& value);
+    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
 
 };
 

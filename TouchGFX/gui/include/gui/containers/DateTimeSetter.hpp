@@ -19,6 +19,7 @@ public:
     virtual ~DateTimeSetter() { }
 
     void initialize() override;
+    DateTime& getValue();
     void setValue(DateTime& value) override;
 
 protected:
