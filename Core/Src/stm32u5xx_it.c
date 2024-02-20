@@ -66,6 +66,7 @@ extern ADC_HandleTypeDef hadc2;
 extern DMA_NodeTypeDef Node_GPDMA1_Channel2;
 extern DMA_QListTypeDef List_GPDMA1_Channel2;
 extern DMA_HandleTypeDef handle_GPDMA1_Channel2;
+extern DAC_HandleTypeDef hdac1;
 extern GPU2D_HandleTypeDef hgpu2d;
 extern LTDC_HandleTypeDef hltdc;
 extern SD_HandleTypeDef hsd1;
@@ -189,6 +190,20 @@ void EXTI6_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles EXTI Line9 interrupt.
+  */
+void EXTI9_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI9_IRQn 0 */
+
+  /* USER CODE END EXTI9_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
+  /* USER CODE BEGIN EXTI9_IRQn 1 */
+
+  /* USER CODE END EXTI9_IRQn 1 */
+}
+
+/**
   * @brief This function handles GPDMA1 Channel 0 global interrupt.
   */
 void GPDMA1_Channel0_IRQHandler(void)
@@ -243,6 +258,20 @@ void ADC1_2_IRQHandler(void)
   /* USER CODE BEGIN ADC1_2_IRQn 1 */
 
   /* USER CODE END ADC1_2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DAC1 interrupt.
+  */
+void DAC1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DAC1_IRQn 0 */
+
+  /* USER CODE END DAC1_IRQn 0 */
+  HAL_DAC_IRQHandler(&hdac1);
+  /* USER CODE BEGIN DAC1_IRQn 1 */
+
+  /* USER CODE END DAC1_IRQn 1 */
 }
 
 /**
