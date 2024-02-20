@@ -12,6 +12,8 @@
 #include "hmi.h"
 #include "StaticClass.hpp"
 #include "OS/Semaphore.hpp"
+#include "adc.h"
+#include "ADC.hpp"
 
 class HMI final
 {
@@ -26,6 +28,10 @@ public:
     /// @param flags Initialization flags.
     static void init(uint32_t flags);
 
+    static void ADC1_readingChanged(double value, double change);
+
+    static void ADC2_readingChanged(double value, double change);
+
     /// @brief Called when the USB media is mounted at "1:/".
     static void USBMediaMounted();
 
@@ -35,5 +41,8 @@ public:
 private:
 
     inline static OS::Semaphore initSemaphore = {}; // Initialization semaphore.
+
+    inline static ADCObserver<1024, uint16_t> ADC_01 = { &hadc1, 2.0 };
+    inline static ADCObserver<1024, uint16_t> ADC_02 = { &hadc2, 2.0 };
 
 };

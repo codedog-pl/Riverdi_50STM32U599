@@ -120,7 +120,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
     NodeConfig.Init.Request = GPDMA1_REQUEST_DAC1_CH1;
     NodeConfig.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
     NodeConfig.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    NodeConfig.Init.SrcInc = DMA_SINC_FIXED;
+    NodeConfig.Init.SrcInc = DMA_SINC_INCREMENTED;
     NodeConfig.Init.DestInc = DMA_DINC_FIXED;
     NodeConfig.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_HALFWORD;
     NodeConfig.Init.DestDataWidth = DMA_DEST_DATAWIDTH_HALFWORD;

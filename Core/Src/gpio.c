@@ -102,12 +102,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(CTP_INT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
   /*Configure GPIO pins : PGPin PGPin */
   GPIO_InitStruct.Pin = USB_PWR_EN_Pin|R_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -161,9 +155,6 @@ void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI6_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI6_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI9_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_IRQn);
 
 }
 

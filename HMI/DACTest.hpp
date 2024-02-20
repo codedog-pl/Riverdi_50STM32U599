@@ -4,6 +4,7 @@
 #include "hal_target.h"
 EXTERN_C_BEGIN
 #include "dac.h"
+#include "tim.h"
 #include HAL_HEADER
 #include HAL_HEADER_(dac)
 #include HAL_HEADER_(dac_ex)
@@ -20,10 +21,10 @@ class DACTest
 
 public:
 
-    // DACTest()
-    // {
-    //     HAL_DAC_Init(&hdac1);
-    // }
+    DACTest()
+    {
+        HAL_TIM_Base_Start(&htim1);
+    }
 
     void start()
     {

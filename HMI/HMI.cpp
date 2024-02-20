@@ -19,6 +19,10 @@ void HMI::start()
     while ((HMI_SysInit & HMI_ALL) != HMI_ALL) initSemaphore.wait();
     Log::msg("HMI: Initialization complete.");
     FS::Test::fileAPI(FS::SD(), "fs-test.dat");
+    ADC_01.registerCallback(ADC1_readingChanged);
+    ADC_01.start();
+    ADC_02.registerCallback(ADC2_readingChanged);
+    ADC_02.start();
     DACTest dacTest;
     dacTest.start();
     OS::AppThread::start(); // This will wait indefinitely for thread synchronization events.
@@ -29,6 +33,16 @@ void HMI::init(uint32_t flags)
 {
     HMI_SysInit |= flags;
     initSemaphore.release();
+}
+
+void HMI::ADC1_readingChanged(double value, double change)
+{
+    Log::msg("ADC1: Value: %.3f", value);
+}
+
+void HMI::ADC2_readingChanged(double value, double change)
+{
+    Log::msg("ADC2: Value: %.3f", value);
 }
 
 void HMI::USBMediaMounted()
