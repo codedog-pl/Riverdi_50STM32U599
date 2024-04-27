@@ -50,7 +50,7 @@ void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV16;
   hadc1.Init.Resolution = ADC_RESOLUTION_14B;
   hadc1.Init.GainCompensation = 0;
   hadc1.Init.DataAlign = ADC_DATAALIGN_LEFT;
@@ -107,7 +107,7 @@ void MX_ADC2_Init(void)
   /** Common config
   */
   hadc2.Instance = ADC2;
-  hadc2.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
+  hadc2.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV16;
   hadc2.Init.Resolution = ADC_RESOLUTION_14B;
   hadc2.Init.GainCompensation = 0;
   hadc2.Init.DataAlign = ADC_DATAALIGN_LEFT;
@@ -123,7 +123,7 @@ void MX_ADC2_Init(void)
   hadc2.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   hadc2.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc2.Init.LeftBitShift = ADC_LEFTBITSHIFT_NONE;
-  hadc2.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DR;
+  hadc2.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR;
   hadc2.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc2) != HAL_OK)
   {
@@ -165,7 +165,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   /** Initializes the peripherals clock
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
-    PeriphClkInit.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_MSIK;
+    PeriphClkInit.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HSI;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
     {
       Error_Handler();
@@ -277,7 +277,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     NodeConfig.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
     NodeConfig.Init.Direction = DMA_PERIPH_TO_MEMORY;
     NodeConfig.Init.SrcInc = DMA_SINC_FIXED;
-    NodeConfig.Init.DestInc = DMA_DINC_FIXED;
+    NodeConfig.Init.DestInc = DMA_DINC_INCREMENTED;
     NodeConfig.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_HALFWORD;
     NodeConfig.Init.DestDataWidth = DMA_DEST_DATAWIDTH_HALFWORD;
     NodeConfig.Init.SrcBurstLength = 1;

@@ -23,21 +23,65 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "header",
-            "X": 15,
-            "Y": 15,
-            "Width": 204,
-            "Height": 28,
-            "CustomContainerDefinitionName": "Header"
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "dateTimeSetter1",
-            "X": 160,
+            "Name": "dateTimeSetter",
+            "X": 30,
             "Y": 104,
             "Width": 480,
             "Height": 272,
             "CustomContainerDefinitionName": "DateTimeSetter"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "sysBar",
+            "Width": 800,
+            "Height": 48,
+            "CustomContainerDefinitionName": "SysBar"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "getTimeBtn",
+            "X": 535,
+            "Y": 104,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_YITW",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "setTimeBtn",
+            "X": 535,
+            "Y": 326,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_AXW0",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
           }
         ],
         "Interactions": [
@@ -52,6 +96,28 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Screen2"
+            }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "getTimeBtn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "getTimeClick"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "setTimeBtn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "setTimeClick"
             }
           }
         ]
@@ -74,15 +140,6 @@
             "Width": 290,
             "Height": 94,
             "CustomContainerDefinitionName": "BackBtn"
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "header",
-            "X": 15,
-            "Y": 15,
-            "Width": 204,
-            "Height": 28,
-            "CustomContainerDefinitionName": "Header"
           },
           {
             "Type": "CustomContainerInstance",
@@ -119,6 +176,13 @@
             "Width": 64,
             "Height": 64,
             "CustomContainerDefinitionName": "SquareLED"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "sysBar1",
+            "Width": 800,
+            "Height": 48,
+            "CustomContainerDefinitionName": "SysBar"
           }
         ],
         "Interactions": [
@@ -175,7 +239,7 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 43,
+            "Height": 32,
             "TextId": "_PREV",
             "TextRotation": "0",
             "AutoSize": true
@@ -221,7 +285,7 @@
             "X": 123,
             "Y": 26,
             "Width": 44,
-            "Height": 43,
+            "Height": 32,
             "TextId": "_NEXT",
             "TextRotation": "0",
             "AutoSize": true
@@ -258,7 +322,7 @@
             "Name": "headerTxt",
             "Y": -6,
             "Width": 204,
-            "Height": 43,
+            "Height": 32,
             "TextId": "_BOARD",
             "TextRotation": "0",
             "Color": {
@@ -309,7 +373,7 @@
                 "X": 388,
                 "Y": -9,
                 "Width": 9,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -321,7 +385,7 @@
                 "X": 328,
                 "Y": -9,
                 "Width": 9,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_TS",
                 "TextRotation": "0",
@@ -333,7 +397,7 @@
                 "X": 194,
                 "Y": -6,
                 "Width": 13,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -345,7 +409,7 @@
                 "X": 130,
                 "Y": -6,
                 "Width": 13,
-                "Height": 55,
+                "Height": 46,
                 "LockPosition": true,
                 "TextId": "_DTS_DS",
                 "TextRotation": "0",
@@ -915,6 +979,7 @@
             "Name": "yellow",
             "Width": 64,
             "Height": 64,
+            "Visible": false,
             "Components": [
               {
                 "Type": "BoxWithBorder",
@@ -983,6 +1048,116 @@
             "Description": "Advances the blink animation."
           }
         ]
+      },
+      {
+        "Name": "SysBar",
+        "Width": 800,
+        "Height": 48,
+        "Components": [
+          {
+            "Type": "BoxWithBorder",
+            "Name": "background",
+            "Width": 800,
+            "Height": 48,
+            "Color": {
+              "Red": 17,
+              "Green": 147,
+              "Blue": 193
+            },
+            "BorderColor": {
+              "Green": 130,
+              "Blue": 173
+            },
+            "BorderSize": 2
+          },
+          {
+            "Type": "TextArea",
+            "Name": "clockTxt",
+            "X": 248,
+            "Y": 4,
+            "Width": 305,
+            "Height": 40,
+            "TextId": "__SingleUse_OC0E",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_C1M8",
+              "UseBuffer": true,
+              "BufferSize": 24
+            }
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "setClockBtn",
+            "X": 248,
+            "Width": 305,
+            "Height": 48,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 305,
+                "Height": 48,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "SetClockClick",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "setClockBtn"
+            },
+            "Action": {
+              "Type": "ActionEmit",
+              "TriggerCustomTypeName": "SysBar setClock happens"
+            }
+          },
+          {
+            "InteractionName": "FrameTickUpdate",
+            "Trigger": {
+              "Type": "TriggerOnEveryTick",
+              "TickCount": 1
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "updateTime"
+            }
+          }
+        ],
+        "CustomTriggers": [
+          {
+            "Name": "setClock",
+            "Description": "Triggered when the clock is clicked"
+          }
+        ]
       }
     ],
     "Name": "Riverdi_50STM32U599",
@@ -1038,6 +1213,6 @@
       "VectorFonts"
     ]
   },
-  "Version": "4.23.0",
+  "Version": "4.23.1",
   "CreatedBy": "4.22.0"
 }

@@ -18,15 +18,15 @@ void HMI::start()
     Log::msg("HMI: Initializing...");
     while ((HMI_SysInit & HMI_ALL) != HMI_ALL) initSemaphore.wait();
     Log::msg("HMI: Initialization complete.");
-    FS::Test::fileAPI(FS::SD(), "fs-test.dat");
-    ADC_01.registerCallback(ADC1_readingChanged);
-    ADC_01.start();
+//    FS::Test::fileAPI(FS::SD(), "fs-test.dat");
+//    ADC_01.registerCallback(ADC1_readingChanged);
+//    ADC_01.start();
     ADC_02.registerCallback(ADC2_readingChanged);
     ADC_02.start();
-    DACTest dacTest;
-    dacTest.start();
+//    DACTest dacTest;
+//    dacTest.start();
     OS::AppThread::start(); // This will wait indefinitely for thread synchronization events.
-    dacTest.stop();
+//    dacTest.stop();
 }
 
 void HMI::init(uint32_t flags)

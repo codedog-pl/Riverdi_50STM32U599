@@ -53,7 +53,9 @@
         "ux_host_class_storage.h": "c",
         "ux_host_msc.h": "c",
         "hal.h": "c",
-        "hal_target.h": "c"
+        "hal_target.h": "c",
+        "ux_api.h": "c",
+        "ux_hcd_stm32.h": "c"
     },
     "svg.preview.background": "transparent"
 }

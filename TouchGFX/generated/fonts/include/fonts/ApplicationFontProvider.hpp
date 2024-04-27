@@ -17,6 +17,7 @@ struct Typography
     static const touchgfx::FontId LARGE = 1;
     static const touchgfx::FontId SMALL = 2;
     static const touchgfx::FontId DATETIMESETTERTEXT = 3;
+    static const touchgfx::FontId SYSBARTEXT = 4;
 };
 
 struct TypographyFontIndex
@@ -25,6 +26,7 @@ struct TypographyFontIndex
     static const touchgfx::FontId LARGE = 1;              // verdana_40_4bpp
     static const touchgfx::FontId SMALL = 2;              // verdana_10_4bpp
     static const touchgfx::FontId DATETIMESETTERTEXT = 3; // impact_45_4bpp
+    static const touchgfx::FontId SYSBARTEXT = 0;         // Ubuntu_Regular_32_4bpp
     static const uint16_t NUMBER_OF_FONTS = 4;
 };
 
