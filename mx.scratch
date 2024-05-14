@@ -6,7 +6,7 @@
     <WorkspacePath>D:\Source\Embedded\Templates\Riverdi\Riverdi_50STM32U599\</WorkspacePath>
     <underRoot>false</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>D:\ST\Repository\STM32Cube_FW_U5_V1.4.0</HAL_Driver>
+    <HAL_Driver>D:\ST\Repository\STM32Cube_FW_U5_V1.5.0</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>Riverdi_50STM32U599.ioc</IocFile>
@@ -27,7 +27,7 @@
             <memory access="xrw" name="RAM" size="2555904" start="0x20000000" />
             <memory access="rx" name="FLASH" size="4194304" start="0x08000000" />
           </memories>
-          <startup>D:\ST\Repository\STM32Cube_FW_U5_V1.4.0\Drivers\CMSIS\Device\ST\STM32U5xx\Source\Templates\gcc\startup_stm32u5a9xx.s</startup>
+          <startup>D:\ST\Repository\STM32Cube_FW_U5_V1.5.0\Drivers\CMSIS\Device\ST\STM32U5xx\Source\Templates\gcc\startup_stm32u5a9xx.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs />
           </LinkSettings>
@@ -1651,6 +1651,9 @@
                 <name>Middlewares/ST/usbx/common/core/src/ux_utility_timer_create.c</name>
               </file>
               <file>
+                <name>Middlewares/ST/usbx/common/core/src/ux_utility_timer_delete.c</name>
+              </file>
+              <file>
                 <name>Middlewares/ST/usbx/common/core/src/ux_utility_unicode_to_string.c</name>
               </file>
               <file>
@@ -1760,9 +1763,6 @@
               </file>
               <file>
                 <name>Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_storage_lock.c</name>
-              </file>
-              <file>
-                <name>Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_storage_media_check.c</name>
               </file>
             </group>
             <group>
